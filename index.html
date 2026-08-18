@@ -1,343 +1,153 @@
 
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hero Section</title>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<title>WHOLEGENCAMP</title>
 <style>
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
 
   :root{
-    --sage: #1A1A1A;
-    --sage-light: #E5E5E5;
-    --cream: #FFFFFF;
-    --tan: #CCCCCC;
-    --brown: #4D4D4D;
-    --ink: #000000;
+    --sage: #9CAF8A;
+    --cream: #F7F3E6;
+    --ink: #3E3A32;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
 
   html,body{
     width:100%;
-    min-height:100vh;
-    font-family:'Pretendard', sans-serif;
-    background: linear-gradient(150deg, var(--sage-light) 0%, var(--cream) 45%, var(--tan) 100%);
-    color: var(--ink);
-    overflow-x:hidden;
-    position:relative;
+    height:100%;
+    background: #000;
+    overflow:hidden;
   }
 
-  .hero{
+  .landing{
     position:relative;
     width:100%;
-    min-height:100vh;
+    height:100vh;
     display:flex;
-    flex-direction:column;
-  }
-
-  /* ---------- NAV ---------- */
-  .nav-wrap{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    padding: 22px 40px 0;
-    position:relative;
-    z-index:20;
-  }
-  nav{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:60px;
-    width:100%;
-    max-width:1200px;
-    padding: 16px 32px;
-    background: var(--ink);
-    border-radius: 999px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.22);
-  }
-  .logo{
-    font-family:'JetBrains Mono', monospace;
-    font-size:18px;
-    color: var(--cream);
-    letter-spacing:0.5px;
-  }
-  .logo b{ color: var(--sage-light); font-weight:600; }
-
-  .nav-links{
-    display:flex;
-    gap:48px;
-    list-style:none;
-  }
-  .nav-links li{
-    font-size:16.5px;
-    letter-spacing:0.8px;
-    color: rgba(255,255,255,0.85);
-    cursor:pointer;
-    transition: color .2s ease;
-  }
-  .nav-links li:hover{ color: var(--sage-light); }
-
-  .inquiry-btn{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    padding:8px 18px;
-    border-radius:999px;
-    background: var(--cream);
-    color: var(--ink);
-    font-weight:600;
-    text-decoration:none;
-    white-space:nowrap;
-    transition: background .2s ease, transform .2s ease;
-    display:inline-block;
-  }
-  .inquiry-btn:hover{
-    background: var(--sage-light);
-    transform: translateY(-1px);
-  }
-
-  @media (max-width:900px){
-    .nav-links{ display:none; }
-  }
-
-  /* ---------- MAIN CONTENT ---------- */
-  .content{
-    position:relative;
-    z-index:15;
-    flex:1;
-    display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding: 80px 24px 120px;
-  }
-
-  .subtag{
-    margin-top:0;
-    font-family:'JetBrains Mono', monospace;
-    font-size:17px;
-    color: var(--brown);
-    letter-spacing:0.5px;
-  }
-
-  .arrow{
-    margin-top:60px;
-    width:40px;
-    height:40px;
-    animation: bob 2.2s ease-in-out infinite;
-  }
-  @keyframes bob{
-    0%,100%{ transform: translateY(0); }
-    50%{ transform: translateY(10px); }
-  }
-
-  /* ---------- AD SECTION (2/3 image : 1/3 info) ---------- */
-  .ad-wrap{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    padding: 28px 40px 0;
-    position:relative;
-    z-index:20;
-  }
-  .ad-section{
-    display:flex;
-    width:100%;
-    max-width:1280px;
-    min-height:420px;
-    border-radius:32px;
     overflow:hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.22);
   }
-  .ad-image{
-    flex:2;
-    background: url('ex.jpg') center/cover no-repeat;
+
+  video#bg-video{
+    position:absolute;
+    top:50%;
+    left:50%;
+    min-width:100%;
+    min-height:100%;
+    width:auto;
+    height:auto;
+    transform: translate(-50%,-50%);
+    object-fit:cover;
+    z-index:1;
   }
-  .ad-info{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:16px;
-    padding: 48px 40px;
-    background: var(--ink);
+
+  .overlay{
+    position:absolute;
+    inset:0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.7) 100%);
+    z-index:2;
+  }
+
+  .landing-text{
+    position:relative;
+    z-index:3;
     color: var(--cream);
+    padding: 0 24px;
   }
-  .ad-tag{
-    align-self:flex-start;
-    font-family:'JetBrains Mono', monospace;
-    font-size:17px;
-    padding:10px 20px;
-    border-radius:999px;
-    background: var(--cream);
-    color: var(--ink);
-    font-weight:800;
-    letter-spacing:0.5px;
-    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
-    animation: dday-pulse 2s ease-in-out infinite;
-  }
-  @keyframes dday-pulse{
-    0%,100%{ box-shadow: 0 0 0 4px rgba(255,255,255,0.15); }
-    50%{ box-shadow: 0 0 0 9px rgba(255,255,255,0.05); }
-  }
-  .ad-title{
-    font-size:28px;
-    font-weight:700;
-    line-height:1.35;
-  }
-  .ad-divider{
-    border:none;
-    border-top:1px solid rgba(255,255,255,0.25);
-    margin:4px 0;
-  }
-  .ad-details{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-  }
-  .ad-row dt{
-    font-family:'JetBrains Mono', monospace;
-    font-size:11.5px;
-    color: var(--sage-light);
-    margin-bottom:5px;
-  }
-  .ad-row dd{
-    font-size:14px;
-    line-height:1.55;
-  }
-  .ad-note{
-    font-size:12px;
-    color: rgba(255,255,255,0.6);
+
+  .landing-text .sub{
+    font-family:'Pretendard', sans-serif;
+    font-weight:600;
+    font-size:24px;
     line-height:1.5;
+    letter-spacing:-0.2px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8), 0 4px 24px rgba(0,0,0,0.6);
   }
 
-  @media (max-width:900px){
-    .ad-section{ flex-direction:column; min-height:0; border-radius:24px; }
-    .ad-image{ min-height:220px; }
-    .ad-info{ padding:36px 28px; }
-    .ad-title{ font-size:26px; }
+  .landing-text .brand{
+    margin-top:18px;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:44px;
+    letter-spacing:2px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8), 0 4px 24px rgba(0,0,0,0.6);
   }
 
-  @media (max-width: 760px){
-    .subtag{ font-size:14px; }
-    .nav-wrap{ padding:16px 16px 0; }
-    nav{ padding:12px 18px; gap:20px; border-radius:32px; }
-    .ad-wrap{ padding:20px 16px 0; }
+  .landing-text .brand .wholegen{
+    color: #B9D1A6;
+  }
+
+  .skip-btn{
+    position:absolute;
+    right:28px;
+    bottom:28px;
+    z-index:5;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.5px;
+    color: rgba(247,243,230,0.85);
+    background: rgba(62,58,50,0.45);
+    border: 1px solid rgba(247,243,230,0.35);
+    padding:9px 18px;
+    border-radius:999px;
+    cursor:pointer;
+    text-decoration:none;
+    transition: background .2s ease, color .2s ease;
+  }
+  .skip-btn:hover{
+    background: rgba(247,243,230,0.9);
+    color: var(--ink);
+  }
+
+  @media (max-width:760px){
+    .landing-text .sub{ font-size:17px; }
+    .landing-text .brand{ font-size:28px; letter-spacing:1px; }
   }
 </style>
 </head>
 <body>
 
-<div class="hero">
+<div class="landing">
+  <!-- 같은 폴더의 "character.mp4" 재생, 끝나면 main.html로 이동 -->
+  <video id="bg-video" autoplay muted playsinline>
+    <source src="character.mp4" type="video/mp4">
+  </video>
 
-  <!-- NAV -->
-  <div class="nav-wrap">
-    <nav>
-      <div class="logo">WHOLEGEN<b>CAMP</b></div>
-      <ul class="nav-links">
-        <li>소개</li>
-        <li>공지</li>
-        <li>캠프</li>
-        <li>자료실</li>
-      </ul>
-      <!-- TODO: href를 실제 카카오톡 채널 URL로 교체하세요 (예: https://pf.kakao.com/_xxxxxx/chat) -->
-      <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
-    </nav>
+  <div class="overlay"></div>
+
+  <div class="landing-text">
+    <div class="sub">하나님을 아는 순전한 세대</div>
+    <div class="brand"><span class="wholegen">WHOLEGEN</span>CAMP</div>
   </div>
 
-  <!-- AD SECTION (2/3 image : 1/3 info panel) -->
-  <div class="ad-wrap">
-    <section class="ad-section">
-      <div class="ad-image"></div>
-      <div class="ad-info">
-        <span class="ad-tag" id="adDday">D-000</span>
-        <h2 class="ad-title">Wholegen 캠프</h2>
-        <hr class="ad-divider">
-        <dl class="ad-details">
-          <div class="ad-row">
-            <dt>주제</dt>
-            <dd>순전함 / 예수 그리스도 안에서 온전히 세워지는 세대</dd>
-          </div>
-          <div class="ad-row">
-            <dt>주제구절</dt>
-            <dd>너희는 이 세대를 본받지 말고 오직 마음을 새롭게 함으로 변화를 받아 <br> 하나님의 선하시고 기뻐하시고 온전하신 뜻이 무엇인지 분별하도록 하라 <br> (로마서 12:2)</dd>
-          </div>
-          <div class="ad-row">
-            <dt>일정</dt>
-            <dd>27.01.01 ~ 27.01.02 하나님의 집</dd>
-          </div>
-        </dl>
-      </div>
-    </section>
-  </div>
-
-  <!-- MAIN CONTENT -->
-  <div class="content">
-    <div class="subtag">growfield sustainability</div>
-
-    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.6">
-      <line x1="12" y1="4" x2="12" y2="20"/>
-      <polyline points="6,14 12,20 18,14"/>
-    </svg>
-  </div>
-
+  <a class="skip-btn" href="main.html">건너뛰기</a>
 </div>
 
 <script>
-  (function(){
-    var today = new Date();
-    today.setHours(0,0,0,0);
-    var target = new Date(today.getFullYear(), 11, 25);
-    if (target < today) target = new Date(today.getFullYear() + 1, 11, 25);
-    var diffDays = Math.round((target - today) / 86400000);
-    var label = diffDays === 0 ? 'D-DAY' : 'D-' + diffDays;
-    document.getElementById('adDday').textContent = label;
-  })();
+  const video = document.getElementById('bg-video');
+
+  // 영상 로드 실패 시 콘솔에서 원인 확인 가능 (F12 → Console)
+  video.addEventListener('error', () => {
+    console.error('영상 로드 실패: 파일명/경로를 확인하세요. 현재 경로:', video.currentSrc);
+  });
+
+  // 영상이 끝나면 main.html로 이동
+  video.addEventListener('ended', () => {
+    window.location.href = 'main.html';
+  });
+
+  // 혹시 자동재생이 막히는 브라우저 대비 - 클릭 시 재생 시도
+  document.addEventListener('click', () => {
+    if (video.paused) video.play().catch(()=>{});
+  }, { once: true });
 </script>
 
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
 </body>
 </html>
