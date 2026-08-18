@@ -62,6 +62,7 @@
     background: var(--ink);
     border-radius: 999px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    position:relative;
   }
   .logo{
     font-family:'JetBrains Mono', monospace;
@@ -102,8 +103,52 @@
     background: var(--sage-light);
     transform: translateY(-1px);
   }
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:28px;
+    height:22px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    flex-shrink:0;
+  }
+  .nav-toggle span{
+    display:block;
+    width:100%;
+    height:2px;
+    background: var(--cream);
+    border-radius:2px;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2){ opacity:0; }
+  .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
   @media (max-width:900px){
-    .nav-links{ display:none; }
+    .nav-toggle{ display:flex; order:3; }
+    .nav-links{
+      display:none;
+      position:absolute;
+      top:calc(100% + 12px);
+      left:0;
+      right:0;
+      flex-direction:column;
+      gap:0;
+      background: var(--ink);
+      border-radius:20px;
+      padding:8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      z-index:30;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-links li a{ display:block; padding:14px 16px; border-radius:12px; }
+    .nav-links li:hover a{ background: rgba(255,255,255,0.08); }
+    .inquiry-btn{ order:2; }
+    .logo{ order:1; }
   }
   @media (max-width:760px){
     .nav-wrap{ padding:16px var(--content-px-mobile) 0; }
@@ -574,12 +619,15 @@
 <div class="nav-wrap">
   <nav>
     <a class="logo" href="main.html">WHOLEGEN<b>CAMP</b></a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
       <li><a href="main.html">소개</a></li>
       <li><a href="camp.html" class="active">캠프</a></li>
       <li><a href="#">자료실</a></li>
       <li><a href="#">FAQ</a></li>
     </ul>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
     <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
   </nav>
 </div>
@@ -784,6 +832,25 @@
 </footer>
 
 <script>
+  // Mobile nav toggle
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (!toggle || !links) return;
+    toggle.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('open');
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+
   // D-day
   (function(){
     var today = new Date();
