@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>캠프 — WHOLEGENCAMP</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --sage: #1A1A1A;
+    --sage-light: #E5E5E5;
+    --cream: #FFFFFF;
+    --tan: #CCCCCC;
+    --brown: #4D4D4D;
+    --ink: #000000;
+
+    --section-gap: 80px;
+    --section-gap-mobile: 52px;
+    --content-px: 40px;
+    --content-px-mobile: 20px;
+
+    --fs-display: 48px;
+    --fs-h2: 36px;
+    --fs-h3: 24px;
+    --fs-body: 15px;
+    --fs-small: 13px;
+    --fs-xs: 11.5px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{
+    width:100%;
+    min-height:100vh;
+    font-family:'Pretendard', sans-serif;
+    background: linear-gradient(150deg, var(--sage-light) 0%, var(--cream) 45%, var(--tan) 100%);
+    color: var(--ink);
+    overflow-x:hidden;
+    font-size: var(--fs-body);
+    line-height: 1.6;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: 24px var(--content-px) 0;
+    position:relative;
+    z-index:20;
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:48px;
+    width:100%;
+    max-width:1200px;
+    padding: 14px 32px;
+    background: var(--ink);
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  }
+  .logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    color: var(--cream);
+    letter-spacing:0.5px;
+    text-decoration:none;
+  }
+  .logo b{ color: var(--sage-light); font-weight:600; }
+  .nav-links{
+    display:flex;
+    gap:40px;
+    list-style:none;
+  }
+  .nav-links li a{
+    font-size: var(--fs-body);
+    letter-spacing:0.6px;
+    color: rgba(255,255,255,0.85);
+    text-decoration:none;
+    transition: color .2s ease;
+  }
+  .nav-links li a:hover{ color: var(--sage-light); }
+  .nav-links li a.active{ color: var(--cream); font-weight:600; }
+  .inquiry-btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-small);
+    padding:9px 20px;
+    border-radius:999px;
+    background: var(--cream);
+    color: var(--ink);
+    font-weight:600;
+    text-decoration:none;
+    white-space:nowrap;
+    transition: background .2s ease, transform .2s ease;
+    display:inline-block;
+  }
+  .inquiry-btn:hover{
+    background: var(--sage-light);
+    transform: translateY(-1px);
+  }
+  @media (max-width:900px){
+    .nav-links{ display:none; }
+  }
+  @media (max-width:760px){
+    .nav-wrap{ padding:16px var(--content-px-mobile) 0; }
+    nav{ padding:12px 18px; gap:20px; border-radius:32px; }
+  }
+
+  /* ---------- PAGE CONTENT ---------- */
+  .page-content{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-bottom: var(--section-gap);
+  }
+
+  /* ---------- CAMP INFO BOX ---------- */
+  .camp-info-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: var(--section-gap) var(--content-px) 0;
+  }
+  .camp-info{
+    width:100%;
+    max-width:1280px;
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--ink);
+    color: var(--cream);
+    padding: 56px 60px;
+    display:flex;
+    align-items:center;
+    gap:60px;
+    position:relative;
+  }
+  .camp-info::before{
+    content:'';
+    position:absolute;
+    top:-40px;
+    right:-40px;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .camp-info-text{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+  .camp-info-badge{
+    align-self:flex-start;
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-body);
+    padding:9px 18px;
+    border-radius:999px;
+    background: var(--cream);
+    color: var(--ink);
+    font-weight:800;
+    letter-spacing:0.5px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+    animation: badge-pulse 2s ease-in-out infinite;
+  }
+  @keyframes badge-pulse{
+    0%,100%{ box-shadow: 0 0 0 4px rgba(255,255,255,0.15); }
+    50%{ box-shadow: 0 0 0 9px rgba(255,255,255,0.05); }
+  }
+  .camp-info-title{
+    font-size: var(--fs-display);
+    font-weight:800;
+    letter-spacing:-1px;
+    line-height:1.15;
+  }
+  .camp-info-divider{
+    border:none;
+    border-top:1px solid rgba(255,255,255,0.15);
+    margin:4px 0;
+  }
+  .camp-info-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:16px 40px;
+  }
+  .camp-info-item dt{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,0.55);
+    margin-bottom:4px;
+    letter-spacing:0.5px;
+  }
+  .camp-info-item dd{
+    font-size: var(--fs-body);
+    line-height:1.5;
+  }
+  .camp-info-cta{
+    align-self:flex-start;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-top:8px;
+    padding:16px 28px;
+    border-radius:14px;
+    background: var(--cream);
+    color: var(--ink);
+    font-weight:700;
+    font-size: var(--fs-body);
+    text-decoration:none;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .camp-info-cta:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255,255,255,0.15);
+  }
+  .camp-info-cta .arrow{ font-size:16px; transition: transform .2s ease; }
+  .camp-info-cta:hover .arrow{ transform: translate(2px, -2px); }
+
+  .camp-info-visual{
+    flex:0 0 280px;
+    height:280px;
+    border-radius:20px;
+    background: rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:64px;
+    font-weight:800;
+    color: rgba(255,255,255,0.08);
+    letter-spacing:-2px;
+  }
+
+  @media (max-width:900px){
+    .camp-info{ flex-direction:column; padding:40px 32px; gap:32px; }
+    .camp-info-visual{ flex:none; width:100%; height:180px; }
+    .camp-info-title{ font-size:32px; }
+    .camp-info-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:760px){
+    .camp-info-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+  }
+
+  /* ---------- SCHEDULE SECTION ---------- */
+  .schedule-wrap{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding: var(--section-gap) var(--content-px) 0;
+  }
+  .schedule-header{
+    text-align:center;
+    margin-bottom:32px;
+  }
+  .schedule-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    font-weight:700;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color: var(--brown);
+  }
+  .schedule-title{
+    margin-top:10px;
+    font-size: var(--fs-h2);
+    font-weight:800;
+    letter-spacing:-0.5px;
+  }
+
+  .schedule-tabs{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:36px;
+  }
+  .schedule-tab{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-small);
+    font-weight:700;
+    letter-spacing:1px;
+    padding:11px 28px;
+    border-radius:999px;
+    border:1.5px solid var(--ink);
+    background:transparent;
+    color: var(--ink);
+    cursor:pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+  .schedule-tab.active{
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .schedule-panel{
+    display:none;
+    width:100%;
+    max-width:1280px;
+    min-height:480px;
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--ink);
+    color: var(--cream);
+    position:relative;
+  }
+  .schedule-panel::before{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .schedule-panel.active{
+    display:flex;
+  }
+
+  /* Left: timeline list */
+  .timeline{
+    flex:0 0 320px;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    padding:36px 24px;
+    border-right:1px solid rgba(255,255,255,0.08);
+    overflow-y:auto;
+    list-style:none;
+  }
+  .timeline-item{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    padding:14px 18px;
+    border-radius:14px;
+    cursor:pointer;
+    transition: background .2s ease;
+    position:relative;
+    min-height:52px;
+    justify-content:center;
+    border-left:3px solid transparent;
+  }
+  /* Duration-based height: each hour = 52px */
+  .timeline-item[data-duration="1"]{ min-height:52px; }
+  .timeline-item[data-duration="2"]{ min-height:104px; }
+  .timeline-item[data-duration="3"]{ min-height:156px; }
+  .timeline-item[data-duration="4"]{ min-height:208px; }
+
+  .timeline-item:hover{ background: rgba(255,255,255,0.05); }
+  .timeline-item.active{
+    background: var(--cream);
+    color: var(--ink);
+    border-left-color: var(--cream);
+  }
+  .timeline-item:not(.active){
+    border-left-color: rgba(255,255,255,0.12);
+  }
+  .timeline-item .t-time{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing:0.5px;
+    color: rgba(255,255,255,0.5);
+  }
+  .timeline-item.active .t-time{ color: var(--brown); }
+  .timeline-item .t-label{
+    font-size: var(--fs-body);
+    font-weight:600;
+  }
+  .timeline-item .t-sublabel{
+    font-size: var(--fs-small);
+    color: rgba(255,255,255,0.4);
+    margin-top:2px;
+  }
+  .timeline-item.active .t-sublabel{ color: var(--brown); }
+
+  /* Right: detail panel */
+  .schedule-detail{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    background: var(--ink);
+  }
+
+  /* Top: profile row (photo + name + title) */
+  .schedule-detail-profile{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:32px 40px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .sdp-photo{
+    width:72px;
+    height:72px;
+    border-radius:12px;
+    background: rgba(255,255,255,0.06);
+    background-size:cover;
+    background-position:center;
+    flex-shrink:0;
+  }
+  .sdp-photo.has-photo{
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .sdp-info{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .sdp-name{
+    font-size: var(--fs-h3);
+    font-weight:800;
+    color: var(--cream);
+  }
+  .sdp-affiliation{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Bottom: content area */
+  .schedule-detail-content{
+    flex:1;
+    padding:32px 40px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .sdc-time{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,0.45);
+    letter-spacing:0.5px;
+  }
+  .sdc-title{
+    font-size: 18px;
+    font-weight:700;
+    color: var(--cream);
+  }
+  .sdc-overview{
+    font-size: var(--fs-body);
+    line-height:1.8;
+    color: rgba(255,255,255,0.65);
+  }
+
+  @media (max-width:900px){
+    .schedule-panel.active{ flex-direction:column; }
+    .timeline{ flex:none; flex-direction:row; overflow-x:auto; border-right:none; border-bottom:1px solid rgba(255,255,255,0.08); padding:24px 20px; gap:8px; }
+    .timeline-item{ white-space:nowrap; padding:10px 16px; min-height:auto !important; }
+    .schedule-detail-profile{ padding:24px 20px; gap:14px; }
+    .schedule-detail-content{ padding:24px 20px; }
+  }
+  @media (max-width:760px){
+    .schedule-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .schedule-title{ font-size:26px; }
+    .schedule-tab{ padding:9px 20px; font-size:12px; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    width:100%;
+    margin-top: var(--section-gap);
+    background: var(--ink);
+    padding: 52px var(--content-px) 36px;
+  }
+  .footer-inner{
+    max-width:1280px;
+    margin:0 auto;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    color: var(--cream);
+    letter-spacing:0.5px;
+  }
+  .footer-logo b{ color: var(--sage-light); font-weight:600; }
+  .footer-links{
+    display:flex;
+    gap:28px;
+    list-style:none;
+  }
+  .footer-links a{
+    color: rgba(255,255,255,0.7);
+    text-decoration:none;
+    font-size: var(--fs-body);
+    transition: color .2s ease;
+  }
+  .footer-links a:hover{ color: var(--cream); }
+  .footer-divider{
+    margin:32px 0 24px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing:0.3px;
+    color: rgba(255,255,255,0.4);
+  }
+  @media (max-width:600px){
+    .site-footer{ padding:36px var(--content-px-mobile) 24px; }
+    .footer-top{ flex-direction:column; align-items:flex-start; gap:16px; }
+    .footer-links{ flex-wrap:wrap; gap:16px 20px; }
+    .footer-bottom{ flex-direction:column; gap:8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav>
+    <a class="logo" href="main.html">WHOLEGEN<b>CAMP</b></a>
+    <ul class="nav-links">
+      <li><a href="main.html">소개</a></li>
+      <li><a href="camp.html" class="active">캠프</a></li>
+      <li><a href="#">자료실</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+    <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
+  </nav>
+</div>
+
+<div class="page-content">
+
+  <!-- CAMP INFO BOX -->
+  <div class="camp-info-wrap">
+    <div class="camp-info">
+      <div class="camp-info-text">
+        <span class="camp-info-badge" id="campDday">D-000</span>
+        <h1 class="camp-info-title">Wholegen Camp 2027</h1>
+        <hr class="camp-info-divider">
+        <dl class="camp-info-grid">
+          <div class="camp-info-item">
+            <dt>주제</dt>
+            <dd>순전함 — 예수 그리스도 안에서 온전히 세워지는 세대</dd>
+          </div>
+          <div class="camp-info-item">
+            <dt>일정</dt>
+            <dd>2027.01.01 (목) ~ 01.02 (금)</dd>
+          </div>
+          <div class="camp-info-item">
+            <dt>장소</dt>
+            <dd>총신대학교 (하나님의 집)</dd>
+          </div>
+          <div class="camp-info-item">
+            <dt>대상</dt>
+            <dd>청년</dd>
+          </div>
+        </dl>
+        <a class="camp-info-cta" href="#">신청하기 <span class="arrow">↗</span></a>
+      </div>
+      <div class="camp-info-visual">WGC</div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <div class="schedule-wrap">
+    <div class="schedule-header">
+      <div class="schedule-eyebrow">PROGRAM</div>
+      <h2 class="schedule-title">시간표</h2>
+    </div>
+
+    <div class="schedule-tabs">
+      <button class="schedule-tab active" data-day="1">DAY 1</button>
+      <button class="schedule-tab" data-day="2">DAY 2</button>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="schedule-panel active" data-panel="1">
+      <ul class="timeline">
+        <li class="timeline-item active" data-duration="1" data-photo="per1.jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">09:00 - 10:00</span>
+          <span class="t-label">항목 1</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="2" data-photo="per2.jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">10:00 - 12:00</span>
+          <span class="t-label">항목 2</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="per3..jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">12:00 - 13:00</span>
+          <span class="t-label">항목 3</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="" data-affiliation="" data-name="점심식사" data-overview="식사 및 휴식">
+          <span class="t-time">13:00 - 14:00</span>
+          <span class="t-label">점심식사</span>
+          <span class="t-sublabel">휴식</span>
+        </li>
+        <li class="timeline-item" data-duration="3" data-photo="per4..jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">14:00 - 17:00</span>
+          <span class="t-label">항목 4</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="" data-affiliation="" data-name="자유시간" data-overview="휴식 및 교제">
+          <span class="t-time">17:00 - 18:00</span>
+          <span class="t-label">자유시간</span>
+          <span class="t-sublabel">휴식</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="" data-affiliation="" data-name="저녁식사" data-overview="식사">
+          <span class="t-time">18:00 - 19:00</span>
+          <span class="t-label">저녁식사</span>
+          <span class="t-sublabel">식사</span>
+        </li>
+        <li class="timeline-item" data-duration="2" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">19:00 - 21:00</span>
+          <span class="t-label">항목 5</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">21:00 - 22:00</span>
+          <span class="t-label">항목 6</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+      </ul>
+      <div class="schedule-detail">
+        <div class="schedule-detail-profile">
+          <div class="sdp-photo has-photo" style="background-image:url('per1.jpg')"></div>
+          <div class="sdp-info">
+            <div class="sdp-name">이름이 들어갑니다</div>
+            <div class="sdp-affiliation">소속이 들어갑니다</div>
+          </div>
+        </div>
+        <div class="schedule-detail-content">
+          <div class="sdc-time">09:00 - 10:00</div>
+          <div class="sdc-title">항목 1</div>
+          <div class="sdc-overview">내용 개요가 들어갑니다</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="schedule-panel" data-panel="2">
+      <ul class="timeline">
+        <li class="timeline-item active" data-duration="1" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">09:00 - 10:00</span>
+          <span class="t-label">항목 1</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="2" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">10:00 - 12:00</span>
+          <span class="t-label">항목 2</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">12:00 - 13:00</span>
+          <span class="t-label">항목 3</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="" data-affiliation="" data-name="점심식사" data-overview="식사 및 휴식">
+          <span class="t-time">13:00 - 14:00</span>
+          <span class="t-label">점심식사</span>
+          <span class="t-sublabel">휴식</span>
+        </li>
+        <li class="timeline-item" data-duration="2" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">14:00 - 16:00</span>
+          <span class="t-label">항목 4</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="" data-affiliation="" data-name="자유시간" data-overview="휴식 및 교제">
+          <span class="t-time">16:00 - 17:00</span>
+          <span class="t-label">자유시간</span>
+          <span class="t-sublabel">휴식</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="" data-affiliation="" data-name="저녁식사" data-overview="식사">
+          <span class="t-time">17:00 - 18:00</span>
+          <span class="t-label">저녁식사</span>
+          <span class="t-sublabel">식사</span>
+        </li>
+        <li class="timeline-item" data-duration="3" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+          <span class="t-time">18:00 - 21:00</span>
+          <span class="t-label">항목 5</span>
+          <span class="t-sublabel">강사명</span>
+        </li>
+        <li class="timeline-item" data-duration="1" data-photo="" data-affiliation="" data-name="마무리" data-overview="폐회 및 정리">
+          <span class="t-time">21:00 - 22:00</span>
+          <span class="t-label">마무리</span>
+          <span class="t-sublabel">폐회</span>
+        </li>
+      </ul>
+      <div class="schedule-detail">
+        <div class="schedule-detail-profile">
+          <div class="sdp-photo"></div>
+          <div class="sdp-info">
+            <div class="sdp-name">이름이 들어갑니다</div>
+            <div class="sdp-affiliation">소속이 들어갑니다</div>
+          </div>
+        </div>
+        <div class="schedule-detail-content">
+          <div class="sdc-time">09:00 - 10:00</div>
+          <div class="sdc-title">항목 1</div>
+          <div class="sdc-overview">내용 개요가 들어갑니다</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">WHOLEGEN<b>CAMP</b></div>
+      <ul class="footer-links">
+        <li><a href="main.html">소개</a></li>
+        <li><a href="#">공지</a></li>
+        <li><a href="camp.html">캠프</a></li>
+        <li><a href="#">자료실</a></li>
+        <li><a href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a></li>
+      </ul>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div>서울특별시 동작구 사당로 143 총신대학교 06988 · TEL. 02-3479-0200</div>
+      <div>&copy; 2026 WHOLEGENCAMP. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // D-day
+  (function(){
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var target = new Date(2027, 0, 1); // 2027.01.01
+    var diff = Math.round((target - today) / 86400000);
+    var label = diff <= 0 ? 'D-DAY' : 'D-' + diff;
+    document.getElementById('campDday').textContent = label;
+  })();
+
+  // Day tabs
+  (function(){
+    var tabs = document.querySelectorAll('.schedule-tab');
+    var panels = document.querySelectorAll('.schedule-panel');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var day = tab.getAttribute('data-day');
+        tabs.forEach(function(t){ t.classList.remove('active'); });
+        panels.forEach(function(p){ p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.querySelector('.schedule-panel[data-panel="'+day+'"]').classList.add('active');
+      });
+    });
+  })();
+
+  // Timeline click interaction
+  (function(){
+    document.querySelectorAll('.schedule-panel').forEach(function(panel){
+      var items = panel.querySelectorAll('.timeline-item');
+      var sdpPhoto = panel.querySelector('.sdp-photo');
+      var sdpName = panel.querySelector('.sdp-name');
+      var sdpAff = panel.querySelector('.sdp-affiliation');
+      var sdcTime = panel.querySelector('.sdc-time');
+      var sdcTitle = panel.querySelector('.sdc-title');
+      var sdcOverview = panel.querySelector('.sdc-overview');
+
+      items.forEach(function(item){
+        item.addEventListener('click', function(){
+          items.forEach(function(i){ i.classList.remove('active'); });
+          item.classList.add('active');
+
+          var photoUrl = item.getAttribute('data-photo');
+          sdpPhoto.style.backgroundImage = photoUrl ? 'url('+photoUrl+')' : '';
+          sdpPhoto.classList.toggle('has-photo', !!photoUrl);
+
+          sdpName.textContent = item.getAttribute('data-name');
+          sdpAff.textContent = item.getAttribute('data-affiliation');
+          sdcTime.textContent = item.querySelector('.t-time').textContent;
+          sdcTitle.textContent = item.querySelector('.t-label').textContent;
+          sdcOverview.textContent = item.getAttribute('data-overview');
+        });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

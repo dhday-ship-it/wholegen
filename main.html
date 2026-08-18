@@ -18,6 +18,20 @@
     --tan: #CCCCCC;
     --brown: #4D4D4D;
     --ink: #000000;
+
+    /* Spacing scale */
+    --section-gap: 80px;
+    --section-gap-mobile: 52px;
+    --content-px: 40px;
+    --content-px-mobile: 20px;
+
+    /* Type scale */
+    --fs-display: 48px;
+    --fs-h2: 36px;
+    --fs-h3: 24px;
+    --fs-body: 15px;
+    --fs-small: 13px;
+    --fs-xs: 11.5px;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
@@ -30,6 +44,8 @@
     color: var(--ink);
     overflow-x:hidden;
     position:relative;
+    font-size: var(--fs-body);
+    line-height: 1.6;
   }
 
   .hero{
@@ -38,6 +54,7 @@
     min-height:100vh;
     display:flex;
     flex-direction:column;
+    padding-bottom: var(--section-gap);
   }
 
   /* ---------- NAV ---------- */
@@ -45,7 +62,7 @@
     width:100%;
     display:flex;
     justify-content:center;
-    padding: 22px 40px 0;
+    padding: 24px var(--content-px) 0;
     position:relative;
     z-index:20;
   }
@@ -53,17 +70,17 @@
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:60px;
+    gap:48px;
     width:100%;
     max-width:1200px;
-    padding: 16px 32px;
+    padding: 14px 32px;
     background: var(--ink);
     border-radius: 999px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
   }
   .logo{
     font-family:'JetBrains Mono', monospace;
-    font-size:18px;
+    font-size:17px;
     color: var(--cream);
     letter-spacing:0.5px;
   }
@@ -71,12 +88,12 @@
 
   .nav-links{
     display:flex;
-    gap:48px;
+    gap:40px;
     list-style:none;
   }
   .nav-links li{
-    font-size:16.5px;
-    letter-spacing:0.8px;
+    font-size: var(--fs-body);
+    letter-spacing:0.6px;
     color: rgba(255,255,255,0.85);
     cursor:pointer;
     transition: color .2s ease;
@@ -85,8 +102,8 @@
 
   .inquiry-btn{
     font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    padding:8px 18px;
+    font-size: var(--fs-small);
+    padding:9px 20px;
     border-radius:999px;
     background: var(--cream);
     color: var(--ink);
@@ -105,44 +122,12 @@
     .nav-links{ display:none; }
   }
 
-  /* ---------- MAIN CONTENT ---------- */
-  .content{
-    position:relative;
-    z-index:15;
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding: 80px 24px 120px;
-  }
-
-  .subtag{
-    margin-top:0;
-    font-family:'JetBrains Mono', monospace;
-    font-size:17px;
-    color: var(--brown);
-    letter-spacing:0.5px;
-  }
-
-  .arrow{
-    margin-top:60px;
-    width:40px;
-    height:40px;
-    animation: bob 2.2s ease-in-out infinite;
-  }
-  @keyframes bob{
-    0%,100%{ transform: translateY(0); }
-    50%{ transform: translateY(10px); }
-  }
-
   /* ---------- AD SECTION (2/3 image : 1/3 info) ---------- */
   .ad-wrap{
     width:100%;
     display:flex;
     justify-content:center;
-    padding: 28px 40px 0;
+    padding: 32px var(--content-px) 0;
     position:relative;
     z-index:20;
   }
@@ -150,10 +135,10 @@
     display:flex;
     width:100%;
     max-width:1280px;
-    min-height:420px;
-    border-radius:32px;
+    min-height:400px;
+    border-radius:28px;
     overflow:hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
   }
   .ad-image{
     flex:2;
@@ -164,16 +149,16 @@
     display:flex;
     flex-direction:column;
     justify-content:center;
-    gap:16px;
-    padding: 48px 40px;
+    gap:18px;
+    padding: 44px 36px;
     background: var(--ink);
     color: var(--cream);
   }
   .ad-tag{
     align-self:flex-start;
     font-family:'JetBrains Mono', monospace;
-    font-size:17px;
-    padding:10px 20px;
+    font-size: var(--fs-body);
+    padding:9px 18px;
     border-radius:999px;
     background: var(--cream);
     color: var(--ink);
@@ -188,12 +173,12 @@
   }
   .marquee-wrap{
     width:100%;
-    margin-top:70px;
+    margin-top: var(--section-gap);
   }
   .marquee{
     width:100%;
     overflow:hidden;
-    padding: 30px 0;
+    padding: 24px 0;
   }
   .marquee-track{
     display:flex;
@@ -204,7 +189,7 @@
     display:flex;
     align-items:center;
     font-family:'Pretendard', sans-serif;
-    font-size:130px;
+    font-size:120px;
     font-weight:800;
     letter-spacing:1px;
     text-transform:uppercase;
@@ -214,65 +199,482 @@
   }
   .marquee-track span i{
     display:inline-block;
-    width:11px;
-    height:11px;
-    margin:0 56px;
+    width:10px;
+    height:10px;
+    margin:0 48px;
     border-radius:50%;
     background: rgba(122,106,89,0.5);
     font-style:normal;
     flex-shrink:0;
   }
   @keyframes marquee-ltr{
-    from{ transform: translateX(-50%); }
-    to{ transform: translateX(0%); }
+    from{ transform: translateX(0%); }
+    to{ transform: translateX(-50%); }
   }
+
+  /* ---------- PROGRAMS ---------- */
+  .programs-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: var(--section-gap) var(--content-px) 0;
+  }
+  .programs{
+    width:100%;
+    max-width:1280px;
+  }
+  .programs-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    font-weight:700;
+    letter-spacing:2.5px;
+    text-align:center;
+    text-transform:uppercase;
+    color: var(--brown);
+  }
+  .programs-title{
+    margin-top:10px;
+    font-family:'Pretendard', sans-serif;
+    font-size: var(--fs-h2);
+    font-weight:800;
+    letter-spacing:-0.5px;
+    text-align:center;
+    color: var(--ink);
+  }
+  .day-tabs{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:28px;
+  }
+  .day-tab{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-small);
+    font-weight:700;
+    letter-spacing:1px;
+    padding:11px 28px;
+    border-radius:999px;
+    border:1.5px solid var(--ink);
+    background:transparent;
+    color: var(--ink);
+    cursor:pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+  .day-tab.active{
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .day-panel{
+    display:none;
+    margin-top:32px;
+    padding:40px;
+    border-radius:24px;
+    background: var(--ink);
+    color: var(--cream);
+    min-height:520px;
+    position:relative;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .day-panel::before{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    width:240px;
+    height:240px;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .day-panel.active{ display:flex; gap:32px; }
+
+  .timetable{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    list-style:none;
+  }
+  .timetable-item{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    padding:12px 16px;
+    border-radius:12px;
+    cursor:pointer;
+    transition: background .2s ease;
+  }
+  .timetable-item:hover{ background: rgba(255,255,255,0.06); }
+  .timetable-item.active{ background: var(--cream); }
+  .timetable-item .time{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing:0.5px;
+    color: var(--sage-light);
+  }
+  .timetable-item.active .time{ color: var(--brown); }
+  .timetable-item .label{
+    font-size: var(--fs-body);
+    font-weight:600;
+  }
+  .timetable-item.active .label{ color: var(--ink); }
+
+  .time-detail{
+    flex:1.2;
+    display:flex;
+    margin-left:40px;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  }
+  .detail-photo{
+    flex:1;
+    background: rgba(0,0,0,0.06);
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .detail-photo .person-icon circle,
+  .detail-photo .person-icon path{ fill: rgba(0,0,0,0.28); }
+  .detail-photo .person-icon{
+    width:55%;
+    height:auto;
+    display:block;
+  }
+  .detail-photo.has-photo .person-icon{ display:none; }
+  .detail-text{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:14px;
+    padding: 32px 28px;
+    background: var(--sage-light);
+    color: var(--ink);
+    position:relative;
+  }
+  .detail-text::after{
+    content:'';
+    position:absolute;
+    bottom:20px;
+    right:20px;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background: var(--ink);
+    opacity:0.04;
+  }
+  .detail-time{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    color: var(--brown);
+    letter-spacing:0.5px;
+  }
+  .detail-affiliation{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color: rgba(0,0,0,0.5);
+  }
+  .detail-name{
+    font-size: var(--fs-h3);
+    font-weight:800;
+  }
+  .detail-overview{
+    font-size: var(--fs-body);
+    line-height:1.7;
+    color: rgba(0,0,0,0.65);
+  }
+
+  @media (max-width:900px){
+    .day-panel.active{ flex-direction:column; gap:24px; }
+    .time-detail{ margin-left:0; border-radius:16px; }
+    .detail-text{ padding:28px 22px; }
+  }
+
+  @media (max-width:600px){
+    .time-detail{ flex-direction:column; }
+    .detail-photo{ min-height:180px; }
+  }
+
+  @media (max-width:760px){
+    .programs-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .programs-title{ font-size:26px; }
+    .day-tab{ padding:9px 20px; font-size:12px; }
+    .day-panel{ padding:24px; min-height:0; }
+  }
+
+  /* ---------- SPOTLIGHT (image : info card) ---------- */
+  .spotlight-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: 32px var(--content-px) 0;
+  }
+  .spotlight{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    max-width:1280px;
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
+    position:relative;
+  }
+  .spotlight-image{
+    width:100%;
+    position:relative;
+  }
+  .spotlight-image img{
+    width:100%;
+    height:auto;
+    display:block;
+    object-fit:contain;
+  }
+  .spotlight-image::after{
+    content:'';
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height:80px;
+    background: linear-gradient(to top, var(--sage-light), transparent);
+    pointer-events:none;
+  }
+  .location-image{
+    width:100%;
+    height:380px;
+  }
+  .location-image iframe{
+    width:100%;
+    height:100%;
+    display:block;
+    border:0;
+  }
+  .location-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    font-weight:700;
+    letter-spacing:1.5px;
+    color: rgba(0,0,0,0.45);
+    text-transform:uppercase;
+  }
+  .location-title{
+    margin-top:-2px;
+    font-size: var(--fs-display);
+    font-weight:800;
+    letter-spacing:-1px;
+    line-height:1.1;
+  }
+  .spotlight-info{
+    flex:none;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:18px;
+    padding: 44px 48px;
+    background: var(--sage-light);
+    color: var(--ink);
+    position:relative;
+  }
+  .spotlight-info::before{
+    content:'';
+    position:absolute;
+    top:24px;
+    right:32px;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background: var(--ink);
+    opacity:0.04;
+  }
+  .spotlight-subtitle{
+    font-size: 18px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .spotlight-subtitle::before{
+    content:'';
+    display:inline-block;
+    width:4px;
+    height:20px;
+    border-radius:2px;
+    background: var(--ink);
+  }
+  .spotlight-block{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    padding-left:14px;
+    border-left:2px solid rgba(0,0,0,0.08);
+  }
+  .spotlight-block-title{
+    font-size: var(--fs-body);
+    font-weight:800;
+  }
+  .spotlight-block-text{
+    font-size: var(--fs-body);
+    line-height:1.7;
+    color: rgba(0,0,0,0.6);
+  }
+  .spotlight-btn{
+    align-self:flex-start;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-top:8px;
+    padding:14px 24px;
+    border-radius:12px;
+    background: var(--ink);
+    color: var(--cream);
+    font-weight:700;
+    font-size: var(--fs-body);
+    text-decoration:none;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .spotlight-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+  .spotlight-btn .arrow-icon{
+    font-size:15px;
+    line-height:1;
+    transition: transform .2s ease;
+  }
+  .spotlight-btn:hover .arrow-icon{
+    transform: translate(2px, -2px);
+  }
+
+  @media (max-width:900px){
+    .spotlight{ border-radius:20px; }
+    .spotlight-info{ padding:28px 24px; }
+    .location-title{ font-size:32px; }
+    .location-image{ height:260px; }
+  }
+
+  @media (max-width:760px){
+    .spotlight-wrap{ padding:24px var(--content-px-mobile) 0; }
+  }
+
+  /* Location card: slightly taller map */
+  .spotlight.spotlight--location .location-image{
+    height:420px;
+  }
+  @media (max-width:900px){
+    .spotlight.spotlight--location .location-image{ height:280px; }
+  }
+
   .ad-title{
-    font-size:28px;
+    font-size: var(--fs-h3);
     font-weight:700;
     line-height:1.35;
   }
   .ad-divider{
     border:none;
-    border-top:1px solid rgba(255,255,255,0.25);
-    margin:4px 0;
+    border-top:1px solid rgba(255,255,255,0.2);
+    margin:6px 0;
   }
   .ad-details{
     display:flex;
     flex-direction:column;
-    gap:16px;
+    gap:14px;
   }
   .ad-row dt{
     font-family:'JetBrains Mono', monospace;
-    font-size:11.5px;
+    font-size: var(--fs-xs);
     color: var(--sage-light);
-    margin-bottom:5px;
+    margin-bottom:4px;
   }
   .ad-row dd{
-    font-size:14px;
-    line-height:1.55;
+    font-size: var(--fs-body);
+    line-height:1.6;
   }
   .ad-note{
-    font-size:12px;
+    font-size: var(--fs-xs);
     color: rgba(255,255,255,0.6);
     line-height:1.5;
   }
 
   @media (max-width:900px){
-    .ad-section{ flex-direction:column; min-height:0; border-radius:24px; }
-    .ad-image{ min-height:220px; }
-    .ad-info{ padding:36px 28px; }
-    .ad-title{ font-size:26px; }
+    .ad-section{ flex-direction:column; min-height:0; border-radius:20px; }
+    .ad-image{ min-height:200px; }
+    .ad-info{ padding:32px 24px; }
+    .ad-title{ font-size:22px; }
   }
 
   @media (max-width: 760px){
-    .subtag{ font-size:14px; }
-    .nav-wrap{ padding:16px 16px 0; }
+    .nav-wrap{ padding:16px var(--content-px-mobile) 0; }
     nav{ padding:12px 18px; gap:20px; border-radius:32px; }
-    .ad-wrap{ padding:20px 16px 0; }
-    .marquee-wrap{ margin-top:44px; }
-    .marquee{ padding:20px 0; }
-    .marquee-track span{ font-size:52px; -webkit-text-stroke: 1px rgba(74,74,74,0.55); }
-    .marquee-track span i{ margin:0 22px; width:7px; height:7px; }
+    .ad-wrap{ padding:20px var(--content-px-mobile) 0; }
+    .marquee-wrap{ margin-top: var(--section-gap-mobile); }
+    .marquee{ padding:16px 0; }
+    .marquee-track span{ font-size:48px; -webkit-text-stroke: 1px rgba(74,74,74,0.55); }
+    .marquee-track span i{ margin:0 20px; width:7px; height:7px; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    width:100%;
+    margin-top: var(--section-gap);
+    background: var(--ink);
+    padding: 52px var(--content-px) 36px;
+  }
+  .footer-inner{
+    max-width:1280px;
+    margin:0 auto;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    color: var(--cream);
+    letter-spacing:0.5px;
+  }
+  .footer-logo b{ color: var(--sage-light); font-weight:600; }
+  .footer-links{
+    display:flex;
+    gap:28px;
+    list-style:none;
+  }
+  .footer-links a{
+    color: rgba(255,255,255,0.7);
+    text-decoration:none;
+    font-size: var(--fs-body);
+    transition: color .2s ease;
+  }
+  .footer-links a:hover{ color: var(--cream); }
+  .footer-divider{
+    margin:32px 0 24px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing:0.3px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  @media (max-width:600px){
+    .site-footer{ padding:36px var(--content-px-mobile) 24px; }
+    .footer-top{ flex-direction:column; align-items:flex-start; gap:16px; }
+    .footer-links{ flex-wrap:wrap; gap:16px 20px; }
+    .footer-bottom{ flex-direction:column; gap:8px; }
   }
 </style>
 </head>
@@ -285,10 +687,10 @@
     <nav>
       <div class="logo">WHOLEGEN<b>CAMP</b></div>
       <ul class="nav-links">
-        <li>소개</li>
-        <li>공지</li>
-        <li>캠프</li>
-        <li>자료실</li>
+        <li><a href="main.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">소개</a></li>
+        <li><a href="camp.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">캠프</a></li>
+        <li><a href="#" style="color:rgba(255,255,255,0.85);text-decoration:none;">자료실</a></li>
+        <li><a href="#" style="color:rgba(255,255,255,0.85);text-decoration:none;">FAQ</a></li>
       </ul>
       <!-- TODO: href를 실제 카카오톡 채널 URL로 교체하세요 (예: https://pf.kakao.com/_xxxxxx/chat) -->
       <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
@@ -331,17 +733,172 @@
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <div class="content">
-    <div class="subtag">growfield sustainability</div>
+  <!-- PROGRAMS -->
+  <div class="programs-wrap">
+    <div class="programs">
+      <div class="programs-eyebrow">SCHEDULE</div>
+      <h2 class="programs-title">CORE Programs</h2>
+      <div class="day-tabs">
+        <button class="day-tab active" data-day="1">DAY 1</button>
+        <button class="day-tab" data-day="2">DAY 2</button>
+      </div>
 
-    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1.6">
-      <line x1="12" y1="4" x2="12" y2="20"/>
-      <polyline points="6,14 12,20 18,14"/>
-    </svg>
+      <div class="day-panel active" data-panel="1">
+        <ul class="timetable">
+          <li class="timetable-item active" data-photo="per1.jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+            <span class="time">09:00 - 10:00</span>
+            <span class="label">시간표 항목 1</span>
+          </li>
+          <li class="timetable-item" data-photo="per2.jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+            <span class="time">10:00 - 11:30</span>
+            <span class="label">시간표 항목 2</span>
+          </li>
+          <li class="timetable-item" data-photo="per3..jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+            <span class="time">11:30 - 13:00</span>
+            <span class="label">시간표 항목 3</span>
+          </li>
+          <li class="timetable-item" data-photo="per4..jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+            <span class="time">13:00 - 15:00</span>
+            <span class="label">시간표 항목 4</span>
+          </li>
+        </ul>
+        <div class="time-detail">
+          <div class="detail-photo has-photo" style="background-image:url('per1.jpg')">
+            <svg class="person-icon" viewBox="0 0 100 120" fill="none">
+              <circle cx="50" cy="40" r="24" fill="rgba(255,255,255,0.32)"/>
+              <path d="M8 118c2-32 20-52 42-52s40 20 42 52" fill="rgba(255,255,255,0.32)"/>
+            </svg>
+          </div>
+          <div class="detail-text">
+            <div class="detail-time">09:00 - 10:00</div>
+            <div class="detail-affiliation">소속이 들어갑니다</div>
+            <div class="detail-name">이름이 들어갑니다</div>
+            <div class="detail-overview">내용 개요가 들어갑니다</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-panel" data-panel="2">
+        <ul class="timetable">
+          <li class="timetable-item active" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+            <span class="time">09:00 - 10:00</span>
+            <span class="label">시간표 항목 1</span>
+          </li>
+          <li class="timetable-item" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+            <span class="time">10:00 - 11:30</span>
+            <span class="label">시간표 항목 2</span>
+          </li>
+          <li class="timetable-item" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
+            <span class="time">11:30 - 13:00</span>
+            <span class="label">시간표 항목 3</span>
+          </li>
+        </ul>
+        <div class="time-detail">
+          <div class="detail-photo">
+            <svg class="person-icon" viewBox="0 0 100 120" fill="none">
+              <circle cx="50" cy="40" r="24" fill="rgba(255,255,255,0.32)"/>
+              <path d="M8 118c2-32 20-52 42-52s40 20 42 52" fill="rgba(255,255,255,0.32)"/>
+            </svg>
+          </div>
+          <div class="detail-text">
+            <div class="detail-time">09:00 - 10:00</div>
+            <div class="detail-affiliation">소속이 들어갑니다</div>
+            <div class="detail-name">이름이 들어갑니다</div>
+            <div class="detail-overview">내용 개요가 들어갑니다</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPOTLIGHT -->
+  <div class="programs-wrap">
+    <div class="programs">
+      <div class="programs-eyebrow">SCHEDULE</div>
+      <h2 class="programs-title">DEEP WORSHIP</h2>
+    </div>
+  </div>
+
+  <div class="spotlight-wrap">
+    <section class="spotlight">
+      <div class="spotlight-image">
+        <img src="so.png" alt="Deep Worship">
+      </div>
+      <div class="spotlight-info">
+        <div class="spotlight-subtitle">소망의바다 미니스트리</div>
+
+        <div class="spotlight-block">
+          <div class="spotlight-block-title">소개</div>
+          <div class="spotlight-block-text">
+            소망의 바다 미니스트리는 한국 기독교(CCM) 찬양 사역 팀으로 지친 영혼들을 위로하고<br> 예배와 기도의 불씨를 지키는 사역을 이어오고 있습니다.
+          </div>
+        </div>
+
+        <div class="spotlight-block">
+          <div class="spotlight-block-title">대표곡</div>
+          <div class="spotlight-block-text">
+            - 빈들에서 성찬이 열린다<br>
+            - 하나님 나라
+          </div>
+        </div>
+
+        <a class="spotlight-btn" href="#">자세히 보기 <span class="arrow-icon">↗</span></a>
+      </div>
+    </section>
+  </div>
+
+  <!-- LOCATION HEADING -->
+  <div class="programs-wrap">
+    <div class="programs">
+      <div class="programs-eyebrow">LOCATION</div>
+      <h2 class="programs-title">Conference Map &amp; Location</h2>
+    </div>
+  </div>
+
+  <!-- LOCATION MAP -->
+  <div class="spotlight-wrap">
+    <section class="spotlight spotlight--location">
+      <div class="location-image">
+        <iframe src="https://www.google.com/maps?q=%EC%B4%9D%EC%8B%A0%EB%8C%80%ED%95%99%EA%B5%90&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="spotlight-info">
+        <div class="location-eyebrow">Location</div>
+        <h3 class="location-title">총신대학교</h3>
+
+        <div class="spotlight-block">
+          <div class="spotlight-block-text">
+            서울특별시 동작구 사당로 143 총신대학교 06988<br>
+            TEL. 02-3479-0200
+          </div>
+        </div>
+
+        <a class="spotlight-btn" href="https://map.naver.com/p/search/%EC%B4%9D%EC%8B%A0%EB%8C%80%ED%95%99%EA%B5%90" target="_blank" rel="noopener noreferrer">교통정보 보기 <span class="arrow-icon">↗</span></a>
+      </div>
+    </section>
   </div>
 
 </div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">WHOLEGEN<b>CAMP</b></div>
+      <ul class="footer-links">
+        <li><a href="#">소개</a></li>
+        <li><a href="#">공지</a></li>
+        <li><a href="#">캠프</a></li>
+        <li><a href="#">자료실</a></li>
+        <li><a href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a></li>
+      </ul>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div class="footer-address">서울특별시 동작구 사당로 143 총신대학교 06988 · TEL. 02-3479-0200</div>
+      <div class="footer-copyright">&copy; 2026 LOIND CORPORATION. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
 
 <script>
   (function(){
@@ -352,6 +909,45 @@
     var diffDays = Math.round((target - today) / 86400000);
     var label = diffDays === 0 ? 'D-DAY' : 'D-' + diffDays;
     document.getElementById('adDday').textContent = label;
+  })();
+
+  (function(){
+    var tabs = document.querySelectorAll('.day-tab');
+    var panels = document.querySelectorAll('.day-panel');
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var day = tab.getAttribute('data-day');
+        tabs.forEach(function(t){ t.classList.remove('active'); });
+        panels.forEach(function(p){ p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.querySelector('.day-panel[data-panel="' + day + '"]').classList.add('active');
+      });
+    });
+  })();
+
+  (function(){
+    document.querySelectorAll('.day-panel').forEach(function(panel){
+      var items = panel.querySelectorAll('.timetable-item');
+      var detailPhoto = panel.querySelector('.detail-photo');
+      var detailTime = panel.querySelector('.detail-time');
+      var detailAffiliation = panel.querySelector('.detail-affiliation');
+      var detailName = panel.querySelector('.detail-name');
+      var detailOverview = panel.querySelector('.detail-overview');
+
+      items.forEach(function(item){
+        item.addEventListener('click', function(){
+          items.forEach(function(i){ i.classList.remove('active'); });
+          item.classList.add('active');
+          var photoUrl = item.getAttribute('data-photo');
+          detailPhoto.style.backgroundImage = photoUrl ? 'url(' + photoUrl + ')' : '';
+          detailPhoto.classList.toggle('has-photo', !!photoUrl);
+          detailTime.textContent = item.querySelector('.time').textContent;
+          detailAffiliation.textContent = item.getAttribute('data-affiliation');
+          detailName.textContent = item.getAttribute('data-name');
+          detailOverview.textContent = item.getAttribute('data-overview');
+        });
+      });
+    });
   })();
 </script>
 
