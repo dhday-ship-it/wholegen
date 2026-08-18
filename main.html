@@ -446,14 +446,14 @@
     pointer-events:none;
   }
   .location-image{
-    width:100%;
-    height:380px;
+    flex:1;
   }
   .location-image iframe{
     width:100%;
     height:100%;
     display:block;
     border:0;
+    min-height:320px;
   }
   .location-eyebrow{
     font-family:'JetBrains Mono', monospace;
@@ -555,19 +555,27 @@
     .spotlight{ border-radius:20px; }
     .spotlight-info{ padding:28px 24px; }
     .location-title{ font-size:32px; }
-    .location-image{ height:260px; }
   }
 
   @media (max-width:760px){
     .spotlight-wrap{ padding:24px var(--content-px-mobile) 0; }
   }
 
-  /* Location card: slightly taller map */
+  /* Location card: row layout with taller map */
+  .spotlight.spotlight--location{
+    flex-direction:row;
+  }
   .spotlight.spotlight--location .location-image{
-    height:420px;
+    flex:1;
+    height:auto;
+    min-height:420px;
+  }
+  .spotlight.spotlight--location .spotlight-info{
+    flex:1;
   }
   @media (max-width:900px){
-    .spotlight.spotlight--location .location-image{ height:280px; }
+    .spotlight.spotlight--location{ flex-direction:column; }
+    .spotlight.spotlight--location .location-image{ min-height:280px; }
   }
 
   .ad-title{
@@ -687,7 +695,7 @@
     <nav>
       <div class="logo">WHOLEGEN<b>CAMP</b></div>
       <ul class="nav-links">
-        <li><a href="main.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">소개</a></li>
+        <li><a href="main.html" style="color:rgba(255,255,255,0.85);text-decoration:none;"></a>소개</a></li>
         <li><a href="camp.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">캠프</a></li>
         <li><a href="#" style="color:rgba(255,255,255,0.85);text-decoration:none;">자료실</a></li>
         <li><a href="#" style="color:rgba(255,255,255,0.85);text-decoration:none;">FAQ</a></li>
@@ -771,9 +779,9 @@
           </div>
           <div class="detail-text">
             <div class="detail-time">09:00 - 10:00</div>
-            <div class="detail-affiliation">재미있는 프로그램을 넣어주세요~/div>
+            <div class="detail-affiliation">소속이 들어갑니다</div>
             <div class="detail-name">이름이 들어갑니다</div>
-            <div class="detail-overview">신나는 프로그램 넣어봅시다. 으쌰으쌰</div>
+            <div class="detail-overview">내용 개요가 들어갑니다</div>
           </div>
         </div>
       </div>
@@ -802,7 +810,7 @@
           </div>
           <div class="detail-text">
             <div class="detail-time">09:00 - 10:00</div>
-            <div class="detail-affiliation">워밍업 신나게 한번 즐겨보자</div>
+            <div class="detail-affiliation">소속이 들어갑니다</div>
             <div class="detail-name">이름이 들어갑니다</div>
             <div class="detail-overview">내용 개요가 들어갑니다</div>
           </div>
@@ -839,7 +847,6 @@
           <div class="spotlight-block-text">
             - 빈들에서 성찬이 열린다<br>
             - 하나님 나라
-            - 또 뭐가 있을까요~~?
           </div>
         </div>
 
@@ -895,7 +902,7 @@
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <div class="footer-address">경기도 부천시 원미구 뭐시기 행복한 대희 집 06988 · TEL. 02-3479-0200</div>
+      <div class="footer-address">서울특별시 동작구 사당로 143 총신대학교 06988 · TEL. 02-3479-0200</div>
       <div class="footer-copyright">&copy; 2026 LOIND CORPORATION. All rights reserved.</div>
     </div>
   </div>
