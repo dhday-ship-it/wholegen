@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -n \"#[0-9A-Fa-f]\\\\{3,6\\\\}\" \"/Users/jeongdaehee/Desktop/WHOLEGENCAMP/웹/INDEX.html\")"
+    ]
+  }
+}
