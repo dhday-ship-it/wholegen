@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소개 — WHOLEGENCAMP</title>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --sage: #1A1A1A;
+    --sage-light: #E5E5E5;
+    --cream: #FFFFFF;
+    --tan: #CCCCCC;
+    --brown: #4D4D4D;
+    --ink: #000000;
+
+    --section-gap: 80px;
+    --section-gap-mobile: 52px;
+    --content-px: 40px;
+    --content-px-mobile: 20px;
+
+    --fs-display: 48px;
+    --fs-h2: 36px;
+    --fs-h3: 24px;
+    --fs-body: 15px;
+    --fs-small: 13px;
+    --fs-xs: 11.5px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{
+    width:100%;
+    min-height:100vh;
+    font-family:'Pretendard', sans-serif;
+    background: linear-gradient(150deg, var(--sage-light) 0%, var(--cream) 45%, var(--tan) 100%);
+    color: var(--ink);
+    overflow-x:hidden;
+    font-size: var(--fs-body);
+    line-height: 1.6;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: 24px var(--content-px) 0;
+    position:relative;
+    z-index:20;
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:48px;
+    width:100%;
+    max-width:1200px;
+    padding: 14px 32px;
+    background: var(--ink);
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  }
+  .logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    color: var(--cream);
+    letter-spacing:0.5px;
+    text-decoration:none;
+  }
+  .logo b{ color: var(--sage-light); font-weight:600; }
+  .nav-links{
+    display:flex;
+    gap:40px;
+    list-style:none;
+  }
+  .nav-links li a{
+    font-size: var(--fs-body);
+    letter-spacing:0.6px;
+    color: rgba(255,255,255,0.85);
+    text-decoration:none;
+    transition: color .2s ease;
+  }
+  .nav-links li a:hover{ color: var(--sage-light); }
+  .nav-links li a.active{ color: var(--cream); font-weight:600; }
+  .inquiry-btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-small);
+    padding:9px 20px;
+    border-radius:999px;
+    background: var(--cream);
+    color: var(--ink);
+    font-weight:600;
+    text-decoration:none;
+    white-space:nowrap;
+    transition: background .2s ease, transform .2s ease;
+    display:inline-block;
+  }
+  .inquiry-btn:hover{
+    background: var(--sage-light);
+    transform: translateY(-1px);
+  }
+  @media (max-width:900px){
+    .nav-links{ display:none; }
+  }
+  @media (max-width:760px){
+    .nav-wrap{ padding:16px var(--content-px-mobile) 0; }
+    nav{ padding:12px 18px; gap:20px; border-radius:32px; }
+  }
+
+  /* ---------- PAGE ---------- */
+  .page-content{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-bottom: var(--section-gap);
+  }
+
+  /* ---------- HERO ---------- */
+  .about-hero{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: 140px var(--content-px) 0;
+  }
+  .about-hero-inner{
+    width:100%;
+    max-width:1280px;
+  }
+  .about-hero-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-small);
+    font-weight:600;
+    letter-spacing:1px;
+    color: var(--brown);
+    margin-bottom:12px;
+  }
+  .about-title{
+    font-size: 88px;
+    font-weight:800;
+    letter-spacing:-3px;
+    line-height:1.0;
+  }
+
+  @media (max-width:900px){
+    .about-hero{ padding:100px var(--content-px) 0; }
+    .about-title{ font-size:56px; letter-spacing:-2px; }
+  }
+  @media (max-width:760px){
+    .about-hero{ padding:72px var(--content-px-mobile) 0; }
+    .about-title{ font-size:38px; letter-spacing:-1px; }
+  }
+
+  /* ---------- VISION SECTION ---------- */
+  .vision-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: var(--section-gap) var(--content-px) 0;
+  }
+  .vision{
+    width:100%;
+    max-width:1280px;
+  }
+  .vision-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+  }
+  .vision-card{
+    padding:44px 40px;
+    border-radius:24px;
+    background: var(--ink);
+    color: var(--cream);
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    position:relative;
+    overflow:hidden;
+    transition: transform .2s ease;
+  }
+  .vision-card:hover{
+    transform: translateY(-3px);
+  }
+  .vision-card:nth-child(2),
+  .vision-card:nth-child(3){
+    background: var(--sage-light);
+    color: var(--ink);
+  }
+  .vision-card-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight:700;
+    letter-spacing:1px;
+    opacity:0.4;
+  }
+  .vision-card:nth-child(2) .vision-card-num,
+  .vision-card:nth-child(3) .vision-card-num{
+    color: var(--brown);
+    opacity:1;
+  }
+  .vision-card-title{
+    font-size: 28px;
+    font-weight:800;
+    letter-spacing:-0.5px;
+  }
+  .vision-card-text{
+    font-size: var(--fs-body);
+    line-height:1.8;
+    opacity:0.7;
+  }
+  .vision-card:nth-child(2) .vision-card-text,
+  .vision-card:nth-child(3) .vision-card-text{
+    color: rgba(0,0,0,0.6);
+    opacity:1;
+  }
+
+  @media (max-width:900px){
+    .vision-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:760px){
+    .vision-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .vision-card{ padding:32px 28px; }
+    .vision-card-title{ font-size:22px; }
+  }
+
+  /* ---------- THEME + INFO SECTION ---------- */
+  .theme-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: var(--section-gap) var(--content-px) 0;
+  }
+  .theme{
+    width:100%;
+    max-width:1280px;
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    border:1px solid rgba(0,0,0,0.06);
+    background: var(--cream);
+    padding:64px 48px;
+  }
+  .theme-top{
+    text-align:center;
+  }
+  .theme-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    font-weight:700;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color: var(--brown);
+  }
+  .theme-title{
+    margin-top:12px;
+    font-size: var(--fs-h2);
+    font-weight:800;
+    letter-spacing:-0.5px;
+  }
+  .theme-verse{
+    margin-top:24px;
+    font-size: 16px;
+    line-height:1.9;
+    color: rgba(0,0,0,0.6);
+    font-style:italic;
+  }
+  .theme-ref{
+    margin-top:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-small);
+    color: var(--brown);
+    font-weight:600;
+  }
+  .theme-divider{
+    margin:40px 0;
+    border-top:1px solid rgba(0,0,0,0.08);
+  }
+  .theme-info-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:24px;
+  }
+  .theme-info-item{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .theme-info-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color: var(--brown);
+  }
+  .theme-info-value{
+    font-size: var(--fs-h3);
+    font-weight:800;
+  }
+  .theme-info-desc{
+    font-size: var(--fs-body);
+    color: rgba(0,0,0,0.55);
+    line-height:1.5;
+  }
+
+  @media (max-width:900px){
+    .theme-info-grid{ grid-template-columns:1fr; gap:20px; }
+  }
+  @media (max-width:760px){
+    .theme-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .theme{ padding:44px 24px; }
+    .theme-title{ font-size:26px; }
+  }
+
+  /* ---------- TEAM SECTION ---------- */
+  .team-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: var(--section-gap) var(--content-px) 0;
+  }
+  .team{
+    width:100%;
+    max-width:1280px;
+  }
+  .team-header{
+    margin-bottom:48px;
+  }
+  .team-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    font-weight:700;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color: var(--brown);
+  }
+  .team-title{
+    margin-top:10px;
+    font-size: var(--fs-h2);
+    font-weight:800;
+    letter-spacing:-0.5px;
+  }
+  .team-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:32px;
+  }
+  .team-card{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .team-card-photo{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:20px;
+    background: #f0f0f0;
+    background-size:cover;
+    background-position:center top;
+    position:relative;
+    overflow:hidden;
+  }
+  .team-card-photo .team-arrow{
+    position:absolute;
+    bottom:16px;
+    right:16px;
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background: var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--cream);
+    font-size:16px;
+    transition: transform .2s ease;
+  }
+  .team-card:hover .team-arrow{
+    transform: scale(1.1);
+  }
+  .team-card-info{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .team-card-name{
+    font-size: 18px;
+    font-weight:700;
+  }
+  .team-card-name span{
+    font-weight:400;
+    color: var(--brown);
+    margin-left:6px;
+  }
+  .team-card-desc{
+    font-size: var(--fs-body);
+    line-height:1.6;
+    color: rgba(0,0,0,0.55);
+  }
+
+  @media (max-width:900px){
+    .team-grid{ grid-template-columns: repeat(2, 1fr); gap:24px; }
+  }
+  @media (max-width:600px){
+    .team-grid{ grid-template-columns:1fr; gap:32px; }
+    .team-card-photo{ aspect-ratio:4/3; }
+  }
+  @media (max-width:760px){
+    .team-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    width:100%;
+    margin-top: var(--section-gap);
+    background: var(--ink);
+    padding: 52px var(--content-px) 36px;
+  }
+  .footer-inner{
+    max-width:1280px;
+    margin:0 auto;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    color: var(--cream);
+    letter-spacing:0.5px;
+  }
+  .footer-logo b{ color: var(--sage-light); font-weight:600; }
+  .footer-links{
+    display:flex;
+    gap:28px;
+    list-style:none;
+  }
+  .footer-links a{
+    color: rgba(255,255,255,0.7);
+    text-decoration:none;
+    font-size: var(--fs-body);
+    transition: color .2s ease;
+  }
+  .footer-links a:hover{ color: var(--cream); }
+  .footer-divider{
+    margin:32px 0 24px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing:0.3px;
+    color: rgba(255,255,255,0.4);
+  }
+  @media (max-width:600px){
+    .site-footer{ padding:36px var(--content-px-mobile) 24px; }
+    .footer-top{ flex-direction:column; align-items:flex-start; gap:16px; }
+    .footer-links{ flex-wrap:wrap; gap:16px 20px; }
+    .footer-bottom{ flex-direction:column; gap:8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav>
+    <a class="logo" href="main.html">WHOLEGEN<b>CAMP</b></a>
+    <ul class="nav-links">
+      <li><a href="about.html" class="active">소개</a></li>
+      <li><a href="camp.html">캠프</a></li>
+      <li><a href="#">자료실</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+    <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
+  </nav>
+</div>
+
+<div class="page-content">
+
+  <!-- HERO -->
+  <div class="about-hero">
+    <div class="about-hero-inner">
+      <div class="about-hero-label">Wholegen Camp</div>
+      <h1 class="about-title">WHOLEGEN<br>CAMP</h1>
+    </div>
+  </div>
+
+  <!-- VISION -->
+  <div class="vision-wrap">
+    <div class="vision">
+      <div class="vision-grid">
+        <div class="vision-card">
+          <div class="vision-card-num">VISION</div>
+          <div class="vision-card-title">비전</div>
+          <div class="vision-card-text">다음 세대가 예수 그리스도 안에서 온전히(Whole) 세워지는(Gen) 것을 목표로, 복음의 능력을 경험하는 세대를 세워갑니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THEME + INFO (하나의 박스) -->
+  <div class="theme-wrap">
+    <div class="theme">
+      <div class="theme-top">
+        <div class="theme-eyebrow">2027 THEME</div>
+        <h2 class="theme-title">순전함</h2>
+        <p class="theme-verse">
+          너희는 이 세대를 본받지 말고 오직 마음을 새롭게 함으로 변화를 받아<br>
+          하나님의 선하시고 기뻐하시고 온전하신 뜻이 무엇인지 분별하도록 하라
+        </p>
+        <div class="theme-ref">로마서 12:2</div>
+      </div>
+      <div class="theme-divider"></div>
+      <div class="theme-info-grid">
+        <div class="theme-info-item">
+          <div class="theme-info-label">대상</div>
+          <div class="theme-info-value">청소년</div>
+          <div class="theme-info-desc">다음 세대 청소년들을 위한 캠프</div>
+        </div>
+        <div class="theme-info-item">
+          <div class="theme-info-label">일정</div>
+          <div class="theme-info-value">무박 2일</div>
+          <div class="theme-info-desc">2027년 겨울 (일정 추후 공지)</div>
+        </div>
+        <div class="theme-info-item">
+          <div class="theme-info-label">장소</div>
+          <div class="theme-info-value">추후 공지</div>
+          <div class="theme-info-desc">확정 시 홈페이지에 안내됩니다</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 함께하는 이들 -->
+  <div class="team-wrap">
+    <div class="team">
+      <div class="team-header">
+        <div class="team-eyebrow">PARTNERS</div>
+        <h2 class="team-title">함께하는 이들</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-card-photo" style="background-image:url('per1.jpg')">
+            <div class="team-arrow">→</div>
+          </div>
+          <div class="team-card-info">
+            <div class="team-card-name">이름 <span>| 역할</span></div>
+            <div class="team-card-desc">소개가 들어갑니다.</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-card-photo" style="background-image:url('per2.jpg')">
+            <div class="team-arrow">→</div>
+          </div>
+          <div class="team-card-info">
+            <div class="team-card-name">이름 <span>| 역할</span></div>
+            <div class="team-card-desc">소개가 들어갑니다.</div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-card-photo" style="background-image:url('per3..jpg')">
+            <div class="team-arrow">→</div>
+          </div>
+          <div class="team-card-info">
+            <div class="team-card-name">이름 <span>| 역할</span></div>
+            <div class="team-card-desc">소개가 들어갑니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">WHOLEGEN<b>CAMP</b></div>
+      <ul class="footer-links">
+        <li><a href="about.html">소개</a></li>
+        <li><a href="#">공지</a></li>
+        <li><a href="camp.html">캠프</a></li>
+        <li><a href="#">자료실</a></li>
+        <li><a href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a></li>
+      </ul>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div>서울특별시 동작구 사당로 143 총신대학교 06988 · TEL. 02-3479-0200</div>
+      <div>&copy; 2026 WHOLEGENCAMP. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

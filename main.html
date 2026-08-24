@@ -365,7 +365,7 @@
   }
   .timetable-item.active .time{ color: var(--brown); }
   .timetable-item .label{
-    font-size: var(--fs-body);
+    font-size: 17px;
     font-weight:600;
   }
   .timetable-item.active .label{ color: var(--ink); }
@@ -431,11 +431,11 @@
     color: rgba(0,0,0,0.5);
   }
   .detail-name{
-    font-size: var(--fs-h3);
+    font-size: 28px;
     font-weight:800;
   }
   .detail-overview{
-    font-size: var(--fs-body);
+    font-size: 16px;
     line-height:1.7;
     color: rgba(0,0,0,0.65);
   }
@@ -478,13 +478,15 @@
   }
   .spotlight-image{
     width:100%;
+    height:400px;
     position:relative;
+    overflow:hidden;
   }
   .spotlight-image img{
     width:100%;
-    height:auto;
+    height:100%;
     display:block;
-    object-fit:contain;
+    object-fit:cover;
   }
   .spotlight-image::after{
     content:'';
@@ -611,6 +613,10 @@
   @media (max-width:760px){
     .spotlight-wrap{ padding:24px var(--content-px-mobile) 0; }
   }
+
+  /* Worship day panels */
+  .worship-panel{ display:none; }
+  .worship-panel.active{ display:flex; }
 
   /* Location card: row layout with taller map */
   .spotlight.spotlight--location{
@@ -746,7 +752,7 @@
     <nav>
       <div class="logo">WHOLEGEN<b>CAMP</b></div>
       <ul class="nav-links" id="navLinks">
-        <li><a href="main.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">소개</a></li>
+        <li><a href="about.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">소개</a></li>
         <li><a href="camp.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">캠프</a></li>
         <li><a href="#" style="color:rgba(255,255,255,0.85);text-decoration:none;">자료실</a></li>
         <li><a href="#" style="color:rgba(255,255,255,0.85);text-decoration:none;">FAQ</a></li>
@@ -807,21 +813,20 @@
 
       <div class="day-panel active" data-panel="1">
         <ul class="timetable">
-          <li class="timetable-item active" data-photo="per1.jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
-            <span class="time">09:00 - 10:00</span>
-            <span class="label">시간표 항목 1</span>
+          <li class="timetable-item active" data-photo="per1.jpg" data-affiliation="" data-name="오프닝 예배" data-overview="오프닝 예배 및 주제 메시지">
+            <span class="label">오프닝 예배</span>
           </li>
-          <li class="timetable-item" data-photo="per2.jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
-            <span class="time">10:00 - 11:30</span>
-            <span class="label">시간표 항목 2</span>
+          <li class="timetable-item" data-photo="per2.jpg" data-affiliation="" data-name="테이블 모임 1" data-overview="첫 만남, 주제 나눔, 관계 형성">
+            <span class="label">테이블 모임 1</span>
           </li>
-          <li class="timetable-item" data-photo="per3..jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
-            <span class="time">11:30 - 13:00</span>
-            <span class="label">시간표 항목 3</span>
+          <li class="timetable-item" data-photo="per3..jpg" data-affiliation="" data-name="비전토크 콘서트" data-overview="신앙·진로·비전을 연결하는 토크 형식">
+            <span class="label">비전토크 콘서트</span>
           </li>
-          <li class="timetable-item" data-photo="per4..jpg" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
-            <span class="time">13:00 - 15:00</span>
-            <span class="label">시간표 항목 4</span>
+          <li class="timetable-item" data-photo="per4..jpg" data-affiliation="" data-name="테이블 모임 2" data-overview="토크 내용 정리와 개인 적용 나눔">
+            <span class="label">테이블 모임 2</span>
+          </li>
+          <li class="timetable-item" data-photo="per1.jpg" data-affiliation="" data-name="저녁집회" data-overview="찬양, 말씀, 기도와 결단">
+            <span class="label">저녁집회</span>
           </li>
         </ul>
         <div class="time-detail">
@@ -832,59 +837,59 @@
             </svg>
           </div>
           <div class="detail-text">
-            <div class="detail-time">09:00 - 10:00</div>
-            <div class="detail-affiliation">소속이 들어갑니다</div>
-            <div class="detail-name">이름이 들어갑니다</div>
-            <div class="detail-overview">내용 개요가 들어갑니다</div>
+            <div class="detail-name">오프닝 예배</div>
+            <div class="detail-overview">오프닝 예배 및 주제 메시지</div>
           </div>
         </div>
       </div>
 
       <div class="day-panel" data-panel="2">
         <ul class="timetable">
-          <li class="timetable-item active" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
-            <span class="time">09:00 - 10:00</span>
-            <span class="label">시간표 항목 1</span>
+          <li class="timetable-item active" data-photo="per2.jpg" data-affiliation="" data-name="오픈마이크 & 예배" data-overview="참여형 무대와 예배를 결합한 오전 프로그램">
+            <span class="label">오픈마이크 & 예배</span>
           </li>
-          <li class="timetable-item" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
-            <span class="time">10:00 - 11:30</span>
-            <span class="label">시간표 항목 2</span>
+          <li class="timetable-item" data-photo="per3..jpg" data-affiliation="" data-name="찬양콘서트" data-overview="찬양을 통한 복음 메시지와 공동체 참여">
+            <span class="label">찬양콘서트</span>
           </li>
-          <li class="timetable-item" data-photo="" data-affiliation="소속이 들어갑니다" data-name="이름이 들어갑니다" data-overview="내용 개요가 들어갑니다">
-            <span class="time">11:30 - 13:00</span>
-            <span class="label">시간표 항목 3</span>
+          <li class="timetable-item" data-photo="per4..jpg" data-affiliation="" data-name="삶을 나누는 콘서트" data-overview="선택특강 / 간증과 현실적인 삶의 이야기를 나누는 시간">
+            <span class="label">삶을 나누는 콘서트</span>
+          </li>
+          <li class="timetable-item" data-photo="per1.jpg" data-affiliation="" data-name="저녁집회" data-overview="찬양, 말씀, 기도와 결단">
+            <span class="label">저녁집회</span>
           </li>
         </ul>
         <div class="time-detail">
-          <div class="detail-photo">
+          <div class="detail-photo has-photo" style="background-image:url('per2.jpg')">
             <svg class="person-icon" viewBox="0 0 100 120" fill="none">
               <circle cx="50" cy="40" r="24" fill="rgba(255,255,255,0.32)"/>
               <path d="M8 118c2-32 20-52 42-52s40 20 42 52" fill="rgba(255,255,255,0.32)"/>
             </svg>
           </div>
           <div class="detail-text">
-            <div class="detail-time">09:00 - 10:00</div>
-            <div class="detail-affiliation">소속이 들어갑니다</div>
-            <div class="detail-name">이름이 들어갑니다</div>
-            <div class="detail-overview">내용 개요가 들어갑니다</div>
+            <div class="detail-name">오픈마이크 & 예배</div>
+            <div class="detail-overview">참여형 무대와 예배를 결합한 오전 프로그램</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SPOTLIGHT -->
+  <!-- SPOTLIGHT: DEEP WORSHIP -->
   <div class="programs-wrap">
     <div class="programs">
       <div class="programs-eyebrow">SCHEDULE</div>
-      <h2 class="programs-title">DEEP WORSHIP</h2>
+      <h2 class="programs-title">저녁집회: DEEP WORSHIP</h2>
+      <div class="day-tabs" id="worshipTabs">
+        <button class="day-tab active" data-wday="1">DAY 1</button>
+        <button class="day-tab" data-wday="2">DAY 2</button>
+      </div>
     </div>
   </div>
 
   <div class="spotlight-wrap">
-    <section class="spotlight">
+    <section class="spotlight worship-panel active" data-wpanel="1">
       <div class="spotlight-image">
-        <img src="so.png" alt="Deep Worship">
+        <img src="so.png" alt="Deep Worship Day 1">
       </div>
       <div class="spotlight-info">
         <div class="spotlight-subtitle">소망의바다 미니스트리</div>
@@ -901,6 +906,34 @@
           <div class="spotlight-block-text">
             - 빈들에서 성찬이 열린다<br>
             - 하나님 나라
+          </div>
+        </div>
+
+        <a class="spotlight-btn" href="#">자세히 보기 <span class="arrow-icon">↗</span></a>
+      </div>
+    </section>
+  </div>
+
+  <div class="spotlight-wrap">
+    <section class="spotlight worship-panel" data-wpanel="2">
+      <div class="spotlight-image">
+        <img src="per3..jpg" alt="Deep Worship Day 2">
+      </div>
+      <div class="spotlight-info">
+        <div class="spotlight-subtitle">Dae hee Worship Team</div>
+
+        <div class="spotlight-block">
+          <div class="spotlight-block-title">소개</div>
+          <div class="spotlight-block-text">
+            DAY 2 저녁집회 찬양 사역자 정보가 들어갑니다.
+          </div>
+        </div>
+
+        <div class="spotlight-block">
+          <div class="spotlight-block-title">대표곡</div>
+          <div class="spotlight-block-text">
+            - 곡명 1<br>
+            - 곡명 2
           </div>
         </div>
 
@@ -992,7 +1025,7 @@
   })();
 
   (function(){
-    var tabs = document.querySelectorAll('.day-tab');
+    var tabs = document.querySelectorAll('.day-tab[data-day]');
     var panels = document.querySelectorAll('.day-panel');
     tabs.forEach(function(tab){
       tab.addEventListener('click', function(){
@@ -1005,12 +1038,25 @@
     });
   })();
 
+  // Worship day tabs
+  (function(){
+    var wtabs = document.querySelectorAll('[data-wday]');
+    var wpanels = document.querySelectorAll('.worship-panel');
+    wtabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var day = tab.getAttribute('data-wday');
+        wtabs.forEach(function(t){ t.classList.remove('active'); });
+        wpanels.forEach(function(p){ p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.querySelector('.worship-panel[data-wpanel="'+day+'"]').classList.add('active');
+      });
+    });
+  })();
+
   (function(){
     document.querySelectorAll('.day-panel').forEach(function(panel){
       var items = panel.querySelectorAll('.timetable-item');
       var detailPhoto = panel.querySelector('.detail-photo');
-      var detailTime = panel.querySelector('.detail-time');
-      var detailAffiliation = panel.querySelector('.detail-affiliation');
       var detailName = panel.querySelector('.detail-name');
       var detailOverview = panel.querySelector('.detail-overview');
 
@@ -1021,8 +1067,6 @@
           var photoUrl = item.getAttribute('data-photo');
           detailPhoto.style.backgroundImage = photoUrl ? 'url(' + photoUrl + ')' : '';
           detailPhoto.classList.toggle('has-photo', !!photoUrl);
-          detailTime.textContent = item.querySelector('.time').textContent;
-          detailAffiliation.textContent = item.getAttribute('data-affiliation');
           detailName.textContent = item.getAttribute('data-name');
           detailOverview.textContent = item.getAttribute('data-overview');
         });
