@@ -470,6 +470,12 @@
 
   main{ min-height: calc(100vh - 160px); }
 
+  @media (max-width:760px){
+    .nav-wrap{ padding-left: var(--content-px-mobile); padding-right: var(--content-px-mobile); }
+    .site-top .nav-wrap{ padding-top:12px; padding-bottom:12px; }
+    nav{ gap:16px; }
+  }
+
   /* ---------- FOOTER ---------- */
   .site-footer{
     width:100%;
