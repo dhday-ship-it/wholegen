@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>소개 — WHOLEGENCAMP</title>
+<title>소개 · WHOLEGENCAMP</title>
+<script>document.documentElement.classList.add('js');</script>
 <style>
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
@@ -15,14 +16,22 @@
     --tan: #CCCCCC;
     --brown: #4D4D4D;
     --ink: #000000;
+    --pw-accent: #9DB1EE;
+    --surface: #121826;
+    --surface-2: #1A2132;
+    --line: rgba(255,255,255,0.07);
 
-    --section-gap: 80px;
-    --section-gap-mobile: 52px;
+    /* Spacing scale */
+    --section-gap: 128px;
+    --section-gap-mobile: 80px;
+    --head-gap: 44px;          /* section heading → content */
+    --head-gap-mobile: 28px;
     --content-px: 40px;
     --content-px-mobile: 20px;
 
+    /* Type scale */
     --fs-display: 48px;
-    --fs-h2: 36px;
+    --fs-h2: 40px;
     --fs-h3: 24px;
     --fs-body: 15px;
     --fs-small: 13px;
@@ -30,16 +39,47 @@
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{ scroll-behavior:smooth; scroll-padding-top:72px; }
 
   html,body{
     width:100%;
     min-height:100vh;
     font-family:'Pretendard', sans-serif;
-    background: linear-gradient(150deg, var(--sage-light) 0%, var(--cream) 45%, var(--tan) 100%);
-    color: var(--ink);
-    overflow-x:hidden;
+    background: #0B0F17;
+    color: #EDEFF3;
+    overflow-x:clip;
+    position:relative;
     font-size: var(--fs-body);
     line-height: 1.6;
+  }
+
+  .site-top{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    background: transparent;
+    border-bottom:1px solid transparent;
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .site-top.is-solid,
+  .site-top.menu-open{
+    background: rgba(11,15,23,0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+  .site-top .logo,
+  .site-top .logo b,
+  .site-top .nav-links li,
+  .site-top .inquiry-btn{ transition: color .3s ease, background .3s ease, transform .2s ease; }
+  .site-top .logo{ color:#fff; }
+  .site-top .logo b{ color: rgba(255,255,255,0.6); }
+  .site-top .inquiry-btn{ background:#fff; color:#0B0F17; }
+  .site-top .inquiry-btn:hover{ background: var(--pw-accent); }
+  .site-top .nav-toggle span{ background:#fff; }
+  @media (min-width:901px){
+    .site-top .nav-links li{ color:#fff; }
+    .site-top .nav-links li:hover{ color: rgba(255,255,255,0.65); }
   }
 
   /* ---------- NAV ---------- */
@@ -49,7 +89,7 @@
     justify-content:center;
     padding: 24px var(--content-px) 0;
     position:relative;
-    z-index:20;
+    z-index:40;
   }
   nav{
     display:flex;
@@ -57,41 +97,41 @@
     justify-content:space-between;
     gap:48px;
     width:100%;
-    max-width:1200px;
-    padding: 14px 32px;
-    background: var(--ink);
-    border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    max-width:1280px;
+    position:relative;
   }
   .logo{
     font-family:'JetBrains Mono', monospace;
     font-size:17px;
-    color: var(--cream);
+    font-weight:700;
+    color: var(--ink);
     letter-spacing:0.5px;
-    text-decoration:none;
   }
-  .logo b{ color: var(--sage-light); font-weight:600; }
+  .logo b{ color: var(--brown); font-weight:700; }
+
   .nav-links{
     display:flex;
     gap:40px;
     list-style:none;
   }
-  .nav-links li a{
+  .nav-links li{
     font-size: var(--fs-body);
+    font-weight:600;
     letter-spacing:0.6px;
-    color: rgba(255,255,255,0.85);
-    text-decoration:none;
+    color: var(--ink);
+    cursor:pointer;
     transition: color .2s ease;
   }
-  .nav-links li a:hover{ color: var(--sage-light); }
-  .nav-links li a.active{ color: var(--cream); font-weight:600; }
+  .nav-links li a{ color:inherit; text-decoration:none; }
+  .nav-links li:hover{ color: var(--brown); }
+
   .inquiry-btn{
     font-family:'JetBrains Mono', monospace;
     font-size: var(--fs-small);
     padding:9px 20px;
     border-radius:999px;
-    background: var(--cream);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--cream);
     font-weight:600;
     text-decoration:none;
     white-space:nowrap;
@@ -99,325 +139,632 @@
     display:inline-block;
   }
   .inquiry-btn:hover{
-    background: var(--sage-light);
+    background: var(--brown);
     transform: translateY(-1px);
   }
-  @media (max-width:900px){
-    .nav-links{ display:none; }
-  }
-  @media (max-width:760px){
-    .nav-wrap{ padding:16px var(--content-px-mobile) 0; }
-    nav{ padding:12px 18px; gap:20px; border-radius:32px; }
-  }
 
-  /* ---------- PAGE ---------- */
-  .page-content{
-    width:100%;
-    display:flex;
+  .nav-toggle{
+    display:none;
     flex-direction:column;
+    justify-content:center;
     align-items:center;
-    padding-bottom: var(--section-gap);
+    gap:5px;
+    width:28px;
+    height:22px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    flex-shrink:0;
+  }
+  .nav-toggle span{
+    display:block;
+    width:100%;
+    height:2px;
+    background: var(--ink);
+    border-radius:2px;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2){ opacity:0; }
+  .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width:900px){
+    .nav-toggle{ display:flex; order:3; }
+    .nav-links{
+      display:none;
+      position:absolute;
+      top:calc(100% + 12px);
+      left:0;
+      right:0;
+      flex-direction:column;
+      gap:0;
+      background: rgba(18,24,38,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius:20px;
+      padding:8px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.07);
+      z-index:30;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-links li{ padding:0; }
+    .nav-links li a{
+      display:block;
+      padding:14px 16px;
+      border-radius:12px;
+    }
+    .nav-links li{ color:#fff; }
+    .nav-links li:hover{ background: rgba(255,255,255,0.06); }
+    .inquiry-btn{ order:2; margin-left:auto; }
+    .logo{ order:1; }
   }
 
-  /* ---------- HERO ---------- */
+  /* ---------- SCROLL REVEAL ---------- */
+  .js .reveal{
+    opacity:0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .js .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .js .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+
+  /* ---------- ABOUT HERO ---------- */
   .about-hero{
-    width:100%;
+    position:relative;
+    min-height: clamp(480px, 68vh, 720px);
     display:flex;
-    justify-content:center;
-    padding: 140px var(--content-px) 0;
+    align-items:flex-end;
+    overflow:hidden;
+    background:#0c1424;
+  }
+  .about-hero-bg{
+    position:absolute;
+    inset:-10%;
+    background: url('art.png') center 55% / cover no-repeat;
+    filter: blur(40px) saturate(1.1) brightness(.5) hue-rotate(-8deg);
+  }
+  .about-hero-art{
+    position:absolute;
+    top:-4%;
+    left:6%;
+    height:108%;
+    aspect-ratio: 326 / 464;
+    background: url('art.png') center / cover no-repeat;
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 50%, transparent 100%);
+            mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 50%, transparent 100%);
+    opacity:.85;
+  }
+  .about-hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:
+      linear-gradient(270deg, rgba(10,20,40,0.85) 0%, rgba(10,20,40,0.4) 50%, rgba(10,20,40,0) 80%),
+      linear-gradient(0deg, #0B0F17 0%, rgba(11,15,23,0) 35%);
+  }
+  .about-hero::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+    opacity:.4;
+    pointer-events:none;
   }
   .about-hero-inner{
+    position:relative;
+    z-index:2;
     width:100%;
     max-width:1280px;
+    margin:0 auto;
+    padding:160px var(--content-px) 72px;
+    text-align:right;
   }
   .about-hero-label{
     font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-small);
-    font-weight:600;
-    letter-spacing:1px;
-    color: var(--brown);
-    margin-bottom:12px;
+    font-size:12px;
+    letter-spacing:3px;
+    color: rgba(255,255,255,0.65);
   }
   .about-title{
-    font-size: 88px;
-    font-weight:800;
-    letter-spacing:-3px;
-    line-height:1.0;
+    margin-top:14px;
+    font-family:'Pretendard', sans-serif;
+    font-size: clamp(56px, 8vw, 128px);
+    font-weight:700;
+    line-height:.9;
+    letter-spacing:-0.035em;
   }
+  .about-title .w-1{ display:block; color:#9DB1EE; }
+  .about-title .w-2{ display:block; color:#F5F6F8; }
 
-  @media (max-width:900px){
-    .about-hero{ padding:100px var(--content-px) 0; }
-    .about-title{ font-size:56px; letter-spacing:-2px; }
-  }
-  @media (max-width:760px){
-    .about-hero{ padding:72px var(--content-px-mobile) 0; }
-    .about-title{ font-size:38px; letter-spacing:-1px; }
-  }
-
-  /* ---------- VISION SECTION ---------- */
-  .vision-wrap{
+  /* ---------- SECTIONS ---------- */
+  .about-section{
     width:100%;
     display:flex;
     justify-content:center;
     padding: var(--section-gap) var(--content-px) 0;
   }
-  .vision{
-    width:100%;
-    max-width:1280px;
-  }
-  .vision-grid{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:20px;
-  }
-  .vision-card{
-    padding:44px 40px;
-    border-radius:24px;
-    background: var(--ink);
-    color: var(--cream);
-    display:flex;
-    flex-direction:column;
-    gap:20px;
-    position:relative;
-    overflow:hidden;
-    transition: transform .2s ease;
-  }
-  .vision-card:hover{
-    transform: translateY(-3px);
-  }
-  .vision-card:nth-child(2),
-  .vision-card:nth-child(3){
-    background: var(--sage-light);
-    color: var(--ink);
-  }
-  .vision-card-num{
-    font-family:'JetBrains Mono', monospace;
-    font-size: 13px;
-    font-weight:700;
-    letter-spacing:1px;
-    opacity:0.4;
-  }
-  .vision-card:nth-child(2) .vision-card-num,
-  .vision-card:nth-child(3) .vision-card-num{
-    color: var(--brown);
-    opacity:1;
-  }
-  .vision-card-title{
-    font-size: 28px;
+  .about-section:first-of-type{ padding-top:72px; }
+  .about-inner{ width:100%; max-width:1280px; }
+  .section-title{
+    font-size: var(--fs-h2);
     font-weight:800;
     letter-spacing:-0.5px;
-  }
-  .vision-card-text{
-    font-size: var(--fs-body);
-    line-height:1.8;
-    opacity:0.7;
-  }
-  .vision-card:nth-child(2) .vision-card-text,
-  .vision-card:nth-child(3) .vision-card-text{
-    color: rgba(0,0,0,0.6);
-    opacity:1;
-  }
-
-  @media (max-width:900px){
-    .vision-grid{ grid-template-columns:1fr; }
-  }
-  @media (max-width:760px){
-    .vision-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
-    .vision-card{ padding:32px 28px; }
-    .vision-card-title{ font-size:22px; }
-  }
-
-  /* ---------- THEME + INFO SECTION ---------- */
-  .theme-wrap{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    padding: var(--section-gap) var(--content-px) 0;
-  }
-  .theme{
-    width:100%;
-    max-width:1280px;
-    border-radius:28px;
-    overflow:hidden;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-    border:1px solid rgba(0,0,0,0.06);
-    background: var(--cream);
-    padding:64px 48px;
-  }
-  .theme-top{
     text-align:center;
+    color:#fff;
+  }
+  .card{
+    border-radius:28px;
+    background: var(--surface);
+    border:1px solid var(--line);
+  }
+
+  /* vision */
+  .vision-card{
+    display:grid;
+    grid-template-columns: 220px 1fr;
+    gap:48px;
+    align-items:center;
+    padding:56px;
+  }
+  .vision-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:3px;
+    color: var(--pw-accent);
+  }
+  .vision-heading{
+    margin-top:10px;
+    font-size:36px;
+    font-weight:800;
+    letter-spacing:-0.02em;
+  }
+  .vision-text{
+    font-size:20px;
+    font-weight:500;
+    line-height:1.7;
+    color: rgba(255,255,255,0.85);
+    word-break: keep-all;
+  }
+  .vision-text b{ color:#fff; }
+
+  /* theme */
+  .theme{ margin-top: var(--head-gap); overflow:hidden; }
+  .theme-top{
+    position:relative;
+    padding:64px 56px 56px;
+    text-align:center;
+    background:
+      radial-gradient(60% 80% at 50% 0%, rgba(157,177,238,0.14) 0%, rgba(157,177,238,0) 70%);
   }
   .theme-eyebrow{
     font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
+    font-size:12px;
     font-weight:700;
-    letter-spacing:2.5px;
-    text-transform:uppercase;
-    color: var(--brown);
+    letter-spacing:3px;
+    color: var(--pw-accent);
   }
   .theme-title{
     margin-top:12px;
-    font-size: var(--fs-h2);
+    font-size: clamp(56px, 7vw, 96px);
     font-weight:800;
-    letter-spacing:-0.5px;
+    letter-spacing:-0.04em;
+    line-height:1;
+  }
+  .theme-sub{
+    margin-top:16px;
+    font-size:18px;
+    font-weight:600;
+    color: rgba(255,255,255,0.85);
   }
   .theme-verse{
-    margin-top:24px;
-    font-size: 16px;
-    line-height:1.9;
-    color: rgba(0,0,0,0.6);
-    font-style:italic;
+    max-width:680px;
+    margin:28px auto 0;
+    font-size:17px;
+    line-height:1.8;
+    color: rgba(255,255,255,0.75);
+    word-break: keep-all;
   }
   .theme-ref{
     margin-top:12px;
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-small);
-    color: var(--brown);
-    font-weight:600;
+    font-size:13px;
+    color: rgba(255,255,255,0.5);
   }
-  .theme-divider{
-    margin:40px 0;
-    border-top:1px solid rgba(0,0,0,0.08);
-  }
-  .theme-info-grid{
+  .theme-info{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
-    gap:24px;
+    border-top:1px solid var(--line);
   }
   .theme-info-item{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
+    padding:32px 36px;
   }
+  .theme-info-item + .theme-info-item{ border-left:1px solid var(--line); }
   .theme-info-label{
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
-    font-weight:700;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color: var(--brown);
+    font-size:13px;
+    color: rgba(255,255,255,0.45);
   }
   .theme-info-value{
-    font-size: var(--fs-h3);
-    font-weight:800;
+    margin-top:6px;
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:-0.01em;
   }
   .theme-info-desc{
-    font-size: var(--fs-body);
-    color: rgba(0,0,0,0.55);
-    line-height:1.5;
+    margin-top:4px;
+    font-size:13.5px;
+    color: rgba(255,255,255,0.55);
   }
 
-  @media (max-width:900px){
-    .theme-info-grid{ grid-template-columns:1fr; gap:20px; }
-  }
-  @media (max-width:760px){
-    .theme-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
-    .theme{ padding:44px 24px; }
-    .theme-title{ font-size:26px; }
-  }
-
-  /* ---------- TEAM SECTION ---------- */
-  .team-wrap{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    padding: var(--section-gap) var(--content-px) 0;
-  }
-  .team{
-    width:100%;
-    max-width:1280px;
-  }
-  .team-header{
-    margin-bottom:48px;
-  }
-  .team-eyebrow{
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
-    font-weight:700;
-    letter-spacing:2.5px;
-    text-transform:uppercase;
-    color: var(--brown);
-  }
-  .team-title{
-    margin-top:10px;
-    font-size: var(--fs-h2);
-    font-weight:800;
-    letter-spacing:-0.5px;
-  }
+  /* team */
   .team-grid{
+    margin-top: var(--head-gap);
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:32px;
+    grid-template-columns: repeat(2, 1fr);
+    gap:16px;
+    max-width:640px;
+    margin-left:auto;
+    margin-right:auto;
   }
   .team-card{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-  }
-  .team-card-photo{
-    width:100%;
-    aspect-ratio:1/1;
-    border-radius:20px;
-    background: #f0f0f0;
-    background-size:cover;
-    background-position:center top;
     position:relative;
+    border-radius:20px;
     overflow:hidden;
+    aspect-ratio: 3 / 4;
+    background: var(--surface-2);
   }
-  .team-card-photo .team-arrow{
+  .team-card img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    object-position:center 20%;
+    transition: transform .6s ease;
+  }
+  .team-card:hover img{ transform: scale(1.04); }
+  .team-card::after{
+    content:'';
     position:absolute;
-    bottom:16px;
-    right:16px;
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    background: var(--ink);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color: var(--cream);
-    font-size:16px;
-    transition: transform .2s ease;
-  }
-  .team-card:hover .team-arrow{
-    transform: scale(1.1);
+    inset:0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
   }
   .team-card-info{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
+    position:absolute;
+    left:24px;
+    right:24px;
+    bottom:22px;
+    z-index:1;
   }
   .team-card-name{
-    font-size: 18px;
+    font-size:20px;
     font-weight:700;
   }
   .team-card-name span{
-    font-weight:400;
-    color: var(--brown);
     margin-left:6px;
+    font-size:14px;
+    font-weight:500;
+    color: rgba(255,255,255,0.65);
   }
   .team-card-desc{
-    font-size: var(--fs-body);
-    line-height:1.6;
-    color: rgba(0,0,0,0.55);
+    margin-top:6px;
+    font-size:13.5px;
+    color: rgba(255,255,255,0.7);
   }
 
-  @media (max-width:900px){
-    .team-grid{ grid-template-columns: repeat(2, 1fr); gap:24px; }
+  /* leadership (profile spread + avatar switcher) */
+  .leader{
+    position:relative;
+    margin-top: var(--head-gap);
+    display:grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap:32px;
+    align-items:center;
+    min-height:520px;
   }
-  @media (max-width:600px){
-    .team-grid{ grid-template-columns:1fr; gap:32px; }
-    .team-card-photo{ aspect-ratio:4/3; }
+  .leader-text{ max-width:520px; }
+  .leader-name{
+    font-size: clamp(44px, 5vw, 72px);
+    font-weight:300;
+    letter-spacing:-0.03em;
+    line-height:1.1;
+  }
+  .leader-role{
+    margin-top:12px;
+    font-size:20px;
+    font-weight:500;
+    color: rgba(255,255,255,0.75);
+  }
+  .leader-bio{
+    margin-top:36px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .leader-bio p{
+    font-size:15.5px;
+    line-height:1.85;
+    color: rgba(255,255,255,0.65);
+    word-break: keep-all;
+  }
+  .leader-photo{
+    justify-self:center;
+    width:min(100%, 420px);
+    aspect-ratio: 626 / 835;
+    position:relative;
+    /* cut-out photo standing on the page, fading out at the bottom */
+    -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+            mask-image: linear-gradient(180deg, #000 72%, transparent 100%);
+  }
+  .leader-photo::before{
+    content:'';
+    position:absolute;
+    left:8%; right:8%; top:12%; bottom:8%;
+    z-index:-1;
+    border-radius:50%;
+    background: radial-gradient(circle, rgba(157,177,238,0.28) 0%, rgba(157,177,238,0) 70%);
+    filter: blur(10px);
+  }
+  .leader-photo img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:contain;
+    object-position:center bottom;
+  }
+  .leader-slide{ display:none; }
+  .leader-slide.active{ display:contents; }
+  .leader-slide.active > *{ animation: leader-in .5s ease; }
+  @keyframes leader-in{ from{ opacity:0; transform: translateY(10px); } to{ opacity:1; transform:none; } }
+  .leader-arrow{
+    position:absolute;
+    top:50%;
+    width:44px;
+    height:44px;
+    margin-top:-22px;
+    border:none;
+    background:none;
+    color:#fff;
+    font-size:26px;
+    cursor:pointer;
+    opacity:.7;
+  }
+  .leader-arrow:hover{ opacity:1; }
+  .leader-arrow.prev{ left:-52px; }
+  .leader-arrow.next{ right:-52px; }
+  .leader-nav{
+    margin-top:40px;
+    padding-top:32px;
+    border-top:1px solid var(--line);
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+  }
+  .leader-avatar{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    background:none;
+    border:none;
+    color: rgba(255,255,255,0.55);
+    font-family:inherit;
+    cursor:pointer;
+  }
+  .leader-avatar img{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:center 20%;
+    opacity:.6;
+    transition: transform .2s ease, opacity .2s ease, box-shadow .2s ease;
+  }
+  .leader-avatar b{ font-size:14px; font-weight:700; }
+  .leader-avatar span{ font-size:12px; }
+  .leader-avatar.active{ color:#fff; }
+  .leader-avatar.active img{ opacity:1; transform: scale(1.2); box-shadow: 0 0 0 2px var(--pw-accent); }
+  .leader-wrap[data-count="1"] .leader-nav,
+  .leader-wrap[data-count="1"] .leader-arrow{ display:none; }
+  @media (max-width:1400px){
+    .leader-arrow.prev{ left:-8px; }
+    .leader-arrow.next{ right:-8px; }
+  }
+  @media (max-width:900px){
+    .leader{ grid-template-columns:1fr; gap:24px; min-height:0; }
+    .leader-photo{ order:-1; width:min(80%, 320px); }
+    .leader-arrow{ top:160px; }
   }
   @media (max-width:760px){
-    .team-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .leader{ margin-top: var(--head-gap-mobile); }
+    .leader-role{ font-size:17px; }
+    .leader-bio{ margin-top:24px; }
+    .leader-bio p{ font-size:15px; }
+    .leader-nav{ gap:20px; }
+    .leader-avatar img{ width:52px; height:52px; }
   }
+
+  /* ---------- PARTNERS ---------- */
+  .crew-grid{
+    margin-top: var(--head-gap);
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:16px;
+  }
+  .crew-card{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    aspect-ratio: 3 / 4;
+    background: var(--surface-2);
+  }
+  .crew-card img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    object-position:center 20%;
+  }
+  .crew-card.is-empty{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px dashed rgba(255,255,255,0.15);
+    background: var(--surface);
+  }
+  .crew-card.is-empty svg{ width:38%; opacity:.18; }
+  .crew-card::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 45%);
+    pointer-events:none;
+  }
+  .crew-info{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:16px;
+    z-index:1;
+  }
+  .crew-name{ font-size:17px; font-weight:700; }
+  .crew-role{ margin-top:2px; font-size:13px; color: rgba(255,255,255,0.65); }
+
+  .partner-groups{
+    margin-top: var(--head-gap);
+    display:flex;
+    flex-direction:column;
+    gap:56px;
+  }
+  .partner-label{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:20px;
+    font-size:18px;
+    font-weight:700;
+  }
+  .partner-label::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background: var(--line);
+  }
+  .advisor-list{
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap:12px;
+    list-style:none;
+  }
+  .advisor-list li{
+    padding:20px 22px;
+    border-radius:16px;
+    background: var(--surface);
+    border:1px solid var(--line);
+  }
+  .advisor-list b{ display:block; font-size:16px; font-weight:700; }
+  .advisor-list span{ display:block; margin-top:4px; font-size:13px; color: rgba(255,255,255,0.55); }
+  .church-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    list-style:none;
+  }
+  .church-list li{
+    padding:12px 20px;
+    border-radius:999px;
+    background: var(--surface);
+    border:1px solid var(--line);
+    font-size:15px;
+    font-weight:600;
+  }
+  .logo-grid{
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap:12px;
+    list-style:none;
+  }
+  .logo-grid li{
+    height:96px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+    border-radius:16px;
+    background: var(--surface);
+    border:1px solid var(--line);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:2px;
+    color: rgba(255,255,255,0.3);
+  }
+  .logo-grid img{ max-width:100%; max-height:100%; object-fit:contain; filter: grayscale(1) brightness(1.6); opacity:.8; }
+  @media (max-width:900px){
+    .crew-grid{ grid-template-columns: repeat(2, 1fr); }
+    .advisor-list{ grid-template-columns: repeat(3, 1fr); }
+    .logo-grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width:760px){
+    .crew-grid{ margin-top: var(--head-gap-mobile); gap:10px; }
+    .crew-card{ border-radius:14px; }
+    .crew-info{ left:14px; right:14px; bottom:12px; }
+    .crew-name{ font-size:15px; }
+    .partner-groups{ margin-top: var(--head-gap-mobile); gap:40px; }
+    .partner-label{ font-size:16px; margin-bottom:14px; }
+    .advisor-list{ gap:8px; grid-template-columns: repeat(2, 1fr); }
+    .advisor-list li{ padding:16px; }
+    .church-list li{ padding:10px 16px; font-size:14px; }
+    .logo-grid{ grid-template-columns: repeat(2, 1fr); gap:8px; }
+    .logo-grid li{ height:80px; }
+  }
+
+  .page-end{ height: var(--section-gap); }
+
+  @media (max-width:900px){
+    .vision-card{ grid-template-columns:1fr; gap:20px; padding:36px 28px; }
+    .theme-info{ grid-template-columns:1fr; }
+    .theme-info-item + .theme-info-item{ border-left:none; border-top:1px solid var(--line); }
+    .team-grid{ grid-template-columns: repeat(2, 1fr); }
+    .about-hero-art{ left:-20%; opacity:.6; }
+  }
+  @media (max-width:760px){
+    .about-section{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .about-section:first-of-type{ padding-top:48px; }
+    .about-hero{ min-height: clamp(420px, 56vh, 560px); }
+    .about-hero-inner{ padding:120px var(--content-px-mobile) 48px; }
+    .section-title{ font-size:28px; }
+    .card{ border-radius:22px; }
+    .vision-heading{ font-size:28px; }
+    .vision-text{ font-size:16px; }
+    .theme{ margin-top: var(--head-gap-mobile); }
+    .theme-top{ padding:44px 22px 36px; }
+    .theme-sub{ font-size:15.5px; }
+    .theme-verse{ font-size:15px; }
+    .theme-info-item{ padding:22px 24px; }
+    .theme-info-value{ font-size:19px; }
+    .team-grid{ margin-top: var(--head-gap-mobile); gap:10px; }
+    .team-card{ border-radius:14px; }
+    .team-card-info{ left:14px; right:14px; bottom:14px; }
+    .team-card-name{ font-size:16px; }
+    .team-card-name span{ display:block; margin:2px 0 0; font-size:12px; }
+    .team-card-desc{ display:none; }
+    .page-end{ height: var(--section-gap-mobile); }
+  }
+
+  main{ min-height: calc(100vh - 160px); }
 
   /* ---------- FOOTER ---------- */
   .site-footer{
     width:100%;
-    margin-top: var(--section-gap);
-    background: var(--ink);
+    background:#06080D;
+    border-top:1px solid var(--line);
     padding: 52px var(--content-px) 36px;
   }
   .footer-inner{
@@ -437,7 +784,7 @@
     color: var(--cream);
     letter-spacing:0.5px;
   }
-  .footer-logo b{ color: var(--sage-light); font-weight:600; }
+  .footer-logo b{ color: rgba(255,255,255,0.5); font-weight:600; }
   .footer-links{
     display:flex;
     gap:28px;
@@ -464,6 +811,7 @@
     letter-spacing:0.3px;
     color: rgba(255,255,255,0.4);
   }
+
   @media (max-width:600px){
     .site-footer{ padding:36px var(--content-px-mobile) 24px; }
     .footer-top{ flex-direction:column; align-items:flex-start; gap:16px; }
@@ -474,116 +822,129 @@
 </head>
 <body>
 
-<!-- NAV -->
-<div class="nav-wrap">
-  <nav>
-    <a class="logo" href="index.html">WHOLEGEN<b>CAMP</b></a>
-    <ul class="nav-links">
-      <li><a href="about.html" class="active">소개</a></li>
-      <li><a href="camp.html">캠프</a></li>
-      <li><a href="#">자료실</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-    </ul>
-    <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
-  </nav>
-</div>
-
-<div class="page-content">
-
-  <!-- HERO -->
-  <div class="about-hero">
-    <div class="about-hero-inner">
-      <div class="about-hero-label">Wholegen Camp</div>
-      <h1 class="about-title">WHOLEGEN<br>CAMP</h1>
+  <header class="site-top">
+    <!-- NAV -->
+    <div class="nav-wrap">
+      <nav>
+        <a class="logo" href="index.html" style="text-decoration:none">WHOLEGEN<b>CAMP</b></a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="about.html" aria-current="page">소개</a></li>
+          <li><a href="camp.html">캠프</a></li>
+          <li><a href="#">자료실</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+        <!-- TODO: href를 실제 카카오톡 채널 URL로 교체하세요 (예: https://pf.kakao.com/_xxxxxx/chat) -->
+        <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
+      </nav>
     </div>
-  </div>
+  </header>
+
+<main>
+  <!-- HERO -->
+  <section class="about-hero banner">
+    <div class="about-hero-bg" aria-hidden="true"></div>
+    <div class="about-hero-art" aria-hidden="true"></div>
+    <div class="about-hero-inner">
+      <p class="about-hero-label">ABOUT</p>
+      <h1 class="about-title"><span class="w-1">WHOLEGEN</span><span class="w-2">CAMP</span></h1>
+    </div>
+  </section>
 
   <!-- VISION -->
-  <div class="vision-wrap">
-    <div class="vision">
-      <div class="vision-grid">
-        <div class="vision-card">
-          <div class="vision-card-num">VISION</div>
-          <div class="vision-card-title">비전</div>
-          <div class="vision-card-text">다음 세대가 예수 그리스도 안에서 온전히(Whole) 세워지는(Gen) 것을 목표로, 복음의 능력을 경험하는 세대를 세워갑니다.</div>
+  <div class="about-section reveal">
+    <div class="about-inner">
+      <div class="card vision-card">
+        <div>
+          <p class="vision-label">VISION</p>
+          <h2 class="vision-heading">비전</h2>
+        </div>
+        <p class="vision-text">다음 세대가 예수 그리스도 안에서 <b>온전히(Whole)</b> 세워지는 <b>세대(Gen)</b>가 되는 것을 목표로, 복음의 능력을 경험하는 세대를 세워갑니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERSHIP -->
+  <div class="about-section reveal">
+    <div class="about-inner leader-wrap" id="leaders">
+      <h2 class="section-title">리더십</h2>
+      <div class="leader">
+        <!-- 리더를 추가하려면 .leader-slide 를 복사하고, 아래 .leader-nav 에 버튼도 하나 추가하세요 -->
+        <div class="leader-slide active">
+          <div class="leader-text">
+            <h3 class="leader-name">이경현 목사</h3>
+            <p class="leader-role">WHOLEGEN CAMP 대표</p>
+            <div class="leader-bio">
+              <p>국어를 가르치는 조은샘의 남편이며 하준, 은준 두 청소년의 아빠입니다.</p>
+              <p>옷 만드는 일을 사랑해서 멋진 의류사업가가 되려 했으나, 찬양 사역에 대한 부르심으로 삶의 방향이 완전히 바뀌어 ‘십자가의 전달자’로 ‘하나님의 집’을 세워가는, ‘울타리를 넘는 예배자’로 살고 있습니다.</p>
+              <p>현재 홀젠 캠프와 소망의 바다 미니스트리 대표로, 구로동교회 예배 사역자로 섬기고 있습니다.</p>
+            </div>
+          </div>
+          <div class="leader-photo"><img src="speakers/lee.png" alt="이경현 목사"></div>
+        </div>
+        <button class="leader-arrow prev" type="button" aria-label="이전 사람">←</button>
+        <button class="leader-arrow next" type="button" aria-label="다음 사람">→</button>
+      </div>
+      <div class="leader-nav">
+        <button class="leader-avatar active" type="button"><img src="speakers/staff1.jpg" alt=""><b>이경현 목사</b><span>대표</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREW -->
+  <div class="about-section reveal">
+    <div class="about-inner">
+      <h2 class="section-title">함께하는 이들</h2>
+      <!-- TODO: 실제 명단과 사진으로 교체하세요 -->
+      <div class="crew-grid">
+        <div class="crew-card"><img src="speakers/staff2.jpg" alt="김일보 간사" loading="lazy"><div class="crew-info"><p class="crew-name">김일보 간사</p><p class="crew-role">총괄디렉터</p></div></div>
+        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">이름</p><p class="crew-role">역할</p></div></div>
+        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">이름</p><p class="crew-role">역할</p></div></div>
+        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">이름</p><p class="crew-role">역할</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTNERS -->
+  <div class="about-section reveal">
+    <div class="about-inner">
+      <h2 class="section-title">함께 세워가는 곳</h2>
+      <!-- TODO: 지도위원 · 협력교회 · 협력사 실제 명단으로 교체하세요 -->
+      <div class="partner-groups">
+        <div>
+          <p class="partner-label">지도위원</p>
+          <ul class="advisor-list">
+            <li><b>전영훈 목사</b><span>새숨교회</span></li>
+            <li><b>이재환 목사</b><span>구로동교회</span></li>
+            <li><b>김단일 목사</b><span>컴앤씨교회</span></li>
+            <li><b>오현철 교수</b><span>성결대학교</span></li>
+            <li><b>김건주 목사</b><span>복음과 도시</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="partner-label">협력교회</p>
+          <ul class="church-list">
+            <li>세상의빛동광교회</li>
+            <li>구로동교회</li>
+            <li>교회 이름</li>
+            <li>교회 이름</li>
+            <li>교회 이름</li>
+          </ul>
+        </div>
+        <div>
+          <p class="partner-label">협력사</p>
+          <ul class="logo-grid">
+            <li>LOGO</li><li>LOGO</li><li>LOGO</li><li>LOGO</li><li>LOGO</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- THEME + INFO (하나의 박스) -->
-  <div class="theme-wrap">
-    <div class="theme">
-      <div class="theme-top">
-        <div class="theme-eyebrow">2027 THEME</div>
-        <h2 class="theme-title">순전함</h2>
-        <p class="theme-verse">
-          너희는 이 세대를 본받지 말고 오직 마음을 새롭게 함으로 변화를 받아<br>
-          하나님의 선하시고 기뻐하시고 온전하신 뜻이 무엇인지 분별하도록 하라
-        </p>
-        <div class="theme-ref">로마서 12:2</div>
-      </div>
-      <div class="theme-divider"></div>
-      <div class="theme-info-grid">
-        <div class="theme-info-item">
-          <div class="theme-info-label">대상</div>
-          <div class="theme-info-value">청소년</div>
-          <div class="theme-info-desc">다음 세대 청소년들을 위한 캠프</div>
-        </div>
-        <div class="theme-info-item">
-          <div class="theme-info-label">일정</div>
-          <div class="theme-info-value">무박 2일</div>
-          <div class="theme-info-desc">2027년 겨울 (일정 추후 공지)</div>
-        </div>
-        <div class="theme-info-item">
-          <div class="theme-info-label">장소</div>
-          <div class="theme-info-value">추후 공지</div>
-          <div class="theme-info-desc">확정 시 홈페이지에 안내됩니다</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 함께하는 이들 -->
-  <div class="team-wrap">
-    <div class="team">
-      <div class="team-header">
-        <div class="team-eyebrow">PARTNERS</div>
-        <h2 class="team-title">함께하는 이들</h2>
-      </div>
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-card-photo" style="background-image:url('per1.jpg')">
-            <div class="team-arrow">→</div>
-          </div>
-          <div class="team-card-info">
-            <div class="team-card-name">이름 <span>| 역할</span></div>
-            <div class="team-card-desc">소개가 들어갑니다.</div>
-          </div>
-        </div>
-        <div class="team-card">
-          <div class="team-card-photo" style="background-image:url('per2.jpg')">
-            <div class="team-arrow">→</div>
-          </div>
-          <div class="team-card-info">
-            <div class="team-card-name">이름 <span>| 역할</span></div>
-            <div class="team-card-desc">소개가 들어갑니다.</div>
-          </div>
-        </div>
-        <div class="team-card">
-          <div class="team-card-photo" style="background-image:url('per3..jpg')">
-            <div class="team-arrow">→</div>
-          </div>
-          <div class="team-card-info">
-            <div class="team-card-name">이름 <span>| 역할</span></div>
-            <div class="team-card-desc">소개가 들어갑니다.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
+  <div class="page-end"></div>
+</main>
 
 <!-- FOOTER -->
 <footer class="site-footer">
@@ -592,19 +953,88 @@
       <div class="footer-logo">WHOLEGEN<b>CAMP</b></div>
       <ul class="footer-links">
         <li><a href="about.html">소개</a></li>
-        <li><a href="#">공지</a></li>
         <li><a href="camp.html">캠프</a></li>
         <li><a href="#">자료실</a></li>
+        <li><a href="faq.html">FAQ</a></li>
         <li><a href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a></li>
       </ul>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <div>서울특별시 동작구 사당로 143 총신대학교 06988 · TEL. 02-3479-0200</div>
-      <div>&copy; 2026 WHOLEGENCAMP. All rights reserved.</div>
+      <div class="footer-address">세상의 빛 동광교회 · 경기도 부천시 소사구 경인옛로 130 · TEL. 032-343-5581</div>
+      <div class="footer-copyright">&copy; 2026 LOIND CORPORATION. All rights reserved.</div>
     </div>
   </div>
 </footer>
+
+<script>
+  // Header: transparent over hero, solid after
+  (function(){
+    var header = document.querySelector('.site-top');
+    var banner = document.querySelector('.banner');
+    if (!header) return;
+    if (!banner){ header.classList.add('is-solid'); return; }
+    function update(){
+      header.classList.toggle('is-solid', window.scrollY > banner.offsetHeight - header.offsetHeight);
+    }
+    update();
+    window.addEventListener('scroll', update, { passive:true });
+    window.addEventListener('resize', update);
+  })();
+
+  // Leadership switcher
+  (function(){
+    var wrap = document.getElementById('leaders');
+    if (!wrap) return;
+    var slides = wrap.querySelectorAll('.leader-slide');
+    var avatars = wrap.querySelectorAll('.leader-avatar');
+    wrap.setAttribute('data-count', slides.length);
+    var idx = 0;
+    function go(i){
+      idx = (i + slides.length) % slides.length;
+      slides.forEach(function(s, k){ s.classList.toggle('active', k === idx); });
+      avatars.forEach(function(a, k){ a.classList.toggle('active', k === idx); });
+    }
+    avatars.forEach(function(a, k){ a.addEventListener('click', function(){ go(k); }); });
+    wrap.querySelector('.leader-arrow.prev').addEventListener('click', function(){ go(idx - 1); });
+    wrap.querySelector('.leader-arrow.next').addEventListener('click', function(){ go(idx + 1); });
+  })();
+
+  // Scroll reveal
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)){
+      els.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (!toggle || !links) return;
+    toggle.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('open');
+      document.querySelector('.site-top').classList.toggle('menu-open', isOpen);
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('open');
+        document.querySelector('.site-top').classList.remove('menu-open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>

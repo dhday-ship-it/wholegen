@@ -1,15 +1,14 @@
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hero Section</title>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<title>WHOLEGENCAMP</title>
+<meta name="description" content="2027 WHOLEGEN WINTER CAMP · 2027.01.21–22 · 세상의 빛 동광교회(부천)">
+<script>document.documentElement.classList.add('js');</script>
 <style>
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
   :root{
     --sage: #1A1A1A;
@@ -18,16 +17,22 @@
     --tan: #CCCCCC;
     --brown: #4D4D4D;
     --ink: #000000;
+    --pw-accent: #9DB1EE;
+    --surface: #121826;
+    --surface-2: #1A2132;
+    --line: rgba(255,255,255,0.07);
 
     /* Spacing scale */
-    --section-gap: 80px;
-    --section-gap-mobile: 52px;
+    --section-gap: 128px;
+    --section-gap-mobile: 80px;
+    --head-gap: 44px;          /* section heading → content */
+    --head-gap-mobile: 28px;
     --content-px: 40px;
     --content-px-mobile: 20px;
 
     /* Type scale */
     --fs-display: 48px;
-    --fs-h2: 36px;
+    --fs-h2: 40px;
     --fs-h3: 24px;
     --fs-body: 15px;
     --fs-small: 13px;
@@ -35,14 +40,15 @@
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{ scroll-behavior:smooth; scroll-padding-top:72px; }
 
   html,body{
     width:100%;
     min-height:100vh;
     font-family:'Pretendard', sans-serif;
-    background: linear-gradient(150deg, var(--sage-light) 0%, var(--cream) 45%, var(--tan) 100%);
-    color: var(--ink);
-    overflow-x:hidden;
+    background: #0B0F17;
+    color: #EDEFF3;
+    overflow-x:clip;
     position:relative;
     font-size: var(--fs-body);
     line-height: 1.6;
@@ -51,10 +57,228 @@
   .hero{
     position:relative;
     width:100%;
-    min-height:100vh;
     display:flex;
     flex-direction:column;
-    padding-bottom: var(--section-gap);
+  }
+
+  /* ---------- TOP BANNER (poster hero) ---------- */
+  .site-top{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    background: transparent;
+    border-bottom:1px solid transparent;
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .site-top.is-solid,
+  .site-top.menu-open{
+    background: rgba(11,15,23,0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+  .site-top .logo,
+  .site-top .logo b,
+  .site-top .nav-links li,
+  .site-top .inquiry-btn{ transition: color .3s ease, background .3s ease, transform .2s ease; }
+  .site-top .logo{ color:#fff; }
+  .site-top .logo b{ color: rgba(255,255,255,0.6); }
+  .site-top .inquiry-btn{ background:#fff; color:#0B0F17; }
+  .site-top .inquiry-btn:hover{ background: var(--pw-accent); }
+  .site-top .nav-toggle span{ background:#fff; }
+  @media (min-width:901px){
+    .site-top .nav-links li{ color:#fff; }
+    .site-top .nav-links li:hover{ color: rgba(255,255,255,0.65); }
+  }
+
+  .banner{
+    --pw: #9DB1EE;       /* poster: WHOLEGEN */
+    --pw-light: #DDE4EE; /* poster: WINTER */
+    position:relative;
+    width:100%;
+    height: 100vh;
+    min-height:660px;
+    max-height:980px;
+    overflow:hidden;
+    background:#0c1424;
+    color:#fff;
+    --p1:0;  /* 0→1 as the hero scrolls away: title fades, artwork drifts to centre */
+  }
+
+  .banner-inner{
+    opacity: calc(1 - var(--p1));
+    transform: translateY(calc(var(--p1) * -48px));
+    filter: blur(calc(var(--p1) * 6px));
+  }
+
+  /* poster artwork, blown up and blurred = poster colour field */
+  .banner-bg{
+    position:absolute;
+    inset:-10%;
+    background: url('art.png') center 55% / cover no-repeat;
+    filter: blur(40px) saturate(1.1) brightness(.5) hue-rotate(-8deg);
+  }
+  /* poster artwork itself: figure holding the light */
+  .banner-figure{
+    position:absolute;
+    top:-4%;
+    left:50%;
+    height:108%;
+    aspect-ratio: 326 / 464;
+    transform: translateX(-96%);
+    background: url('art.png') center / cover no-repeat;
+    filter: saturate(1.15) brightness(calc(1 - var(--p1) * 0.12));
+    translate: calc(var(--p1) * 46%) 0;
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+            mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+    opacity:0;
+    animation: banner-figure 1.6s ease .1s forwards;
+  }
+  @keyframes banner-figure{
+    from{ opacity:0; transform: translateX(-96%) scale(1.04); }
+    to{ opacity:1; transform: translateX(-96%) scale(1); }
+  }
+  .banner::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:
+      linear-gradient(270deg, rgba(10,20,40,0.82) 0%, rgba(10,20,40,0.5) 40%, rgba(10,20,40,0) 70%),
+      linear-gradient(0deg, #0B0F17 0%, rgba(11,15,23,0) 28%);
+  }
+  .banner::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+    opacity:.4;
+    pointer-events:none;
+  }
+  .banner-inner{
+    position:relative;
+    z-index:2;
+    height:100%;
+    max-width:1280px;
+    margin:0 auto;
+    padding:128px var(--content-px) 64px;
+    display:grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1.3fr);
+    align-content:center;
+    align-items:start;
+    gap:48px;
+  }
+
+  /* main (right): title + date + place + buttons */
+  .banner-main{
+    grid-column:2;
+    grid-row:1;
+    align-self:start;
+    justify-self:end;
+    text-align:right;
+  }
+  .banner-wordmark{
+    font-family:'Pretendard', sans-serif;
+    font-weight:700;
+    font-size: clamp(64px, 8.4vw, 140px);
+    line-height:.9;
+    letter-spacing:-0.035em;
+    text-shadow: 0 4px 40px rgba(8,13,25,0.35);
+  }
+  .banner-wordmark span{
+    display:block;
+    opacity:0;
+    animation: banner-up 1s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .banner-wordmark .w-2{ color: var(--pw); animation-delay:.25s; }
+  .banner-wordmark .w-3{ color: var(--pw-light); animation-delay:.35s; }
+  .banner-wordmark .w-4{ color:#F5F6F8; animation-delay:.45s; }
+  .banner-step{
+    display:inline-block;
+    width:.5em;
+    height:.5em;
+    margin-right:-.01em;
+    vertical-align:baseline;
+    background: var(--pw);
+    clip-path: polygon(0 0, 34% 0, 34% 52%, 100% 52%, 100% 100%, 0 100%);
+  }
+  .banner-main > :not(.banner-wordmark){
+    opacity:0;
+    animation: banner-up .9s ease forwards;
+  }
+  .banner-date{
+    margin-top:36px;
+    font-family:'Pretendard', sans-serif;
+    font-size: clamp(30px, 3vw, 46px);
+    font-weight:700;
+    line-height:1;
+    letter-spacing:-0.02em;
+    animation-delay:.6s !important;
+  }
+  .banner-place{
+    margin-top:10px;
+    font-size: clamp(15px, 1.2vw, 17px);
+    font-weight:700;
+    color: rgba(255,255,255,0.88);
+    animation-delay:.68s !important;
+  }
+  .banner-hl{
+    padding:2px 8px;
+    border-radius:6px;
+    background: var(--pw);
+    color:#0c1424;
+    -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+  }
+  .banner-actions{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:22px;
+    animation-delay:.76s !important;
+  }
+  .banner-btn{
+    padding:8px 16px;
+    border-radius:999px;
+    font-size:12.5px;
+    font-weight:700;
+    text-decoration:none;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+  }
+  .banner-btn:hover{ transform: translateY(-2px); }
+  .banner-btn--solid{ background:#fff; color:#0c1424; }
+  .banner-btn--ghost{ border:1px solid rgba(255,255,255,0.45); color:#fff; }
+  .banner-btn--ghost:hover{ background: rgba(255,255,255,0.12); }
+
+  @keyframes banner-up{
+    from{ opacity:0; transform: translateY(18px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .banner-figure{ animation:none; opacity:1; }
+    .banner-wordmark span, .banner-main > *{ animation:none; opacity:1; }
+  }
+  @media (max-width:900px){
+    .banner{ height:100vh; height:100svh; min-height:560px; max-height:none; }
+    .banner-inner{ align-content:center; }
+    .banner-figure{ translate: calc(var(--p1) * 12%) 0; }
+    .banner-inner{
+      grid-template-columns:1fr;
+      gap:56px;
+      padding:120px var(--content-px) 56px;
+    }
+    .banner-main{ grid-column:auto; grid-row:auto; justify-self:end; }
+    .banner-wordmark{ font-size: clamp(60px, 17vw, 130px); }
+    .banner-figure{ height:100%; top:0; transform: translateX(-62%); animation:none; opacity:.9; }
+    .banner::before{
+      background: linear-gradient(180deg, rgba(8,13,25,0.35) 0%, rgba(8,13,25,0.15) 50%, rgba(8,13,25,0.55) 100%);
+    }
+  }
+  @media (max-width:760px){
+    .banner-inner{ padding:104px var(--content-px-mobile) 48px; gap:40px; }
   }
 
   /* ---------- NAV ---------- */
@@ -72,20 +296,17 @@
     justify-content:space-between;
     gap:48px;
     width:100%;
-    max-width:1200px;
-    padding: 14px 32px;
-    background: var(--ink);
-    border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    max-width:1280px;
     position:relative;
   }
   .logo{
     font-family:'JetBrains Mono', monospace;
     font-size:17px;
-    color: var(--cream);
+    font-weight:700;
+    color: var(--ink);
     letter-spacing:0.5px;
   }
-  .logo b{ color: var(--sage-light); font-weight:600; }
+  .logo b{ color: var(--brown); font-weight:700; }
 
   .nav-links{
     display:flex;
@@ -94,20 +315,22 @@
   }
   .nav-links li{
     font-size: var(--fs-body);
+    font-weight:600;
     letter-spacing:0.6px;
-    color: rgba(255,255,255,0.85);
+    color: var(--ink);
     cursor:pointer;
     transition: color .2s ease;
   }
-  .nav-links li:hover{ color: var(--sage-light); }
+  .nav-links li a{ color:inherit; text-decoration:none; }
+  .nav-links li:hover{ color: var(--brown); }
 
   .inquiry-btn{
     font-family:'JetBrains Mono', monospace;
     font-size: var(--fs-small);
     padding:9px 20px;
     border-radius:999px;
-    background: var(--cream);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--cream);
     font-weight:600;
     text-decoration:none;
     white-space:nowrap;
@@ -115,7 +338,7 @@
     display:inline-block;
   }
   .inquiry-btn:hover{
-    background: var(--sage-light);
+    background: var(--brown);
     transform: translateY(-1px);
   }
 
@@ -137,7 +360,7 @@
     display:block;
     width:100%;
     height:2px;
-    background: var(--cream);
+    background: var(--ink);
     border-radius:2px;
     transition: transform .2s ease, opacity .2s ease;
   }
@@ -155,10 +378,13 @@
       right:0;
       flex-direction:column;
       gap:0;
-      background: var(--ink);
+      background: rgba(18,24,38,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-radius:20px;
       padding:8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.07);
       z-index:30;
     }
     .nav-links.open{ display:flex; }
@@ -168,63 +394,159 @@
       padding:14px 16px;
       border-radius:12px;
     }
-    .nav-links li:hover{ background: rgba(255,255,255,0.08); }
-    .inquiry-btn{ order:2; }
+    .nav-links li{ color:#fff; }
+    .nav-links li:hover{ background: rgba(255,255,255,0.06); }
+    .inquiry-btn{ order:2; margin-left:auto; }
     .logo{ order:1; }
   }
 
-  /* ---------- AD SECTION (2/3 image : 1/3 info) ---------- */
-  .ad-wrap{
+  /* ---------- 2027 THEME (centered text) ---------- */
+  .theme-wrap{
     width:100%;
     display:flex;
     justify-content:center;
-    padding: 32px var(--content-px) 0;
-    position:relative;
-    z-index:20;
+    padding: var(--section-gap) var(--content-px) 0;
   }
-  .ad-section{
-    display:flex;
+  .theme{
     width:100%;
-    max-width:1280px;
-    min-height:400px;
-    border-radius:28px;
-    overflow:hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    max-width:640px;
+    text-align:center;
   }
-  .ad-image{
-    flex:2;
-    background: url('ex.jpg') center/cover no-repeat;
-  }
-  .ad-info{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:18px;
-    padding: 44px 36px;
-    background: var(--ink);
-    color: var(--cream);
-  }
-  .ad-tag{
-    align-self:flex-start;
+  .theme-eyebrow{
     font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-body);
-    padding:9px 18px;
-    border-radius:999px;
-    background: var(--cream);
-    color: var(--ink);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:3px;
+    color: var(--pw-accent);
+  }
+  .theme-title{
+    margin-top:12px;
+    font-size:64px;          /* one step above section titles (40px) */
     font-weight:800;
-    letter-spacing:0.5px;
-    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
-    animation: dday-pulse 2s ease-in-out infinite;
+    line-height:1.05;
+    letter-spacing:-0.04em;
   }
-  @keyframes dday-pulse{
-    0%,100%{ box-shadow: 0 0 0 4px rgba(255,255,255,0.15); }
-    50%{ box-shadow: 0 0 0 9px rgba(255,255,255,0.05); }
+  .theme-sub{
+    margin-top:14px;
+    font-size:17px;
+    font-weight:600;
+    color: rgba(255,255,255,0.85);
   }
+  .theme-verse{
+    margin-top:28px;
+    font-size:15px;
+    line-height:1.8;
+    color: rgba(255,255,255,0.65);
+    word-break: keep-all;
+  }
+  .theme-ref{
+    margin-top:10px;
+    font-size:13px;
+    color: rgba(255,255,255,0.45);
+  }
+  @media (max-width:760px){
+    .theme-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .theme-title{ font-size:44px; }
+    .theme-sub{ font-size:15px; }
+    .theme-verse{ margin-top:22px; font-size:14px; }
+  }
+
+  /* ---------- SPEAKERS (scrolling strip) ---------- */
+  .speakers-wrap{
+    width:100%;
+    padding-top: var(--section-gap);
+  }
+  .speakers-head{ padding:0 var(--content-px); }
+  .speakers-panel{
+    display:none;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:16px;
+    max-width:1280px;
+    margin:var(--head-gap) auto 0;
+    padding:0 var(--content-px);
+    list-style:none;
+  }
+  .speakers-panel.active{
+    display:flex;
+    animation: speakers-in .5s ease;
+  }
+  @keyframes speakers-in{
+    from{ opacity:0; transform: translateY(12px); }
+    to{ opacity:1; transform:none; }
+  }
+  .speaker{
+    position:relative;
+    flex:none;
+    width:220px;
+    height:294px;
+    border-radius:18px;
+    overflow:hidden;
+    background: var(--surface-2);
+  }
+  /* two team photos side by side span exactly three single cards (3×220 + 2×16),
+     shown at their own wide ratio so nobody in the group gets cropped */
+  .speaker--wide{ width:338px; height:auto; aspect-ratio: 19 / 10; }
+  .speakers-panel[data-spanel="WORSHIP"]{ max-width: calc(692px + 2 * var(--content-px)); }   /* 2 team photos / 3 singles per row */
+  .speaker img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    object-position:center 20%;
+    transition: transform .6s ease;
+  }
+  .speaker:hover img{ transform: scale(1.04); }
+  .speaker.is-empty{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: var(--surface);
+    border:1px dashed rgba(255,255,255,0.15);
+  }
+  .speaker.is-empty svg{ width:38%; opacity:.18; }
+  .speaker::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 45%);
+    pointer-events:none;
+  }
+  .speaker-info{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:16px;
+    z-index:1;
+  }
+  .speaker-name{
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:#fff;
+  }
+  .speaker-role{
+    margin-top:2px;
+    font-size:13px;
+    color: rgba(255,255,255,0.7);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .speakers-panel.active{ animation:none; }
+  }
+  @media (max-width:600px){
+    .speakers-wrap{ padding-top: var(--section-gap-mobile); }
+    .speakers-head{ padding:0 var(--content-px-mobile); }
+    .speakers-panel{ gap:10px; margin-top: var(--head-gap-mobile); padding:0 var(--content-px-mobile); }
+    .speaker{ width: calc((100% - 10px) / 2); height:auto; aspect-ratio: 3 / 4; border-radius:14px; }
+    .speaker--wide{ width:100%; aspect-ratio: 19 / 10; }
+    .speaker-name{ font-size:15px; }
+    .speaker-role{ font-size:11.5px; }
+  }
+
   .marquee-wrap{
     width:100%;
     margin-top: var(--section-gap);
+    margin-bottom:24px;
   }
   .marquee{
     width:100%;
@@ -244,8 +566,8 @@
     font-weight:800;
     letter-spacing:1px;
     text-transform:uppercase;
-    color: rgba(0,0,0,0.05);
-    -webkit-text-stroke: 1.5px rgba(74,74,74,0.55);
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(255,255,255,0.16);
     white-space:nowrap;
   }
   .marquee-track span i{
@@ -254,7 +576,7 @@
     height:10px;
     margin:0 48px;
     border-radius:50%;
-    background: rgba(122,106,89,0.5);
+    background: rgba(157,177,238,0.5);
     font-style:normal;
     flex-shrink:0;
   }
@@ -274,28 +596,18 @@
     width:100%;
     max-width:1280px;
   }
-  .programs-eyebrow{
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
-    font-weight:700;
-    letter-spacing:2.5px;
-    text-align:center;
-    text-transform:uppercase;
-    color: var(--brown);
-  }
   .programs-title{
-    margin-top:10px;
     font-family:'Pretendard', sans-serif;
     font-size: var(--fs-h2);
     font-weight:800;
     letter-spacing:-0.5px;
     text-align:center;
-    color: var(--ink);
+    color:#fff;
   }
   .day-tabs{
     display:flex;
     justify-content:center;
-    gap:12px;
+    gap:10px;
     margin-top:28px;
   }
   .day-tab{
@@ -305,165 +617,163 @@
     letter-spacing:1px;
     padding:11px 28px;
     border-radius:999px;
-    border:1.5px solid var(--ink);
+    border:1.5px solid rgba(255,255,255,0.3);
     background:transparent;
-    color: var(--ink);
+    color:#fff;
     cursor:pointer;
     transition: background .2s ease, color .2s ease;
   }
   .day-tab.active{
-    background: var(--ink);
-    color: var(--cream);
+    background:#fff;
+    border-color:#fff;
+    color:#0B0F17;
   }
-  .day-panel{
-    display:none;
-    margin-top:32px;
+  /* glass timetable over the poster artwork */
+  .tt{
+    position:relative;
+    margin-top: var(--head-gap);
     padding:40px;
-    border-radius:24px;
-    background: var(--ink);
-    color: var(--cream);
-    min-height:520px;
-    position:relative;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
-  }
-  .day-panel::before{
-    content:'';
-    position:absolute;
-    top:0;
-    right:0;
-    width:240px;
-    height:240px;
-    border-radius:50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
-    pointer-events:none;
-  }
-  .day-panel.active{ display:flex; gap:32px; }
-
-  .timetable{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    list-style:none;
-  }
-  .timetable-item{
-    display:flex;
-    flex-direction:column;
-    gap:3px;
-    padding:12px 16px;
-    border-radius:12px;
-    cursor:pointer;
-    transition: background .2s ease;
-  }
-  .timetable-item:hover{ background: rgba(255,255,255,0.06); }
-  .timetable-item.active{ background: var(--cream); }
-  .timetable-item .time{
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
-    letter-spacing:0.5px;
-    color: var(--sage-light);
-  }
-  .timetable-item.active .time{ color: var(--brown); }
-  .timetable-item .label{
-    font-size: 17px;
-    font-weight:600;
-  }
-  .timetable-item.active .label{ color: var(--ink); }
-
-  .time-detail{
-    flex:1.2;
-    display:flex;
-    margin-left:40px;
-    border-radius:20px;
+    border-radius:28px;
     overflow:hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    isolation:isolate;
+    border:1px solid rgba(255,255,255,0.1);
   }
-  .detail-photo{
-    flex:1;
-    background: rgba(0,0,0,0.06);
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-  .detail-photo .person-icon circle,
-  .detail-photo .person-icon path{ fill: rgba(0,0,0,0.28); }
-  .detail-photo .person-icon{
-    width:55%;
-    height:auto;
-    display:block;
-  }
-  .detail-photo.has-photo .person-icon{ display:none; }
-  .detail-text{
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    gap:14px;
-    padding: 32px 28px;
-    background: var(--sage-light);
-    color: var(--ink);
-    position:relative;
-  }
-  .detail-text::after{
+  .tt::before{
     content:'';
     position:absolute;
-    bottom:20px;
-    right:20px;
-    width:40px;
-    height:40px;
+    inset:-40px;
+    z-index:-2;
+    background: url('art.png') center 55% / cover no-repeat;
+    filter: blur(30px) saturate(1.1) brightness(.55);
+  }
+  .tt::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background: rgba(11,15,23,0.3);
+  }
+  .tt-days{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:40px;
+  }
+  .tt-col{
+    position:relative;
+    display:grid;
+    grid-template-columns: 76px 1fr;
+    column-gap:36px;
+    align-items:start;
+  }
+  /* vertical line with a dot on top */
+  .tt-col::before{
+    content:'';
+    position:absolute;
+    left:93px;
+    top:14px;
+    bottom:6px;
+    width:2px;
+    border-radius:2px;
+    background: rgba(255,255,255,0.8);
+  }
+  .tt-col::after{
+    content:'';
+    position:absolute;
+    left:88px;
+    top:6px;
+    width:12px;
+    height:12px;
     border-radius:50%;
-    background: var(--ink);
-    opacity:0.04;
+    background:#fff;
   }
-  .detail-time{
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
-    color: var(--brown);
-    letter-spacing:0.5px;
+  .tt-day{
+    padding-top:4px;
+    text-align:right;
   }
-  .detail-affiliation{
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color: rgba(0,0,0,0.5);
-  }
-  .detail-name{
-    font-size: 28px;
+  .tt-day b{
+    display:block;
+    font-size:20px;
     font-weight:800;
+    letter-spacing:-0.01em;
   }
-  .detail-overview{
-    font-size: 16px;
-    line-height:1.7;
-    color: rgba(0,0,0,0.65);
+  .tt-day span{
+    display:block;
+    margin-top:2px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color: rgba(255,255,255,0.6);
   }
-
-  @media (max-width:900px){
-    .day-panel.active{ flex-direction:column; gap:24px; }
-    .time-detail{ margin-left:0; border-radius:16px; }
-    .detail-text{ padding:28px 22px; }
+  .tt-groups{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
   }
-
-  @media (max-width:600px){
-    .time-detail{ flex-direction:column; }
-    .detail-photo{ min-height:180px; }
+  .tt-card{
+    padding:18px 20px;
+    border-radius:18px;
+    background: rgba(255,255,255,0.09);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .tt-card.is-key{ background: rgba(157,177,238,0.16); border-color: rgba(157,177,238,0.28); }
+  .tt-item p{
+    font-size:16px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    line-height:1.35;
+  }
+  .tt-item p small{
+    margin-left:8px;
+    font-size:12.5px;
+    font-weight:500;
+    color: rgba(255,255,255,0.7);
+    white-space:nowrap;
+  }
+  .tt-item span{
+    display:block;
+    margin-top:2px;
+    font-size:13px;
+    font-weight:300;
+    letter-spacing:0.3px;
+    color: rgba(255,255,255,0.75);
+  }
+  .tt-break{
+    padding:2px 20px;
+    font-size:12.5px;
+    color: rgba(255,255,255,0.5);
+  }
+  @media (max-width:1100px){
+    .tt-days{ grid-template-columns:1fr; gap:36px; }
   }
 
   @media (max-width:760px){
     .programs-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
-    .programs-title{ font-size:26px; }
+    .programs-title{ font-size:28px; }
     .day-tab{ padding:9px 20px; font-size:12px; }
-    .day-panel{ padding:24px; min-height:0; }
+    .tt{ margin-top: var(--head-gap-mobile); padding:24px 16px; border-radius:22px; }
+    .tt-col{ grid-template-columns: 52px 1fr; column-gap:28px; }
+    .tt-col::before{ left:65px; }
+    .tt-col::after{ left:60px; }
+    .tt-day b{ font-size:16px; }
+    .tt-day span{ font-size:10px; white-space:nowrap; }
+    .tt-card{ padding:15px 16px; border-radius:15px; gap:12px; }
+    .tt-item p{ font-size:15.5px; }
+    .tt-item p small{ display:block; margin:2px 0 0; }
+    .tt-item span{ font-size:12.5px; }
+    .tt-break{ padding:0 16px; font-size:12px; }
   }
 
   /* ---------- SPOTLIGHT (image : info card) ---------- */
   .spotlight-wrap{
     width:100%;
     display:flex;
-    justify-content:center;
-    padding: 32px var(--content-px) 0;
+    flex-direction:column;
+    align-items:center;
+    padding: var(--head-gap) var(--content-px) 0;
   }
   .spotlight{
     display:flex;
@@ -472,49 +782,12 @@
     max-width:1280px;
     border-radius:28px;
     overflow:hidden;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
-    border: 1px solid rgba(0,0,0,0.06);
+    background: var(--surface);
+    border: 1px solid var(--line);
     position:relative;
-  }
-  .spotlight-image{
-    width:100%;
-    height:400px;
-    position:relative;
-    overflow:hidden;
-  }
-  .spotlight-image img{
-    width:100%;
-    height:100%;
-    display:block;
-    object-fit:cover;
-  }
-  .spotlight-image::after{
-    content:'';
-    position:absolute;
-    bottom:0;
-    left:0;
-    right:0;
-    height:80px;
-    background: linear-gradient(to top, var(--sage-light), transparent);
-    pointer-events:none;
   }
   .location-image{
     flex:1;
-  }
-  .location-image iframe{
-    width:100%;
-    height:100%;
-    display:block;
-    border:0;
-    min-height:320px;
-  }
-  .location-eyebrow{
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
-    font-weight:700;
-    letter-spacing:1.5px;
-    color: rgba(0,0,0,0.45);
-    text-transform:uppercase;
   }
   .location-title{
     margin-top:-2px;
@@ -530,24 +803,14 @@
     justify-content:center;
     gap:18px;
     padding: 44px 48px;
-    background: var(--sage-light);
-    color: var(--ink);
+    background: var(--surface);
+    color:#fff;
     position:relative;
   }
-  .spotlight-info::before{
-    content:'';
-    position:absolute;
-    top:24px;
-    right:32px;
-    width:56px;
-    height:56px;
-    border-radius:50%;
-    background: var(--ink);
-    opacity:0.04;
-  }
   .spotlight-subtitle{
-    font-size: 18px;
-    font-weight:700;
+    font-size: 26px;
+    font-weight:800;
+    letter-spacing:-0.02em;
     display:flex;
     align-items:center;
     gap:10px;
@@ -556,16 +819,16 @@
     content:'';
     display:inline-block;
     width:4px;
-    height:20px;
+    height:24px;
     border-radius:2px;
-    background: var(--ink);
+    background: var(--pw-accent);
   }
   .spotlight-block{
     display:flex;
     flex-direction:column;
     gap:6px;
     padding-left:14px;
-    border-left:2px solid rgba(0,0,0,0.08);
+    border-left:2px solid rgba(255,255,255,0.12);
   }
   .spotlight-block-title{
     font-size: var(--fs-body);
@@ -574,7 +837,7 @@
   .spotlight-block-text{
     font-size: var(--fs-body);
     line-height:1.7;
-    color: rgba(0,0,0,0.6);
+    color: rgba(255,255,255,0.65);
   }
   .spotlight-btn{
     align-self:flex-start;
@@ -584,8 +847,9 @@
     margin-top:8px;
     padding:14px 24px;
     border-radius:12px;
-    background: var(--ink);
-    color: var(--cream);
+    border:1px solid transparent;
+    background:#fff;
+    color:#0B0F17;
     font-weight:700;
     font-size: var(--fs-body);
     text-decoration:none;
@@ -593,7 +857,7 @@
   }
   .spotlight-btn:hover{
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
   }
   .spotlight-btn .arrow-icon{
     font-size:15px;
@@ -611,12 +875,8 @@
   }
 
   @media (max-width:760px){
-    .spotlight-wrap{ padding:24px var(--content-px-mobile) 0; }
+    .spotlight-wrap{ padding: var(--head-gap-mobile) var(--content-px-mobile) 0; }
   }
-
-  /* Worship day panels */
-  .worship-panel{ display:none; }
-  .worship-panel.active{ display:flex; }
 
   /* Location card: row layout with taller map */
   .spotlight.spotlight--location{
@@ -629,65 +889,215 @@
   }
   .spotlight.spotlight--location .spotlight-info{
     flex:1;
+    padding:64px 56px;
   }
+  .location-image{
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(157,177,238,0.16) 0%, rgba(157,177,238,0) 55%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 48px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 48px),
+      var(--surface-2);
+  }
+  /* Kakao roughmap fills the left pane */
+  .location-image .root_daum_roughmap{
+    position:absolute;
+    inset:0;
+    width:100% !important;
+    height:100% !important;
+    border:0;
+    background:transparent;
+  }
+  .location-image .root_daum_roughmap .wrap_map{ height:100% !important; }
+  .location-image .root_daum_roughmap .cont{ display:none; }  /* hide the link bar under the map */
+  /* scoped tightly: the Kakao roughmap loader injects global dl/dt/dd resets */
+  .spotlight-info dl.location-info{
+    display:block;
+    margin:4px 0 6px;
+    padding:0;
+    border-top:1px solid var(--line);
+  }
+  .spotlight-info dl.location-info > div{
+    display:grid;
+    grid-template-columns: 56px 1fr;
+    gap:16px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .spotlight-info dl.location-info dt{
+    display:block;
+    margin:0;
+    padding-top:1px;
+    font-size:13px;
+    font-weight:400;
+    color: rgba(255,255,255,0.45);
+  }
+  .spotlight-info dl.location-info dd{
+    display:block;
+    margin:0;
+    font-size:15px;
+    font-weight:600;
+    line-height:1.5;
+    color:#fff;
+  }
+  .spotlight-info dl.location-info dd small{
+    display:block;
+    margin-top:2px;
+    font-size:12.5px;
+    font-weight:400;
+    color: rgba(255,255,255,0.5);
+  }
+  .location-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:8px;
+  }
+  .location-actions .spotlight-btn{ margin-top:0; }
+  .spotlight-btn--ghost{
+    background:transparent;
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.3);
+  }
+  .spotlight-btn--ghost:hover{ background: rgba(255,255,255,0.08); }
   @media (max-width:900px){
     .spotlight.spotlight--location{ flex-direction:column; }
     .spotlight.spotlight--location .location-image{ min-height:280px; }
   }
 
-  .ad-title{
-    font-size: var(--fs-h3);
-    font-weight:700;
-    line-height:1.35;
-  }
-  .ad-divider{
-    border:none;
-    border-top:1px solid rgba(255,255,255,0.2);
-    margin:6px 0;
-  }
-  .ad-details{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-  }
-  .ad-row dt{
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
-    color: var(--sage-light);
-    margin-bottom:4px;
-  }
-  .ad-row dd{
-    font-size: var(--fs-body);
-    line-height:1.6;
-  }
-  .ad-note{
-    font-size: var(--fs-xs);
-    color: rgba(255,255,255,0.6);
-    line-height:1.5;
-  }
-
-  @media (max-width:900px){
-    .ad-section{ flex-direction:column; min-height:0; border-radius:20px; }
-    .ad-image{ min-height:200px; }
-    .ad-info{ padding:32px 24px; }
-    .ad-title{ font-size:22px; }
-  }
-
   @media (max-width: 760px){
-    .nav-wrap{ padding:16px var(--content-px-mobile) 0; }
-    nav{ padding:12px 18px; gap:20px; border-radius:32px; }
-    .ad-wrap{ padding:20px var(--content-px-mobile) 0; }
+    .nav-wrap{ padding-left: var(--content-px-mobile); padding-right: var(--content-px-mobile); }
+    .site-top .nav-wrap{ padding-top:12px; padding-bottom:12px; }
+    nav{ gap:16px; }
     .marquee-wrap{ margin-top: var(--section-gap-mobile); }
     .marquee{ padding:16px 0; }
-    .marquee-track span{ font-size:48px; -webkit-text-stroke: 1px rgba(74,74,74,0.55); }
+    .marquee-track span{ font-size:48px; -webkit-text-stroke: 1px rgba(255,255,255,0.16); }
     .marquee-track span i{ margin:0 20px; width:7px; height:7px; }
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .js .reveal{
+    opacity:0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .js .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .js .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ---------- VENUE SLIDER (one wide box) ---------- */
+  .venue-slider{
+    position:relative;
+    width:100%;
+    max-width:1280px;
+    margin-bottom:16px;
+    aspect-ratio: 21 / 8;
+    border-radius:28px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    background: var(--surface-2);
+    touch-action: pan-y;
+  }
+  .venue-slide{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transition: opacity .9s ease;
+  }
+  .venue-slide.active{ opacity:1; }
+  .venue-slide img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    transform: scale(1.04);
+    transition: transform 5s ease-out;
+  }
+  .venue-slide.active img{ transform: scale(1); }
+  .venue-slider::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background: linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 40%);
+    pointer-events:none;
+  }
+  .venue-caption{
+    position:absolute;
+    left:32px;
+    bottom:28px;
+    z-index:2;
+    font-size:18px;
+    font-weight:700;
+    color:#fff;
+  }
+  .venue-count{
+    margin-left:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:500;
+    color: rgba(255,255,255,0.65);
+  }
+  .venue-dots{
+    position:absolute;
+    right:32px;
+    bottom:34px;
+    z-index:2;
+    display:flex;
+    gap:8px;
+  }
+  .venue-dots button{
+    width:8px;
+    height:8px;
+    padding:0;
+    border:none;
+    border-radius:999px;
+    background: rgba(255,255,255,0.4);
+    cursor:pointer;
+    transition: width .3s ease, background .3s ease;
+  }
+  .venue-dots button.active{ width:24px; background:#fff; }
+  .venue-arrow{
+    position:absolute;
+    top:50%;
+    z-index:2;
+    width:44px;
+    height:44px;
+    margin-top:-22px;
+    border:none;
+    border-radius:50%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color:#fff;
+    font-size:20px;
+    cursor:pointer;
+    opacity:0;
+    transition: opacity .25s ease, background .2s ease;
+  }
+  .venue-slider:hover .venue-arrow{ opacity:1; }
+  .venue-arrow:hover{ background: rgba(0,0,0,0.6); }
+  .venue-arrow.prev{ left:20px; }
+  .venue-arrow.next{ right:20px; }
+  @media (prefers-reduced-motion: reduce){
+    .venue-slide, .venue-slide img{ transition:none; transform:none; }
+  }
+  @media (max-width:760px){
+    .venue-slider{ margin-bottom:10px; aspect-ratio: 16 / 10; border-radius:20px; }
+    .venue-caption{ left:18px; bottom:16px; font-size:15px; }
+    .venue-dots{ right:18px; bottom:21px; }
+    .venue-arrow{ display:none; }
   }
 
   /* ---------- FOOTER ---------- */
   .site-footer{
     width:100%;
-    margin-top: var(--section-gap);
-    background: var(--ink);
+    background:#06080D;
+    border-top:1px solid var(--line);
     padding: 52px var(--content-px) 36px;
   }
   .footer-inner{
@@ -707,7 +1117,7 @@
     color: var(--cream);
     letter-spacing:0.5px;
   }
-  .footer-logo b{ color: var(--sage-light); font-weight:600; }
+  .footer-logo b{ color: rgba(255,255,255,0.5); font-weight:600; }
   .footer-links{
     display:flex;
     gap:28px;
@@ -747,217 +1157,169 @@
 
 <div class="hero">
 
-  <!-- NAV -->
-  <div class="nav-wrap">
-    <nav>
-      <div class="logo">WHOLEGEN<b>CAMP</b></div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="about.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">소개</a></li>
-        <li><a href="camp.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">캠프</a></li>
-        <li><a href="#" style="color:rgba(255,255,255,0.85);text-decoration:none;">자료실</a></li>
-        <li><a href="faq.html" style="color:rgba(255,255,255,0.85);text-decoration:none;">FAQ</a></li>
-      </ul>
-      <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
-        <span></span><span></span><span></span>
-      </button>
-      <!-- TODO: href를 실제 카카오톡 채널 URL로 교체하세요 (예: https://pf.kakao.com/_xxxxxx/chat) -->
-      <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
-    </nav>
+  <!-- TOP NAV -->
+  <header class="site-top">
+    <!-- NAV -->
+    <div class="nav-wrap">
+      <nav>
+        <div class="logo">WHOLEGEN<b>CAMP</b></div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="about.html">소개</a></li>
+          <li><a href="camp.html">캠프</a></li>
+          <li><a href="#">자료실</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+        <!-- TODO: href를 실제 카카오톡 채널 URL로 교체하세요 (예: https://pf.kakao.com/_xxxxxx/chat) -->
+        <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- TOP BANNER (poster hero) -->
+  <section class="banner" aria-label="2027 WHOLEGEN WINTER CAMP">
+    <div class="banner-bg" aria-hidden="true"></div>
+    <div class="banner-figure" aria-hidden="true"></div>
+    <div class="banner-inner">
+      <div class="banner-main">
+        <h1 class="banner-wordmark" aria-label="2027 WHOLEGEN WINTER CAMP">
+          <span class="w-2" aria-hidden="true">WHOLEGEN</span>
+          <span class="w-3" aria-hidden="true"><i class="banner-step"></i>WINTER</span>
+          <span class="w-4" aria-hidden="true">CAMP</span>
+        </h1>
+        <p class="banner-date">2027.01.21—22</p>
+        <p class="banner-place"><mark class="banner-hl">무박 2일 청소년 캠프</mark> · 세상의 빛 동광교회 (부천)</p>
+        <div class="banner-actions">
+          <a class="banner-btn banner-btn--solid" href="about.html">캠프 소개</a>
+          <a class="banner-btn banner-btn--ghost" href="poster.jpg" target="_blank" rel="noopener">포스터 보기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 2027 THEME -->
+  <div class="theme-wrap reveal" id="theme">
+    <section class="theme" aria-label="2027 주제">
+      <p class="theme-eyebrow">2027 THEME</p>
+      <h2 class="theme-title">순전함</h2>
+      <p class="theme-sub">예수 그리스도 안에서 온전히 세워지는 세대</p>
+      <p class="theme-verse">그리하여 여러분은, 흠이 없고 순결해져서, 구부러지고 뒤틀린 세대 가운데서 하나님의 흠없는 자녀가 되어야 합니다. 그리하면 여러분은 이 세상에서 별과 같이 빛날 것입니다.</p>
+      <p class="theme-ref">빌립보서 2:15 · 새번역</p>
+    </section>
   </div>
 
-  <!-- AD SECTION (2/3 image : 1/3 info panel) -->
-  <div class="ad-wrap">
-    <section class="ad-section">
-      <div class="ad-image"></div>
-      <div class="ad-info">
-        <span class="ad-tag" id="adDday">D-000</span>
-        <h2 class="ad-title">Wholegen 캠프</h2>
-        <hr class="ad-divider">
-        <dl class="ad-details">
-          <div class="ad-row">
-            <dt>주제</dt>
-            <dd>순전함 / 예수 그리스도 안에서 온전히 세워지는 세대</dd>
-          </div>
-          <div class="ad-row">
-            <dt>주제구절</dt>
-            <dd>너희는 이 세대를 본받지 말고 오직 마음을 새롭게 함으로 변화를 받아 <br> 하나님의 선하시고 기뻐하시고 온전하신 뜻이 무엇인지 분별하도록 하라 <br> (로마서 12:2)</dd>
-          </div>
-          <div class="ad-row">
-            <dt>일정</dt>
-            <dd>27.01.01 ~ 27.01.02 하나님의 집</dd>
-          </div>
-        </dl>
+  <!-- SPEAKERS -->
+  <div class="speakers-wrap reveal" id="speakers">
+    <div class="speakers-head">
+      <h2 class="programs-title">강사진</h2>
+      <div class="day-tabs">
+        <button class="day-tab active" type="button" data-sgroup="STAFF">STAFF</button>
+        <button class="day-tab" type="button" data-sgroup="SPEAKER">SPEAKER</button>
+        <button class="day-tab" type="button" data-sgroup="PROGRAM">PROGRAM</button>
+        <button class="day-tab" type="button" data-sgroup="WORSHIP">WORSHIP</button>
       </div>
-    </section>
+    </div>
+      <ul class="speakers-panel active" data-spanel="STAFF">
+        <li class="speaker"><img src="speakers/staff1.jpg" alt="이경현 목사" loading="lazy"><div class="speaker-info"><p class="speaker-name">이경현 목사</p><p class="speaker-role">대표</p></div></li>
+        <li class="speaker"><img src="speakers/staff2.jpg" alt="김일보 간사" loading="lazy"><div class="speaker-info"><p class="speaker-name">김일보 간사</p><p class="speaker-role">총괄디렉터</p></div></li>
+      </ul>
+      <ul class="speakers-panel" data-spanel="SPEAKER">
+        <li class="speaker"><img src="speakers/prog7.jpg" alt="우성환 목사" loading="lazy"><div class="speaker-info"><p class="speaker-name">우성환 목사</p><p class="speaker-role">세상의 빛 동광교회</p></div></li>
+        <li class="speaker"><img src="speakers/wor2.jpg" alt="류재상 목사" loading="lazy"><div class="speaker-info"><p class="speaker-name">류재상 목사</p><p class="speaker-role">마임아티스트</p></div></li>
+        <li class="speaker"><img src="speakers/prog4.jpg" alt="유경상" loading="lazy"><div class="speaker-info"><p class="speaker-name">유경상</p><p class="speaker-role">CTC 기독교세계관교육센터</p></div></li>
+        <li class="speaker"><img src="speakers/prog5.jpg" alt="오선화" loading="lazy"><div class="speaker-info"><p class="speaker-name">오선화</p><p class="speaker-role">청소년상담가</p></div></li>
+      </ul>
+      <ul class="speakers-panel" data-spanel="PROGRAM">
+        <li class="speaker"><img src="speakers/prog3.jpg" alt="조인정" loading="lazy"><div class="speaker-info"><p class="speaker-name">조인정</p><p class="speaker-role">마임아티스트</p></div></li>
+        <li class="speaker is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="speaker-info"><p class="speaker-name">김형기</p><p class="speaker-role">힙합에어로빅</p></div></li>
+        <li class="speaker is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="speaker-info"><p class="speaker-name">권동원</p><p class="speaker-role">프로스토어 대표</p></div></li>
+        <li class="speaker"><img src="speakers/prog6.jpg" alt="이창훈" loading="lazy"><div class="speaker-info"><p class="speaker-name">이창훈</p><p class="speaker-role">간호사</p></div></li>
+        <li class="speaker"><img src="speakers/prog8.jpg" alt="최반석" loading="lazy"><div class="speaker-info"><p class="speaker-name">최반석</p><p class="speaker-role">화물운반</p></div></li>
+        <li class="speaker"><img src="speakers/wor4.jpg" alt="조세아" loading="lazy"><div class="speaker-info"><p class="speaker-name">조세아</p><p class="speaker-role">찬양사역자</p></div></li>
+      </ul>
+      <ul class="speakers-panel" data-spanel="WORSHIP">
+        <li class="speaker speaker--wide"><img src="speakers/wor6.jpg" alt="소망의바다 미니스트리" loading="lazy"><div class="speaker-info"><p class="speaker-name">소망의바다 미니스트리</p></div></li>
+        <li class="speaker speaker--wide"><img src="speakers/wor5.jpg" alt="웨이홈" loading="lazy"><div class="speaker-info"><p class="speaker-name">웨이홈</p></div></li>
+        <li class="speaker"><img src="speakers/wor4.jpg" alt="조세아" loading="lazy"><div class="speaker-info"><p class="speaker-name">조세아</p><p class="speaker-role">찬양사역자</p></div></li>
+        <li class="speaker"><img src="speakers/wor3.jpg" alt="노수미" loading="lazy"><div class="speaker-info"><p class="speaker-name">노수미</p><p class="speaker-role">찬양사역자</p></div></li>
+        <li class="speaker is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="speaker-info"><p class="speaker-name">이신영</p><p class="speaker-role">음악감독</p></div></li>
+      </ul>
   </div>
 
   <!-- PROGRAMS -->
-  <div class="programs-wrap">
+  <div class="programs-wrap reveal" id="programs">
     <div class="programs">
-      <div class="programs-eyebrow">SCHEDULE</div>
-      <h2 class="programs-title">CORE Programs</h2>
-      <div class="day-tabs">
-        <button class="day-tab active" data-day="1">DAY 1</button>
-        <button class="day-tab" data-day="2">DAY 2</button>
-      </div>
-
-      <div class="day-panel active" data-panel="1">
-        <ul class="timetable">
-          <li class="timetable-item active" data-photo="per1.jpg" data-affiliation="" data-name="오프닝 예배" data-overview="오프닝 예배 및 주제 메시지">
-            <span class="label">오프닝 예배</span>
-          </li>
-          <li class="timetable-item" data-photo="per2.jpg" data-affiliation="" data-name="테이블 모임 1" data-overview="첫 만남, 주제 나눔, 관계 형성">
-            <span class="label">테이블 모임 1</span>
-          </li>
-          <li class="timetable-item" data-photo="per3..jpg" data-affiliation="" data-name="비전토크 콘서트" data-overview="신앙·진로·비전을 연결하는 토크 형식">
-            <span class="label">비전토크 콘서트</span>
-          </li>
-          <li class="timetable-item" data-photo="per4..jpg" data-affiliation="" data-name="테이블 모임 2" data-overview="토크 내용 정리와 개인 적용 나눔">
-            <span class="label">테이블 모임 2</span>
-          </li>
-          <li class="timetable-item" data-photo="per1.jpg" data-affiliation="" data-name="저녁집회" data-overview="찬양, 말씀, 기도와 결단">
-            <span class="label">저녁집회</span>
-          </li>
-        </ul>
-        <div class="time-detail">
-          <div class="detail-photo has-photo" style="background-image:url('per1.jpg')">
-            <svg class="person-icon" viewBox="0 0 100 120" fill="none">
-              <circle cx="50" cy="40" r="24" fill="rgba(255,255,255,0.32)"/>
-              <path d="M8 118c2-32 20-52 42-52s40 20 42 52" fill="rgba(255,255,255,0.32)"/>
-            </svg>
-          </div>
-          <div class="detail-text">
-            <div class="detail-name">오프닝 예배</div>
-            <div class="detail-overview">오프닝 예배 및 주제 메시지</div>
-          </div>
+      <h2 class="programs-title">프로그램</h2>
+<div class="tt">
+      <div class="tt-days">
+        <div class="tt-col">
+          <p class="tt-day"><b>DAY 1</b><span>01.21 THU</span></p>
+          <div class="tt-groups">
+              <div class="tt-card"><div class="tt-item"><p>접수</p><span>[ 09:00 - 10:00 ]</span></div><div class="tt-item"><p>WHOLE WORSHIP 1<small>이경현 목사</small></p><span>[ 10:00 - 12:00 ]</span></div></div>
+              <p class="tt-break">12:00 점심식사</p>
+              <div class="tt-card"><div class="tt-item"><p>WHOLE UP!<small>송종근 · 심미연</small></p><span>[ 13:30 - 14:30 ]</span></div><div class="tt-item"><p>마임 콘서트<small>조인정 아티스트</small></p><span>[ 14:30 - 15:00 ]</span></div><div class="tt-item"><p>WHOLE RE:VIEW<small>유경상 교수</small></p><span>[ 15:00 - 17:00 ]</span></div></div>
+              <p class="tt-break">17:00 저녁식사</p>
+              <div class="tt-card is-key"><div class="tt-item"><p>WHOLE WORSHIP 2<small>이지웅 · 서진교 목사</small></p><span>[ 18:30 - 21:30 ]</span></div></div>
+              <p class="tt-break">21:30 집으로~!</p>
+            </div>
+        </div>
+        <div class="tt-col">
+          <p class="tt-day"><b>DAY 2</b><span>01.22 FRI</span></p>
+          <div class="tt-groups">
+              <div class="tt-card"><div class="tt-item"><p>접수 & WHOLE UP!</p><span>[ 09:00 - 10:00 ]</span></div><div class="tt-item"><p>WHOLE WORSHIP 3<small>동광교회 목사님</small></p><span>[ 10:00 - 12:00 ]</span></div></div>
+              <p class="tt-break">12:00 점심식사</p>
+              <div class="tt-card"><div class="tt-item"><p>찬양콘서트<small>웨이홈</small></p><span>[ 13:30 - 14:30 ]</span></div><div class="tt-item"><p>WHOLE VISION<small>비전토크콘서트</small></p><span>[ 14:30 - 16:00 ]</span></div><div class="tt-item"><p>VISION TABLE</p><span>[ 16:00 - 17:30 ]</span></div></div>
+              <p class="tt-break">17:30 저녁식사</p>
+              <div class="tt-card is-key"><div class="tt-item"><p>WHOLE WORSHIP 4<small>이경현 목사</small></p><span>[ 19:00 - 22:00 ]</span></div></div>
+            </div>
         </div>
       </div>
-
-      <div class="day-panel" data-panel="2">
-        <ul class="timetable">
-          <li class="timetable-item active" data-photo="per2.jpg" data-affiliation="" data-name="오픈마이크 & 예배" data-overview="참여형 무대와 예배를 결합한 오전 프로그램">
-            <span class="label">오픈마이크 & 예배</span>
-          </li>
-          <li class="timetable-item" data-photo="per3..jpg" data-affiliation="" data-name="찬양콘서트" data-overview="찬양을 통한 복음 메시지와 공동체 참여">
-            <span class="label">찬양콘서트</span>
-          </li>
-          <li class="timetable-item" data-photo="per4..jpg" data-affiliation="" data-name="삶을 나누는 콘서트" data-overview="선택특강 / 간증과 현실적인 삶의 이야기를 나누는 시간">
-            <span class="label">삶을 나누는 콘서트</span>
-          </li>
-          <li class="timetable-item" data-photo="per1.jpg" data-affiliation="" data-name="저녁집회" data-overview="찬양, 말씀, 기도와 결단">
-            <span class="label">저녁집회</span>
-          </li>
-        </ul>
-        <div class="time-detail">
-          <div class="detail-photo has-photo" style="background-image:url('per2.jpg')">
-            <svg class="person-icon" viewBox="0 0 100 120" fill="none">
-              <circle cx="50" cy="40" r="24" fill="rgba(255,255,255,0.32)"/>
-              <path d="M8 118c2-32 20-52 42-52s40 20 42 52" fill="rgba(255,255,255,0.32)"/>
-            </svg>
-          </div>
-          <div class="detail-text">
-            <div class="detail-name">오픈마이크 & 예배</div>
-            <div class="detail-overview">참여형 무대와 예배를 결합한 오전 프로그램</div>
-          </div>
-        </div>
       </div>
     </div>
-  </div>
-
-  <!-- SPOTLIGHT: DEEP WORSHIP -->
-  <div class="programs-wrap">
-    <div class="programs">
-      <div class="programs-eyebrow">SCHEDULE</div>
-      <h2 class="programs-title">저녁집회: DEEP WORSHIP</h2>
-      <div class="day-tabs" id="worshipTabs">
-        <button class="day-tab active" data-wday="1">DAY 1</button>
-        <button class="day-tab" data-wday="2">DAY 2</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="spotlight-wrap">
-    <section class="spotlight worship-panel active" data-wpanel="1">
-      <div class="spotlight-image">
-        <img src="so.png" alt="Deep Worship Day 1">
-      </div>
-      <div class="spotlight-info">
-        <div class="spotlight-subtitle">소망의바다 미니스트리</div>
-
-        <div class="spotlight-block">
-          <div class="spotlight-block-title">소개</div>
-          <div class="spotlight-block-text">
-            소망의 바다 미니스트리는 한국 기독교(CCM) 찬양 사역 팀으로 지친 영혼들을 위로하고<br> 예배와 기도의 불씨를 지키는 사역을 이어오고 있습니다.
-          </div>
-        </div>
-
-        <div class="spotlight-block">
-          <div class="spotlight-block-title">대표곡</div>
-          <div class="spotlight-block-text">
-            - 빈들에서 성찬이 열린다<br>
-            - 하나님 나라
-          </div>
-        </div>
-
-        <a class="spotlight-btn" href="#">자세히 보기 <span class="arrow-icon">↗</span></a>
-      </div>
-    </section>
-  </div>
-
-  <div class="spotlight-wrap">
-    <section class="spotlight worship-panel" data-wpanel="2">
-      <div class="spotlight-image">
-        <img src="per3..jpg" alt="Deep Worship Day 2">
-      </div>
-      <div class="spotlight-info">
-        <div class="spotlight-subtitle">Dae hee Worship Team</div>
-
-        <div class="spotlight-block">
-          <div class="spotlight-block-title">소개</div>
-          <div class="spotlight-block-text">
-            DAY 2 저녁집회 찬양 사역자 정보가 들어갑니다.
-          </div>
-        </div>
-
-        <div class="spotlight-block">
-          <div class="spotlight-block-title">대표곡</div>
-          <div class="spotlight-block-text">
-            - 곡명 1<br>
-            - 곡명 2
-          </div>
-        </div>
-
-        <a class="spotlight-btn" href="#">자세히 보기 <span class="arrow-icon">↗</span></a>
-      </div>
-    </section>
   </div>
 
   <!-- LOCATION HEADING -->
-  <div class="programs-wrap">
+  <div class="programs-wrap reveal" id="location">
     <div class="programs">
-      <div class="programs-eyebrow">LOCATION</div>
-      <h2 class="programs-title">Conference Map &amp; Location</h2>
+      <h2 class="programs-title">장소</h2>
     </div>
   </div>
 
   <!-- LOCATION MAP -->
-  <div class="spotlight-wrap">
+  <div class="spotlight-wrap reveal">
+    <!-- TODO: 실제 장소 사진으로 venue/venue1~4.jpg 파일을 교체하세요 (지금은 임시 사진) -->
+    <div class="venue-slider" id="venueSlider" aria-roledescription="carousel" aria-label="장소 사진">
+      <div class="venue-slide active" data-label="본당"><img src="venue/venue1.jpg" alt="본당 (임시 사진)"></div>
+      <div class="venue-slide" data-label="로비"><img src="venue/venue2.jpg" alt="로비 (임시 사진)" loading="lazy"></div>
+      <div class="venue-slide" data-label="모임 공간"><img src="venue/venue3.jpg" alt="모임 공간 (임시 사진)" loading="lazy"></div>
+      <div class="venue-slide" data-label="주변"><img src="venue/venue4.jpg" alt="주변 (임시 사진)" loading="lazy"></div>
+      <p class="venue-caption"><span id="venueLabel">본당</span><span class="venue-count" id="venueCount">1 / 4</span></p>
+      <div class="venue-dots" id="venueDots"></div>
+      <button class="venue-arrow prev" type="button" aria-label="이전 사진">‹</button>
+      <button class="venue-arrow next" type="button" aria-label="다음 사진">›</button>
+    </div>
     <section class="spotlight spotlight--location">
-      <div class="location-image">
-        <iframe src="https://www.google.com/maps?q=%EC%B4%9D%EC%8B%A0%EB%8C%80%ED%95%99%EA%B5%90&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="location-image" id="mapBox">
+        <!-- 카카오맵 지도퍼가기 -->
+        <div id="daumRoughmapContainer1791734562245" class="root_daum_roughmap root_daum_roughmap_landing"></div>
       </div>
       <div class="spotlight-info">
-        <div class="location-eyebrow">Location</div>
-        <h3 class="location-title">총신대학교</h3>
+        <h3 class="location-title">세상의 빛<br>동광교회</h3>
 
-        <div class="spotlight-block">
-          <div class="spotlight-block-text">
-            서울특별시 동작구 사당로 143 총신대학교 06988<br>
-            TEL. 02-3479-0200
+        <dl class="location-info">
+          <div>
+            <dt>주소</dt>
+            <dd>경기도 부천시 소사구 경인옛로 130<small>괴안동 3-4 · 우 14682</small></dd>
           </div>
-        </div>
+        </dl>
 
-        <a class="spotlight-btn" href="https://map.naver.com/p/search/%EC%B4%9D%EC%8B%A0%EB%8C%80%ED%95%99%EA%B5%90" target="_blank" rel="noopener noreferrer">교통정보 보기 <span class="arrow-icon">↗</span></a>
+        <div class="location-actions">
+          <a class="spotlight-btn" href="https://map.kakao.com/link/map/%EC%84%B8%EC%83%81%EC%9D%98%EB%B9%9B%EB%8F%99%EA%B4%91%EA%B5%90%ED%9A%8C,37.4813546,126.8055173" target="_blank" rel="noopener noreferrer">카카오맵 <span class="arrow-icon">↗</span></a>
+          <a class="spotlight-btn spotlight-btn--ghost" href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EA%B2%BD%EC%9D%B8%EC%98%9B%EB%A1%9C%20130" target="_blank" rel="noopener noreferrer">네이버 지도 <span class="arrow-icon">↗</span></a>
+        </div>
       </div>
     </section>
   </div>
@@ -980,16 +1342,16 @@
     <div class="footer-top">
       <div class="footer-logo">WHOLEGEN<b>CAMP</b></div>
       <ul class="footer-links">
-        <li><a href="#">소개</a></li>
-        <li><a href="#">공지</a></li>
-        <li><a href="#">캠프</a></li>
+        <li><a href="about.html">소개</a></li>
+        <li><a href="camp.html">캠프</a></li>
         <li><a href="#">자료실</a></li>
+        <li><a href="faq.html">FAQ</a></li>
         <li><a href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a></li>
       </ul>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <div class="footer-address">서울특별시 동작구 사당로 143 총신대학교 06988 · TEL. 02-3479-0200</div>
+      <div class="footer-address">세상의 빛 동광교회 · 경기도 부천시 소사구 경인옛로 130 · TEL. 032-343-5581</div>
       <div class="footer-copyright">&copy; 2026 LOIND CORPORATION. All rights reserved.</div>
     </div>
   </div>
@@ -999,11 +1361,59 @@
   (function(){
     var today = new Date();
     today.setHours(0,0,0,0);
-    var target = new Date(today.getFullYear(), 11, 25);
-    if (target < today) target = new Date(today.getFullYear() + 1, 11, 25);
-    var diffDays = Math.round((target - today) / 86400000);
-    var label = diffDays === 0 ? 'D-DAY' : 'D-' + diffDays;
-    document.getElementById('adDday').textContent = label;
+    var start = new Date(2027, 0, 21);
+    var end = new Date(2027, 0, 22);
+    var diffDays = Math.round((start - today) / 86400000);
+    var label = diffDays > 0 ? 'D-' + diffDays : (today <= end ? 'D-DAY' : 'THANK YOU');
+    var dday = document.getElementById('adDday');
+    if (dday) dday.textContent = label;
+  })();
+
+  // Hero: as it scrolls away the title fades and the artwork drifts to centre
+  (function(){
+    var banner = document.querySelector('.banner');
+    if (!banner) return;
+    var ticking = false;
+    function clamp(v){ return Math.min(1, Math.max(0, v)); }
+    function update(){
+      ticking = false;
+      var p = clamp(-banner.getBoundingClientRect().top / (banner.offsetHeight * 0.6));
+      banner.style.setProperty('--p1', p.toFixed(3));
+    }
+    function onScroll(){
+      if (!ticking){ ticking = true; requestAnimationFrame(update); }
+    }
+    update();
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll);
+  })();
+
+  // Header: transparent over hero, solid after
+  (function(){
+    var header = document.querySelector('.site-top');
+    var banner = document.querySelector('.banner');
+    if (!header || !banner) return;
+    function update(){
+      header.classList.toggle('is-solid', window.scrollY > banner.offsetHeight - header.offsetHeight);
+    }
+    update();
+    window.addEventListener('scroll', update, { passive:true });
+    window.addEventListener('resize', update);
+  })();
+
+  // Scroll reveal
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)){
+      els.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    els.forEach(function(el){ io.observe(el); });
   })();
 
   (function(){
@@ -1012,106 +1422,92 @@
     if (!toggle || !links) return;
     toggle.addEventListener('click', function(){
       var isOpen = links.classList.toggle('open');
+      document.querySelector('.site-top').classList.toggle('menu-open', isOpen);
       toggle.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
     links.querySelectorAll('a').forEach(function(a){
       a.addEventListener('click', function(){
         links.classList.remove('open');
+        document.querySelector('.site-top').classList.remove('menu-open');
         toggle.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
       });
     });
   })();
 
+  // Venue slider
   (function(){
-    var tabs = document.querySelectorAll('.day-tab[data-day]');
-    var panels = document.querySelectorAll('.day-panel');
+    var box = document.getElementById('venueSlider');
+    if (!box) return;
+    var slides = box.querySelectorAll('.venue-slide');
+    var label = document.getElementById('venueLabel');
+    var count = document.getElementById('venueCount');
+    var dotsWrap = document.getElementById('venueDots');
+    var idx = 0, timer = null, dots = [];
+    slides.forEach(function(_, i){
+      var d = document.createElement('button');
+      d.type = 'button';
+      d.setAttribute('aria-label', (i + 1) + '번 사진');
+      d.addEventListener('click', function(){ go(i); restart(); });
+      dotsWrap.appendChild(d);
+      dots.push(d);
+    });
+    function go(i){
+      idx = (i + slides.length) % slides.length;
+      slides.forEach(function(s, k){ s.classList.toggle('active', k === idx); });
+      dots.forEach(function(d, k){ d.classList.toggle('active', k === idx); });
+      label.textContent = slides[idx].getAttribute('data-label');
+      count.textContent = (idx + 1) + ' / ' + slides.length;
+    }
+    function restart(){
+      clearInterval(timer);
+      timer = setInterval(function(){ go(idx + 1); }, 4000);
+    }
+    box.querySelector('.prev').addEventListener('click', function(){ go(idx - 1); restart(); });
+    box.querySelector('.next').addEventListener('click', function(){ go(idx + 1); restart(); });
+    box.addEventListener('mouseenter', function(){ clearInterval(timer); });
+    box.addEventListener('mouseleave', restart);
+    var x0 = null;
+    box.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, { passive:true });
+    box.addEventListener('touchend', function(e){
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40){ go(idx + (dx < 0 ? 1 : -1)); restart(); }
+      x0 = null;
+    });
+    go(0);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) restart();
+  })();
+
+  // Speaker category tabs
+  (function(){
+    var tabs = document.querySelectorAll('[data-sgroup]');
+    var panels = document.querySelectorAll('.speakers-panel');
     tabs.forEach(function(tab){
       tab.addEventListener('click', function(){
-        var day = tab.getAttribute('data-day');
-        tabs.forEach(function(t){ t.classList.remove('active'); });
-        panels.forEach(function(p){ p.classList.remove('active'); });
-        tab.classList.add('active');
-        document.querySelector('.day-panel[data-panel="' + day + '"]').classList.add('active');
-      });
-    });
-  })();
-
-  // Worship day tabs
-  (function(){
-    var wtabs = document.querySelectorAll('[data-wday]');
-    var wpanels = document.querySelectorAll('.worship-panel');
-    wtabs.forEach(function(tab){
-      tab.addEventListener('click', function(){
-        var day = tab.getAttribute('data-wday');
-        wtabs.forEach(function(t){ t.classList.remove('active'); });
-        wpanels.forEach(function(p){ p.classList.remove('active'); });
-        tab.classList.add('active');
-        document.querySelector('.worship-panel[data-wpanel="'+day+'"]').classList.add('active');
-      });
-    });
-  })();
-
-  (function(){
-    document.querySelectorAll('.day-panel').forEach(function(panel){
-      var items = panel.querySelectorAll('.timetable-item');
-      var detailPhoto = panel.querySelector('.detail-photo');
-      var detailName = panel.querySelector('.detail-name');
-      var detailOverview = panel.querySelector('.detail-overview');
-
-      items.forEach(function(item){
-        item.addEventListener('click', function(){
-          items.forEach(function(i){ i.classList.remove('active'); });
-          item.classList.add('active');
-          var photoUrl = item.getAttribute('data-photo');
-          detailPhoto.style.backgroundImage = photoUrl ? 'url(' + photoUrl + ')' : '';
-          detailPhoto.classList.toggle('has-photo', !!photoUrl);
-          detailName.textContent = item.getAttribute('data-name');
-          detailOverview.textContent = item.getAttribute('data-overview');
-        });
+        var g = tab.getAttribute('data-sgroup');
+        tabs.forEach(function(t){ t.classList.toggle('active', t === tab); });
+        panels.forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-spanel') === g); });
       });
     });
   })();
 </script>
 
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
+<!-- 카카오맵 지도퍼가기: 설치 스크립트 + 실행 (왼쪽 칸 크기에 맞춰 렌더) -->
+<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://t1.kakaocdn.net/kakaomapweb/roughmap/loader/prod/roughmapLoader.js"></script>
+<script charset="UTF-8">
+  (function(){
+    var box = document.getElementById('mapBox');
+    if (!box || !window.daum || !daum.roughmap) return;
+    new daum.roughmap.Lander({
+      "timestamp" : "1791734562245",
+      "key" : "34oadzfhhps",
+      "mapWidth" : String(Math.round(box.clientWidth) || 640),
+      "mapHeight" : String(Math.round(box.clientHeight) || 360)
+    }).render();
+  })();
 </script>
+
 </body>
 </html>

@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAQ — WHOLEGENCAMP</title>
+<title>FAQ · WHOLEGENCAMP</title>
+<script>document.documentElement.classList.add('js');</script>
 <style>
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
@@ -15,14 +16,22 @@
     --tan: #CCCCCC;
     --brown: #4D4D4D;
     --ink: #000000;
+    --pw-accent: #9DB1EE;
+    --surface: #121826;
+    --surface-2: #1A2132;
+    --line: rgba(255,255,255,0.07);
 
-    --section-gap: 80px;
-    --section-gap-mobile: 52px;
+    /* Spacing scale */
+    --section-gap: 128px;
+    --section-gap-mobile: 80px;
+    --head-gap: 44px;          /* section heading → content */
+    --head-gap-mobile: 28px;
     --content-px: 40px;
     --content-px-mobile: 20px;
 
+    /* Type scale */
     --fs-display: 48px;
-    --fs-h2: 36px;
+    --fs-h2: 40px;
     --fs-h3: 24px;
     --fs-body: 15px;
     --fs-small: 13px;
@@ -30,16 +39,47 @@
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
+  html{ scroll-behavior:smooth; scroll-padding-top:72px; }
 
   html,body{
     width:100%;
     min-height:100vh;
     font-family:'Pretendard', sans-serif;
-    background: linear-gradient(150deg, var(--sage-light) 0%, var(--cream) 45%, var(--tan) 100%);
-    color: var(--ink);
-    overflow-x:hidden;
+    background: #0B0F17;
+    color: #EDEFF3;
+    overflow-x:clip;
+    position:relative;
     font-size: var(--fs-body);
     line-height: 1.6;
+  }
+
+  .site-top{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    background: transparent;
+    border-bottom:1px solid transparent;
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .site-top.is-solid,
+  .site-top.menu-open{
+    background: rgba(11,15,23,0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+  .site-top .logo,
+  .site-top .logo b,
+  .site-top .nav-links li,
+  .site-top .inquiry-btn{ transition: color .3s ease, background .3s ease, transform .2s ease; }
+  .site-top .logo{ color:#fff; }
+  .site-top .logo b{ color: rgba(255,255,255,0.6); }
+  .site-top .inquiry-btn{ background:#fff; color:#0B0F17; }
+  .site-top .inquiry-btn:hover{ background: var(--pw-accent); }
+  .site-top .nav-toggle span{ background:#fff; }
+  @media (min-width:901px){
+    .site-top .nav-links li{ color:#fff; }
+    .site-top .nav-links li:hover{ color: rgba(255,255,255,0.65); }
   }
 
   /* ---------- NAV ---------- */
@@ -49,7 +89,7 @@
     justify-content:center;
     padding: 24px var(--content-px) 0;
     position:relative;
-    z-index:20;
+    z-index:40;
   }
   nav{
     display:flex;
@@ -57,42 +97,41 @@
     justify-content:space-between;
     gap:48px;
     width:100%;
-    max-width:1200px;
-    padding: 14px 32px;
-    background: var(--ink);
-    border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    max-width:1280px;
     position:relative;
   }
   .logo{
     font-family:'JetBrains Mono', monospace;
     font-size:17px;
-    color: var(--cream);
+    font-weight:700;
+    color: var(--ink);
     letter-spacing:0.5px;
-    text-decoration:none;
   }
-  .logo b{ color: var(--sage-light); font-weight:600; }
+  .logo b{ color: var(--brown); font-weight:700; }
+
   .nav-links{
     display:flex;
     gap:40px;
     list-style:none;
   }
-  .nav-links li a{
+  .nav-links li{
     font-size: var(--fs-body);
+    font-weight:600;
     letter-spacing:0.6px;
-    color: rgba(255,255,255,0.85);
-    text-decoration:none;
+    color: var(--ink);
+    cursor:pointer;
     transition: color .2s ease;
   }
-  .nav-links li a:hover{ color: var(--sage-light); }
-  .nav-links li a.active{ color: var(--cream); font-weight:600; }
+  .nav-links li a{ color:inherit; text-decoration:none; }
+  .nav-links li:hover{ color: var(--brown); }
+
   .inquiry-btn{
     font-family:'JetBrains Mono', monospace;
     font-size: var(--fs-small);
     padding:9px 20px;
     border-radius:999px;
-    background: var(--cream);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--cream);
     font-weight:600;
     text-decoration:none;
     white-space:nowrap;
@@ -100,9 +139,10 @@
     display:inline-block;
   }
   .inquiry-btn:hover{
-    background: var(--sage-light);
+    background: var(--brown);
     transform: translateY(-1px);
   }
+
   .nav-toggle{
     display:none;
     flex-direction:column;
@@ -121,13 +161,14 @@
     display:block;
     width:100%;
     height:2px;
-    background: var(--cream);
+    background: var(--ink);
     border-radius:2px;
     transition: transform .2s ease, opacity .2s ease;
   }
   .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2){ opacity:0; }
   .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
   @media (max-width:900px){
     .nav-toggle{ display:flex; order:3; }
     .nav-links{
@@ -138,137 +179,173 @@
       right:0;
       flex-direction:column;
       gap:0;
-      background: var(--ink);
+      background: rgba(18,24,38,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-radius:20px;
       padding:8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.07);
       z-index:30;
     }
     .nav-links.open{ display:flex; }
-    .nav-links li a{ display:block; padding:14px 16px; border-radius:12px; }
-    .nav-links li:hover a{ background: rgba(255,255,255,0.08); }
-    .inquiry-btn{ order:2; }
+    .nav-links li{ padding:0; }
+    .nav-links li a{
+      display:block;
+      padding:14px 16px;
+      border-radius:12px;
+    }
+    .nav-links li{ color:#fff; }
+    .nav-links li:hover{ background: rgba(255,255,255,0.06); }
+    .inquiry-btn{ order:2; margin-left:auto; }
     .logo{ order:1; }
   }
-  @media (max-width:760px){
-    .nav-wrap{ padding:16px var(--content-px-mobile) 0; }
-    nav{ padding:12px 18px; gap:20px; border-radius:32px; }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .js .reveal{
+    opacity:0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .js .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .js .reveal{ opacity:1; transform:none; transition:none; }
   }
 
-  /* ---------- PAGE CONTENT ---------- */
-  .page-content{
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding-bottom: var(--section-gap);
-  }
 
-  /* ---------- FAQ ---------- */
-  .faq-wrap{
+  /* ---------- PAGE ---------- */
+  .page-head{
+    width:100%;
+    padding:160px var(--content-px) 0;
+    text-align:center;
+  }
+  .page-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:3px;
+    color: var(--pw-accent);
+  }
+  .page-title{
+    margin-top:12px;
+    font-size:56px;
+    font-weight:800;
+    letter-spacing:-0.03em;
+    line-height:1.1;
+  }
+  .page-section{
     width:100%;
     display:flex;
-    flex-direction:column;
-    align-items:center;
+    justify-content:center;
     padding: var(--section-gap) var(--content-px) 0;
   }
-  .faq-header{
-    text-align:center;
-    margin-bottom:36px;
-  }
-  .faq-eyebrow{
-    font-family:'JetBrains Mono', monospace;
-    font-size: var(--fs-xs);
-    font-weight:700;
-    letter-spacing:2.5px;
-    text-transform:uppercase;
-    color: var(--brown);
-  }
-  .faq-title{
-    margin-top:10px;
+  .page-section.first{ padding-top: var(--head-gap); }
+  .page-inner{ width:100%; max-width:1280px; }
+  .section-title{
     font-size: var(--fs-h2);
     font-weight:800;
     letter-spacing:-0.5px;
+    text-align:center;
+    color:#fff;
+  }
+  .page-end{ height: var(--section-gap); }
+  @media (max-width:760px){
+    .page-head{ padding:112px var(--content-px-mobile) 0; }
+    .page-title{ font-size:36px; }
+    .page-section{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .page-section.first{ padding-top: var(--head-gap-mobile); }
+    .section-title{ font-size:28px; }
+    .page-end{ height: var(--section-gap-mobile); }
   }
 
   .faq-list{
-    width:100%;
-    max-width:900px;
-    border-radius:28px;
-    overflow:hidden;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
-    border: 1px solid rgba(0,0,0,0.06);
-    background: var(--ink);
+    max-width:880px;
+    margin:0 auto;
+    border-top:1px solid rgba(255,255,255,0.12);
   }
-  .faq-item{
-    border-bottom:1px solid rgba(255,255,255,0.08);
-  }
-  .faq-item:last-child{ border-bottom:none; }
+  .faq-item{ border-bottom:1px solid rgba(255,255,255,0.12); }
   .faq-q{
     width:100%;
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:20px;
-    padding:26px 36px;
+    padding:26px 4px;
     background:none;
     border:none;
-    cursor:pointer;
-    text-align:left;
-    font-family:'Pretendard', sans-serif;
-    color: var(--cream);
-  }
-  .faq-q-text{
-    font-size: var(--fs-h3);
+    color:#fff;
+    font-family:inherit;
+    font-size:18px;
     font-weight:700;
+    text-align:left;
+    cursor:pointer;
   }
+  .faq-q:hover .faq-q-text{ color: var(--pw-accent); }
+  .faq-q-text{ transition: color .2s ease; }
   .faq-icon{
-    flex-shrink:0;
-    width:28px;
-    height:28px;
-    border-radius:50%;
-    border:1.5px solid rgba(255,255,255,0.3);
+    flex:none;
+    width:32px;
+    height:32px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-family:'JetBrains Mono', monospace;
-    font-size:16px;
-    color: rgba(255,255,255,0.7);
-    transition: transform .25s ease, background .25s ease, border-color .25s ease;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.2);
+    font-size:18px;
+    font-weight:400;
+    transition: transform .25s ease, background .2s ease, color .2s ease;
   }
-  .faq-item.open .faq-icon{
-    transform: rotate(135deg);
-    background: var(--cream);
-    border-color: var(--cream);
-    color: var(--ink);
-  }
+  .faq-item.open .faq-icon{ transform: rotate(45deg); background:#fff; color:#0B0F17; border-color:#fff; }
   .faq-a{
-    max-height:0;
-    overflow:hidden;
-    transition: max-height .3s ease;
+    display:grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .3s ease;
   }
-  .faq-item.open .faq-a{ max-height:240px; }
+  .faq-item.open .faq-a{ grid-template-rows: 1fr; }
   .faq-a-inner{
-    padding:0 36px 26px;
-    font-size: var(--fs-body);
+    overflow:hidden;
+    padding:0 4px;
+    font-size:15px;
     line-height:1.8;
     color: rgba(255,255,255,0.65);
   }
-
-  @media (max-width:760px){
-    .faq-wrap{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
-    .faq-title{ font-size:26px; }
-    .faq-list{ border-radius:20px; }
-    .faq-q{ padding:20px 22px; }
-    .faq-q-text{ font-size:17px; }
-    .faq-a-inner{ padding:0 22px 20px; }
+  .faq-item.open .faq-a-inner{ padding-bottom:26px; }
+  .faq-more{
+    max-width:880px;
+    margin:48px auto 0;
+    padding:32px;
+    border-radius:20px;
+    background: var(--surface);
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
   }
+  .faq-more p{ font-size:16px; font-weight:600; }
+  .faq-more p small{ display:block; margin-top:4px; font-size:13.5px; font-weight:400; color: rgba(255,255,255,0.55); }
+  .faq-more a{
+    padding:12px 22px;
+    border-radius:12px;
+    background:#fff;
+    color:#0B0F17;
+    font-size:14px;
+    font-weight:700;
+    text-decoration:none;
+  }
+  @media (max-width:760px){
+    .faq-q{ padding:20px 2px; font-size:16px; }
+    .faq-more{ margin-top:32px; padding:22px; }
+  }
+
+  main{ min-height: calc(100vh - 160px); }
 
   /* ---------- FOOTER ---------- */
   .site-footer{
     width:100%;
-    margin-top: var(--section-gap);
-    background: var(--ink);
+    background:#06080D;
+    border-top:1px solid var(--line);
     padding: 52px var(--content-px) 36px;
   }
   .footer-inner{
@@ -288,7 +365,7 @@
     color: var(--cream);
     letter-spacing:0.5px;
   }
-  .footer-logo b{ color: var(--sage-light); font-weight:600; }
+  .footer-logo b{ color: rgba(255,255,255,0.5); font-weight:600; }
   .footer-links{
     display:flex;
     gap:28px;
@@ -315,6 +392,7 @@
     letter-spacing:0.3px;
     color: rgba(255,255,255,0.4);
   }
+
   @media (max-width:600px){
     .site-footer{ padding:36px var(--content-px-mobile) 24px; }
     .footer-top{ flex-direction:column; align-items:flex-start; gap:16px; }
@@ -325,79 +403,68 @@
 </head>
 <body>
 
-<!-- NAV -->
-<div class="nav-wrap">
-  <nav>
-    <a class="logo" href="index.html">WHOLEGEN<b>CAMP</b></a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="about.html">소개</a></li>
-      <li><a href="camp.html">캠프</a></li>
-      <li><a href="#">자료실</a></li>
-      <li><a href="faq.html" class="active">FAQ</a></li>
-    </ul>
-    <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
-    </button>
-    <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
-  </nav>
-</div>
-
-<div class="page-content">
-
-  <!-- FAQ -->
-  <div class="faq-wrap">
-    <div class="faq-header">
-      <div class="faq-eyebrow">SUPPORT</div>
-      <h2 class="faq-title">자주 묻는 질문</h2>
+  <header class="site-top">
+    <!-- NAV -->
+    <div class="nav-wrap">
+      <nav>
+        <a class="logo" href="index.html" style="text-decoration:none">WHOLEGEN<b>CAMP</b></a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="about.html">소개</a></li>
+          <li><a href="camp.html">캠프</a></li>
+          <li><a href="#">자료실</a></li>
+          <li><a href="faq.html" aria-current="page">FAQ</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+        <!-- TODO: href를 실제 카카오톡 채널 URL로 교체하세요 (예: https://pf.kakao.com/_xxxxxx/chat) -->
+        <a class="inquiry-btn" href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="faq-list" id="faqList">
-      <div class="faq-item">
-        <button class="faq-q" type="button">
-          <span class="faq-q-text">Q. TBD</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
+<main>
+  <header class="page-head">
+    <p class="page-eyebrow">FAQ</p>
+    <h1 class="page-title">자주 묻는 질문</h1>
+  </header>
+
+  <section class="page-section first reveal">
+    <div class="page-inner">
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false"><span class="faq-q-text">Q. TBD</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false"><span class="faq-q-text">Q. TBD</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false"><span class="faq-q-text">Q. TBD</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false"><span class="faq-q-text">Q. TBD</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false"><span class="faq-q-text">Q. TBD</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false"><span class="faq-q-text">Q. TBD</span><span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
+        </div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" type="button">
-          <span class="faq-q-text">Q. TBD</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" type="button">
-          <span class="faq-q-text">Q. TBD</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" type="button">
-          <span class="faq-q-text">Q. TBD</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" type="button">
-          <span class="faq-q-text">Q. TBD</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" type="button">
-          <span class="faq-q-text">Q. TBD</span>
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><div class="faq-a-inner">A. TBD</div></div>
+      <div class="faq-more">
+        <p>찾는 답이 없나요?<small>카카오톡 채널로 편하게 문의해 주세요.</small></p>
+        <a href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의하기 ↗</a>
       </div>
     </div>
-  </div>
-
-</div>
+  </section>
+  <div class="page-end"></div>
+</main>
 
 <!-- FOOTER -->
 <footer class="site-footer">
@@ -406,34 +473,64 @@
       <div class="footer-logo">WHOLEGEN<b>CAMP</b></div>
       <ul class="footer-links">
         <li><a href="about.html">소개</a></li>
-        <li><a href="#">공지</a></li>
         <li><a href="camp.html">캠프</a></li>
         <li><a href="#">자료실</a></li>
+        <li><a href="faq.html">FAQ</a></li>
         <li><a href="https://pf.kakao.com/_your_channel_id/chat" target="_blank" rel="noopener noreferrer">문의</a></li>
       </ul>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <div>서울특별시 동작구 사당로 143 총신대학교 06988 · TEL. 02-3479-0200</div>
-      <div>&copy; 2026 WHOLEGENCAMP. All rights reserved.</div>
+      <div class="footer-address">세상의 빛 동광교회 · 경기도 부천시 소사구 경인옛로 130 · TEL. 032-343-5581</div>
+      <div class="footer-copyright">&copy; 2026 LOIND CORPORATION. All rights reserved.</div>
     </div>
   </div>
 </footer>
 
 <script>
-  // Mobile nav toggle
+  // Header: transparent over hero, solid after
+  (function(){
+    var header = document.querySelector('.site-top');
+    var banner = document.querySelector('.banner');
+    if (!header) return;
+    if (!banner){ header.classList.add('is-solid'); return; }
+    function update(){
+      header.classList.toggle('is-solid', window.scrollY > banner.offsetHeight - header.offsetHeight);
+    }
+    update();
+    window.addEventListener('scroll', update, { passive:true });
+    window.addEventListener('resize', update);
+  })();
+
+  // Scroll reveal
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)){
+      els.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
   (function(){
     var toggle = document.getElementById('navToggle');
     var links = document.getElementById('navLinks');
     if (!toggle || !links) return;
     toggle.addEventListener('click', function(){
       var isOpen = links.classList.toggle('open');
+      document.querySelector('.site-top').classList.toggle('menu-open', isOpen);
       toggle.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
     links.querySelectorAll('a').forEach(function(a){
       a.addEventListener('click', function(){
         links.classList.remove('open');
+        document.querySelector('.site-top').classList.remove('menu-open');
         toggle.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
       });
@@ -444,7 +541,8 @@
   (function(){
     document.querySelectorAll('.faq-q').forEach(function(btn){
       btn.addEventListener('click', function(){
-        btn.closest('.faq-item').classList.toggle('open');
+        var open = btn.closest('.faq-item').classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       });
     });
   })();
