@@ -398,6 +398,18 @@
     letter-spacing:0.3px;
     color: rgba(255,255,255,0.4);
   }
+  .footer-account b{ color: rgba(255,255,255,0.75); font-weight:700; }
+  .copy-btn{
+    margin-left:6px;
+    padding:2px 9px;
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:999px;
+    background:transparent;
+    color: rgba(255,255,255,0.6);
+    font: inherit;
+    cursor:pointer;
+  }
+  .copy-btn:hover{ color:#fff; border-color: rgba(255,255,255,0.5); }
 
   @media (max-width:600px){
     .site-footer{ padding:36px var(--content-px-mobile) 24px; }
@@ -487,7 +499,7 @@
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <div class="footer-address">세상의 빛 동광교회 · 경기도 부천시 소사구 경인옛로 130 · TEL. 032-343-5581</div>
+      <div class="footer-account">계좌 · 하나은행 <b>161-910048-18805</b> · 예금주 홀젠(WHOLEGEN) <button class="copy-btn" type="button" data-copy="161-910048-18805">복사</button></div>
       <div class="footer-copyright">&copy; 2026 LOIND CORPORATION. All rights reserved.</div>
     </div>
   </div>
@@ -554,5 +566,14 @@
   })();
 </script>
 
+<script>
+  // 푸터 계좌번호 복사
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var done = function(){ btn.textContent = '복사됨'; setTimeout(function(){ btn.textContent = '복사'; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(btn.dataset.copy).then(done);
+    });
+  });
+</script>
 </body>
 </html>

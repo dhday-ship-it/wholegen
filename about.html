@@ -309,6 +309,9 @@
     padding: 220px var(--content-px) 0;
   }
   .about-section:first-of-type{ padding-top:72px; }
+  .about-section.about-section--tight{ padding-top:240px; }
+  .about-section.about-section--crew{ padding-top:24px; }
+  .about-section--crew .crew-grid{ margin-top:0; }
   .about-inner{ width:100%; max-width:1280px; }
   .section-title{
     font-size: var(--fs-h2);
@@ -363,13 +366,24 @@
     line-height:1.6;
     color:#fff;
   }
-  .intro-sign{
-    margin-top:32px;
-    font-family:'JetBrains Mono', monospace;
+  .intro-verse{
+    max-width:640px;
+    margin:64px auto 0;
+  }
+  .intro-verse p{
+    font-size:18px;
+    font-weight:500;
+    line-height:1.85;
+    color: rgba(255,255,255,0.6);
+  }
+  .intro-verse cite{
+    display:block;
+    margin-top:16px;
+    font-style:normal;
     font-size:14px;
-    font-weight:700;
-    letter-spacing:3px;
-    color: rgba(255,255,255,0.4);
+    font-weight:600;
+    letter-spacing:1px;
+    color: var(--pw-accent);
   }
 
   /* vision */
@@ -661,10 +675,12 @@
   /* ---------- PARTNERS ---------- */
   .crew-grid{
     margin-top: var(--head-gap);
-    display:grid;
-    grid-template-columns: repeat(4, 1fr);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
     gap:16px;
   }
+  .crew-grid > .crew-card{ flex:0 0 calc((100% - 64px) / 5); }
   .crew-card{
     position:relative;
     border-radius:18px;
@@ -724,20 +740,31 @@
     height:1px;
     background: var(--line);
   }
+  .advisor-list, .logo-grid{ margin-top: var(--head-gap); }
   .advisor-list{
     display:grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap:12px;
     list-style:none;
   }
   .advisor-list li{
-    padding:20px 22px;
+    overflow:hidden;
     border-radius:16px;
     background: var(--surface);
     border:1px solid var(--line);
   }
-  .advisor-list b{ display:block; font-size:16px; font-weight:700; }
-  .advisor-list span{ display:block; margin-top:4px; font-size:13px; color: rgba(255,255,255,0.55); }
+  .advisor-photo{
+    aspect-ratio: 3 / 4;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: var(--surface-2);
+  }
+  .advisor-photo svg{ width:38%; opacity:.18; }
+  .advisor-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .advisor-info{ padding:14px 16px 16px; }
+  .advisor-list b{ display:block; font-size:15px; font-weight:700; }
+  .advisor-list span{ display:block; margin-top:4px; font-size:12.5px; color: rgba(255,255,255,0.55); word-break:keep-all; }
   .church-list{
     display:flex;
     flex-wrap:wrap;
@@ -774,20 +801,21 @@
   }
   .logo-grid img{ max-width:100%; max-height:100%; object-fit:contain; filter: grayscale(1) brightness(1.6); opacity:.8; }
   @media (max-width:900px){
-    .crew-grid{ grid-template-columns: repeat(2, 1fr); }
+    .crew-grid > .crew-card{ flex-basis: calc((100% - 32px) / 3); }
     .advisor-list{ grid-template-columns: repeat(3, 1fr); }
     .logo-grid{ grid-template-columns: repeat(3, 1fr); }
   }
   @media (max-width:760px){
     .crew-grid{ margin-top: var(--head-gap-mobile); gap:10px; }
+    .crew-grid > .crew-card{ flex-basis: calc((100% - 10px) / 2); }
     .crew-card{ border-radius:14px; }
     .crew-info{ left:14px; right:14px; bottom:12px; }
     .crew-name{ font-size:15px; }
     .partner-groups{ margin-top: var(--head-gap-mobile); gap:56px; }
+    .advisor-list, .logo-grid{ margin-top: var(--head-gap-mobile); }
     .partner-label{ font-size:16px; margin-bottom:14px; }
-    .advisor-list{ gap:8px; grid-template-columns:1fr; }
-    .advisor-list li{ padding:16px 18px; display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
-    .advisor-list span{ margin-top:0; }
+    .advisor-list{ gap:10px; grid-template-columns: repeat(2, 1fr); }
+    .advisor-info{ padding:12px 14px 14px; }
     .church-list li{ padding:10px 16px; font-size:14px; }
     .logo-grid{ grid-template-columns: repeat(3, 1fr); gap:8px; }
     .logo-grid li{ height:64px; }
@@ -804,6 +832,9 @@
   }
   @media (max-width:760px){
     .about-section{ padding: 140px var(--content-px-mobile) 0; }
+    .about-section.about-section--tight{ padding-top:150px; }
+    .about-section.about-section--crew{ padding-top:16px; }
+    .about-section--crew .crew-grid{ margin-top:0; }
     .about-section:first-of-type{ padding-top:48px; }
 
     .about-hero-inner{ padding:80px var(--content-px-mobile); }
@@ -818,6 +849,9 @@
     .intro-body{ font-size:17px; line-height:1.85; }
     .intro-body p + p{ margin-top:22px; }
     .intro-close{ margin-top:40px; padding-top:36px; font-size:20px; }
+    .intro-verse{ margin-top:44px; }
+    .intro-verse p{ font-size:15.5px; }
+    .intro-verse cite{ font-size:13px; }
     .theme{ margin-top: var(--head-gap-mobile); }
     .theme-top{ padding:44px 22px 36px; }
     .theme-sub{ font-size:15.5px; }
@@ -843,6 +877,8 @@
 
   /* ---------- FOOTER ---------- */
   .site-footer{
+    position:relative;
+    z-index:3;  /* 고정 배경(.about-top) 위로 */
     width:100%;
     background:#06080D;
     border-top:1px solid var(--line);
@@ -892,6 +928,18 @@
     letter-spacing:0.3px;
     color: rgba(255,255,255,0.4);
   }
+  .footer-account b{ color: rgba(255,255,255,0.75); font-weight:700; }
+  .copy-btn{
+    margin-left:6px;
+    padding:2px 9px;
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:999px;
+    background:transparent;
+    color: rgba(255,255,255,0.6);
+    font: inherit;
+    cursor:pointer;
+  }
+  .copy-btn:hover{ color:#fff; border-color: rgba(255,255,255,0.5); }
 
   @media (max-width:600px){
     .site-footer{ padding:36px var(--content-px-mobile) 24px; }
@@ -949,6 +997,23 @@
       <div class="intro-close">
         <p>말씀과 사랑, 섬김으로 세워갈 하나님나라<br>순전한 시간<br><span class="intro-accent">홀젠캠프</span>에 여러분을 초대합니다.</p>
       </div>
+      <blockquote class="intro-verse">
+        <p>여러분은, 흠이 없고 순결해져서, 구부러지고 뒤틀린 세대 가운데서 하나님의 흠없는 자녀가 되어야 합니다. 그리하면 여러분은 이 세상에서 별과 같이 빛날 것입니다.</p>
+        <cite>빌립보서 2:15 · 새번역</cite>
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- VISION -->
+  <div class="about-section reveal">
+    <div class="about-inner">
+      <div class="card vision-card">
+        <div>
+          <p class="vision-label">VISION</p>
+          <h2 class="vision-heading">비전</h2>
+        </div>
+        <p class="vision-text">홀젠캠프는 Whole Generation - <b>WHOLEGEN</b> 을 의미하며,<br>모든 세대, 곧 <b>온전한 세대</b>가 하나님 앞에 나아가기를 꿈꾸는 캠프입니다.<br><b>‘순전함’</b>으로 빛날 존귀한 청소년들을 복음으로 함께 세워가요.</p>
+      </div>
     </div>
   </div>
 
@@ -979,53 +1044,42 @@
     </div>
   </div>
 
-  <!-- CREW -->
-  <div class="about-section reveal">
+  <!-- CREW (리더십 바로 아래, 제목 없이) -->
+  <div class="about-section about-section--crew reveal">
     <div class="about-inner">
-      <h2 class="section-title">함께하는 이들</h2>
-      <!-- TODO: 실제 명단과 사진으로 교체하세요 -->
       <div class="crew-grid">
+        <div class="crew-card"><img src="speakers/staff1.jpg" alt="이경현 목사" loading="lazy"><div class="crew-info"><p class="crew-name">이경현 목사</p><p class="crew-role">대표</p></div></div>
         <div class="crew-card"><img src="speakers/staff2.jpg" alt="김일보 간사" loading="lazy"><div class="crew-info"><p class="crew-name">김일보 간사</p><p class="crew-role">총괄디렉터</p></div></div>
-        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">이름</p><p class="crew-role">역할</p></div></div>
-        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">이름</p><p class="crew-role">역할</p></div></div>
-        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">이름</p><p class="crew-role">역할</p></div></div>
+        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">이혜원</p></div></div>
+        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">주찬미</p></div></div>
+        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">정대희</p></div></div>
       </div>
+    </div>
+  </div>
+
+  <!-- ADVISORS -->
+  <div class="about-section about-section--tight reveal">
+    <div class="about-inner">
+      <h2 class="section-title">지도위원</h2>
+      <ul class="advisor-list">
+            <li><div class="advisor-photo"><img src="speakers/adv1.jpg" alt="전영훈 목사" loading="lazy"></div><div class="advisor-info"><b>전영훈 목사</b><span>새숨교회</span></div></li>
+            <li><div class="advisor-photo"><img src="speakers/adv2.jpg" alt="이재환 목사" loading="lazy"></div><div class="advisor-info"><b>이재환 목사</b><span>구로동교회</span></div></li>
+            <li><div class="advisor-photo"><img src="speakers/adv3.jpg" alt="김단일 목사" loading="lazy"></div><div class="advisor-info"><b>김단일 목사</b><span>컴앤씨교회</span></div></li>
+            <li><div class="advisor-photo"><img src="speakers/adv4.jpg" alt="오현철 교수" loading="lazy"></div><div class="advisor-info"><b>오현철 교수</b><span>성결대학교</span></div></li>
+            <li><div class="advisor-photo"><img src="speakers/adv5.jpg" alt="김건주 목사" loading="lazy"></div><div class="advisor-info"><b>김건주 목사</b><span>복음과 도시</span></div></li>
+            <li><div class="advisor-photo"><img src="speakers/wor2.jpg" alt="류재상 목사" loading="lazy"></div><div class="advisor-info"><b>류재상 목사</b><span>세상의 빛 동광교회</span></div></li>
+          </ul>
     </div>
   </div>
 
   <!-- PARTNERS -->
   <div class="about-section reveal">
     <div class="about-inner">
-      <h2 class="section-title">함께 세워가는 곳</h2>
-      <!-- TODO: 지도위원 · 협력교회 · 협력사 실제 명단으로 교체하세요 -->
-      <div class="partner-groups">
-        <div>
-          <p class="partner-label">지도위원</p>
-          <ul class="advisor-list">
-            <li><b>전영훈 목사</b><span>새숨교회</span></li>
-            <li><b>이재환 목사</b><span>구로동교회</span></li>
-            <li><b>김단일 목사</b><span>컴앤씨교회</span></li>
-            <li><b>오현철 교수</b><span>성결대학교</span></li>
-            <li><b>김건주 목사</b><span>복음과 도시</span></li>
-          </ul>
-        </div>
-        <div>
-          <p class="partner-label">협력교회</p>
-          <ul class="church-list">
-            <li>세상의빛동광교회</li>
-            <li>구로동교회</li>
-            <li>교회 이름</li>
-            <li>교회 이름</li>
-            <li>교회 이름</li>
-          </ul>
-        </div>
-        <div>
-          <p class="partner-label">협력사</p>
-          <ul class="logo-grid">
+      <h2 class="section-title">협력사</h2>
+      <!-- TODO: 협력사 로고로 교체하세요 -->
+      <ul class="logo-grid">
             <li>LOGO</li><li>LOGO</li><li>LOGO</li><li>LOGO</li><li>LOGO</li>
           </ul>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -1048,7 +1102,7 @@
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <div class="footer-address">세상의 빛 동광교회 · 경기도 부천시 소사구 경인옛로 130 · TEL. 032-343-5581</div>
+      <div class="footer-account">계좌 · 하나은행 <b>161-910048-18805</b> · 예금주 홀젠(WHOLEGEN) <button class="copy-btn" type="button" data-copy="161-910048-18805">복사</button></div>
       <div class="footer-copyright">&copy; 2026 LOIND CORPORATION. All rights reserved.</div>
     </div>
   </div>
@@ -1123,5 +1177,14 @@
   })();
 </script>
 
+<script>
+  // 푸터 계좌번호 복사
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var done = function(){ btn.textContent = '복사됨'; setTimeout(function(){ btn.textContent = '복사'; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(btn.dataset.copy).then(done);
+    });
+  });
+</script>
 </body>
 </html>
