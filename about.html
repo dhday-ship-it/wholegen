@@ -680,7 +680,7 @@
     justify-content:center;
     gap:16px;
   }
-  .crew-grid > .crew-card{ flex:0 0 calc((100% - 64px) / 5); }
+  .crew-grid > .crew-card{ flex:0 0 calc((100% - 80px) / 6); }
   .crew-card{
     position:relative;
     border-radius:18px;
@@ -785,7 +785,9 @@
     gap:12px;
     list-style:none;
   }
-  .logo-grid li{
+  .logo-grid li{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .logo-box{
+    width:100%;
     height:96px;
     display:flex;
     align-items:center;
@@ -800,12 +802,20 @@
     word-break:keep-all;
     color:#fff;
   }
+  .logo-link{
+    font-size:13px;
+    font-weight:600;
+    color: rgba(255,255,255,0.55);
+    text-decoration:none;
+    transition: color .2s;
+  }
+  .logo-link:hover{ color: var(--pw-accent); }
   .logo-grid li.is-en{ font-family:'JetBrains Mono', monospace; font-size:15px; letter-spacing:1px; }
   .logo-grid img{ max-width:80%; max-height:48px; object-fit:contain; }
   .logo-grid img.logo-dg{ max-height:60px; max-width:88%; }
   .logo-grid img.logo-guro{ max-height:44px; max-width:80%; }
   .logo-grid img.logo-loind{ max-height:36px; }
-  .logo-grid li.logo-text{ font-size:22px; font-weight:800; letter-spacing:-0.02em; }
+  .logo-box.logo-text{ font-size:22px; font-weight:800; letter-spacing:-0.02em; }
   @media (max-width:900px){
     .crew-grid > .crew-card{ flex-basis: calc((100% - 32px) / 3); }
     .advisor-list{ grid-template-columns: repeat(3, 1fr); }
@@ -824,7 +834,7 @@
     .advisor-info{ padding:12px 14px 14px; }
     .church-list li{ padding:10px 16px; font-size:14px; }
     .logo-grid{ grid-template-columns:1fr; gap:8px; }
-    .logo-grid li{ height:64px; font-size:16px; }
+    .logo-box{ height:64px; font-size:16px; }
     .logo-grid li.is-en{ font-size:14px; }
   }
 
@@ -1060,6 +1070,7 @@
         <div class="crew-card"><img src="speakers/crew3.jpg" alt="이혜원" loading="lazy"><div class="crew-info"><p class="crew-name">이혜원</p></div></div>
         <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">주찬미</p></div></div>
         <div class="crew-card"><img src="speakers/crew5.jpg" alt="정대희" loading="lazy"><div class="crew-info"><p class="crew-name">정대희</p></div></div>
+        <div class="crew-card"><img src="speakers/wor3.jpg" alt="노수미" loading="lazy"><div class="crew-info"><p class="crew-name">노수미</p></div></div>
       </div>
     </div>
   </div>
@@ -1084,10 +1095,10 @@
       <h2 class="section-title">협력기관</h2>
       <!-- TODO: 협력기관 로고로 교체하세요 -->
       <ul class="logo-grid">
-        <li><img class="logo-dg" src="partners/donggwang.png" alt="세상의 빛 동광교회"></li>
-        <li><img class="logo-guro" src="partners/guro.png" alt="구로동교회"></li>
-        <li class="logo-text">소망의바다 미니스트리</li>
-        <li><img class="logo-loind" src="partners/loind.png" alt="LOIND CORPORATION"></li>
+        <li><div class="logo-box"><img class="logo-dg" src="partners/donggwang.png" alt="세상의 빛 동광교회"></div><a class="logo-link" href="https://sbdk.or.kr/" target="_blank" rel="noopener noreferrer">홈페이지 <span aria-hidden="true">↗</span></a></li>
+        <li><div class="logo-box"><img class="logo-guro" src="partners/guro.png" alt="구로동교회"></div><a class="logo-link" href="https://www.gurodong.org/" target="_blank" rel="noopener noreferrer">홈페이지 <span aria-hidden="true">↗</span></a></li>
+        <li><div class="logo-box logo-text">소망의바다 미니스트리</div><a class="logo-link" href="https://www.youtube.com/c/Wait%EC%86%8C%EB%A7%9D%EC%9D%98%EB%B0%94%EB%8B%A4%EB%AF%B8%EB%8B%88%EC%8A%A4%ED%8A%B8%EB%A6%AC" target="_blank" rel="noopener noreferrer">유튜브 <span aria-hidden="true">↗</span></a></li>
+        <li><div class="logo-box"><img class="logo-loind" src="partners/loind.png" alt="LOIND CORPORATION"></div><a class="logo-link" href="https://loind.com" target="_blank" rel="noopener noreferrer">홈페이지 <span aria-hidden="true">↗</span></a></li>
       </ul>
     </div>
   </div>
