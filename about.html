@@ -743,7 +743,7 @@
   .advisor-list, .logo-grid{ margin-top: var(--head-gap); }
   .advisor-list{
     display:grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap:12px;
     list-style:none;
   }
@@ -781,7 +781,7 @@
   }
   .logo-grid{
     display:grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap:12px;
     list-style:none;
   }
@@ -794,16 +794,22 @@
     border-radius:16px;
     background: var(--surface);
     border:1px solid var(--line);
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    letter-spacing:2px;
-    color: rgba(255,255,255,0.3);
+    font-size:18px;
+    font-weight:700;
+    text-align:center;
+    word-break:keep-all;
+    color:#fff;
   }
-  .logo-grid img{ max-width:100%; max-height:100%; object-fit:contain; filter: grayscale(1) brightness(1.6); opacity:.8; }
+  .logo-grid li.is-en{ font-family:'JetBrains Mono', monospace; font-size:15px; letter-spacing:1px; }
+  .logo-grid img{ max-width:80%; max-height:48px; object-fit:contain; }
+  .logo-grid img.logo-dg{ max-height:60px; max-width:88%; }
+  .logo-grid img.logo-guro{ max-height:44px; max-width:80%; }
+  .logo-grid img.logo-loind{ max-height:36px; }
+  .logo-grid li.logo-text{ font-size:22px; font-weight:800; letter-spacing:-0.02em; }
   @media (max-width:900px){
     .crew-grid > .crew-card{ flex-basis: calc((100% - 32px) / 3); }
     .advisor-list{ grid-template-columns: repeat(3, 1fr); }
-    .logo-grid{ grid-template-columns: repeat(3, 1fr); }
+    .logo-grid{ grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width:760px){
     .crew-grid{ margin-top: var(--head-gap-mobile); gap:10px; }
@@ -817,8 +823,9 @@
     .advisor-list{ gap:10px; grid-template-columns: repeat(2, 1fr); }
     .advisor-info{ padding:12px 14px 14px; }
     .church-list li{ padding:10px 16px; font-size:14px; }
-    .logo-grid{ grid-template-columns: repeat(3, 1fr); gap:8px; }
-    .logo-grid li{ height:64px; }
+    .logo-grid{ grid-template-columns:1fr; gap:8px; }
+    .logo-grid li{ height:64px; font-size:16px; }
+    .logo-grid li.is-en{ font-size:14px; }
   }
 
   .page-end{ height:200px; }
@@ -1050,9 +1057,9 @@
       <div class="crew-grid">
         <div class="crew-card"><img src="speakers/staff1.jpg" alt="이경현 목사" loading="lazy"><div class="crew-info"><p class="crew-name">이경현 목사</p><p class="crew-role">대표</p></div></div>
         <div class="crew-card"><img src="speakers/staff2.jpg" alt="김일보 간사" loading="lazy"><div class="crew-info"><p class="crew-name">김일보 간사</p><p class="crew-role">총괄디렉터</p></div></div>
-        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">이혜원</p></div></div>
+        <div class="crew-card"><img src="speakers/crew3.jpg" alt="이혜원" loading="lazy"><div class="crew-info"><p class="crew-name">이혜원</p></div></div>
         <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">주찬미</p></div></div>
-        <div class="crew-card is-empty"><svg viewBox="0 0 100 120" fill="#fff" aria-hidden="true"><circle cx="50" cy="40" r="24"/><path d="M8 118c2-32 20-52 42-52s40 20 42 52"/></svg><div class="crew-info"><p class="crew-name">정대희</p></div></div>
+        <div class="crew-card"><img src="speakers/crew5.jpg" alt="정대희" loading="lazy"><div class="crew-info"><p class="crew-name">정대희</p></div></div>
       </div>
     </div>
   </div>
@@ -1067,7 +1074,6 @@
             <li><div class="advisor-photo"><img src="speakers/adv3.jpg" alt="김단일 목사" loading="lazy"></div><div class="advisor-info"><b>김단일 목사</b><span>컴앤씨교회</span></div></li>
             <li><div class="advisor-photo"><img src="speakers/adv4.jpg" alt="오현철 교수" loading="lazy"></div><div class="advisor-info"><b>오현철 교수</b><span>성결대학교</span></div></li>
             <li><div class="advisor-photo"><img src="speakers/adv5.jpg" alt="김건주 목사" loading="lazy"></div><div class="advisor-info"><b>김건주 목사</b><span>복음과 도시</span></div></li>
-            <li><div class="advisor-photo"><img src="speakers/wor2.jpg" alt="류재상 목사" loading="lazy"></div><div class="advisor-info"><b>류재상 목사</b><span>세상의 빛 동광교회</span></div></li>
           </ul>
     </div>
   </div>
@@ -1075,11 +1081,14 @@
   <!-- PARTNERS -->
   <div class="about-section reveal">
     <div class="about-inner">
-      <h2 class="section-title">협력사</h2>
-      <!-- TODO: 협력사 로고로 교체하세요 -->
+      <h2 class="section-title">협력기관</h2>
+      <!-- TODO: 협력기관 로고로 교체하세요 -->
       <ul class="logo-grid">
-            <li>LOGO</li><li>LOGO</li><li>LOGO</li><li>LOGO</li><li>LOGO</li>
-          </ul>
+        <li><img class="logo-dg" src="partners/donggwang.png" alt="세상의 빛 동광교회"></li>
+        <li><img class="logo-guro" src="partners/guro.png" alt="구로동교회"></li>
+        <li class="logo-text">소망의바다 미니스트리</li>
+        <li><img class="logo-loind" src="partners/loind.png" alt="LOIND CORPORATION"></li>
+      </ul>
     </div>
   </div>
 
