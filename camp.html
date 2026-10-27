@@ -319,7 +319,6 @@
   .camp-info-list dt{ font-size:13px; color: rgba(255,255,255,0.45); padding-top:2px; }
   .camp-info-list dd{ font-size:16px; font-weight:600; }
   .camp-info-list dd small{ display:block; margin-top:2px; font-size:13px; font-weight:400; color: rgba(255,255,255,0.5); }
-  .camp-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:32px; }
   .camp-btn{
     display:inline-flex;
     align-items:center;
@@ -334,6 +333,116 @@
   .camp-btn:hover{ transform: translateY(-2px); }
   .camp-btn--solid{ background:#fff; color:#0B0F17; }
   .camp-btn--ghost{ border:1px solid rgba(255,255,255,0.3); color:#fff; }
+  .camp-recruit{
+    display:inline-block;
+    margin-left:4px;
+    padding:5px 12px;
+    border-radius:999px;
+    background: var(--pw-accent);
+    color:#0B0F17;
+    font-size:12px;
+    font-weight:700;
+  }
+  html{ scroll-behavior:smooth; }
+  #apply{ scroll-margin-top:72px; }
+
+  /* 2단: 왼쪽 캠프 안내 · 시간표, 오른쪽 신청 카드(스크롤 따라옴) */
+  .camp-layout{ display:grid; grid-template-columns: minmax(0,1fr) 360px; gap:32px; align-items:start; }
+  .camp-main{ min-width:0; }
+  .camp-main .camp-info{ grid-template-columns: 1fr 240px; gap:40px; padding:44px; }
+  /* 시간표: 캠프 안내 카드 안, 지도 바로 아래 (카드 폭 전체) */
+  .camp-tt{ grid-column: 1 / -1; margin-top:24px; }
+  .camp-tt .section-title{ text-align:left; font-size:22px; }
+  .camp-tt .tt{ margin-top:16px; }
+  .camp-side{ position:sticky; top:96px; }
+  .apply-card{
+    padding:32px 28px 28px;
+    border-radius:28px;
+    background: var(--surface);
+    border:1px solid var(--line);
+  }
+  .apply-card-eyebrow{ font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:700; letter-spacing:3px; color: var(--pw-accent); }
+  .apply-card-title{ margin-top:8px; font-size:26px; font-weight:800; letter-spacing:-0.02em; color:#fff; }
+  .apply-fee{ list-style:none; margin-top:22px; border-radius:16px; background: rgba(255,255,255,0.04); border:1px solid var(--line); overflow:hidden; }
+  .apply-fee li{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 18px; font-size:14px; color: rgba(237,239,243,0.85); }
+  .apply-fee li + li{ border-top:1px solid var(--line); }
+  .apply-fee li span{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .apply-fee em{ padding:2px 8px; border-radius:999px; background: var(--pw-accent); font-size:11px; font-style:normal; font-weight:700; color:#0B0F17; }
+  .apply-fee b{ font-size:19px; font-weight:800; letter-spacing:-0.02em; color:#fff; white-space:nowrap; }
+  .apply-fee li.is-late b{ color: rgba(255,255,255,0.6); }
+  .apply-notes{ margin:14px 0 0; padding:0; list-style:none; }
+  .apply-notes li{ position:relative; padding-left:12px; font-size:12.5px; line-height:1.7; color: rgba(255,255,255,0.5); word-break:keep-all; }
+  .apply-notes li::before{ content:""; position:absolute; left:0; top:0.75em; width:4px; height:4px; border-radius:50%; background: rgba(255,255,255,0.35); }
+  .apply-go{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    height:56px; margin-top:24px; border-radius:999px;
+    background:#fff; color:#0B0F17; font-size:16px; font-weight:700; text-decoration:none;
+    transition: background .2s ease, opacity .2s ease;
+  }
+  .apply-go:hover{ background: var(--pw-accent); }
+  .apply-go[aria-disabled="true"]{ opacity:0.3; cursor:not-allowed; }
+  .apply-go[aria-disabled="true"]:hover{ background:#fff; }
+  .apply-help{ margin-top:14px; text-align:center; font-size:13px; color: rgba(255,255,255,0.5); }
+  .apply-help a{ color:#fff; font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+  .apply-help a:hover{ color: var(--pw-accent); }
+  /* 오시는 길: 캠프 안내 카드 맨 아래, 카드 폭 전체 지도 */
+  .camp-loc{ grid-column: 1 / -1; margin-top:8px; }
+  #location{ scroll-margin-top:96px; }
+  .loc-map{ position:relative; height:300px; border-radius:18px; overflow:hidden; background:#1a2030; }
+  .loc-map .root_daum_roughmap{ position:absolute; inset:0; width:100% !important; height:100% !important; border:0; background:transparent; }
+  .loc-map .root_daum_roughmap .wrap_map{ height:100% !important; }
+  .loc-map .root_daum_roughmap .cont{ display:none; }
+  .loc-pin{
+    position:absolute;
+    left:50%;
+    top:50%;
+    z-index:2;
+    transform: translate(-50%, calc(-100% - 58px)); /* 지도 가운데의 빨간 핀(높이 약 50px) 바로 위 */
+    padding:9px 14px;
+    border-radius:12px;
+    background:#0B0F17;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+    pointer-events:none;
+    transition: opacity .25s ease;
+  }
+  .loc-pin::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-7px;
+    transform: translateX(-50%);
+    border:7px solid transparent;
+    border-bottom:0;
+    border-top-color:#0B0F17;
+  }
+  .loc-pin img{ display:block; height:24px; width:auto; }
+  .loc-pin.is-hidden{ opacity:0; }
+  /* 카카오 기본 이름표 대신 로고 표시. 지도를 움직이면(pin-off) 기본 이름표가 다시 보임 */
+  .loc-map:not(.pin-off) .roughmap_lebel_text,
+  .loc-map:not(.pin-off) div:has(> .roughmap_lebel_text){ visibility:hidden; }
+  .loc-row{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:16px; }
+  .loc-addr{ font-size:14.5px; color: rgba(255,255,255,0.75); word-break:keep-all; }
+  .loc-addr b{ margin-right:10px; font-weight:700; color:#fff; }
+  .loc-actions{ display:flex; gap:8px; }
+  .loc-actions .camp-btn{ padding:10px 16px; font-size:14px; border-radius:10px; }
+  @media (max-width:760px){
+    .loc-map{ height:240px; border-radius:14px; }
+    .loc-addr b{ display:block; margin:0 0 2px; }
+  }
+  /* 좁은 화면: 한 줄로 → 캠프 안내(지도·시간표 포함) · 신청 카드 순서 */
+  @media (max-width:1100px){
+    .camp-layout{ display:flex; flex-direction:column; gap:40px; }
+    .camp-main{ display:contents; }
+    .camp-main .camp-info{ order:1; }
+    .camp-side{ order:2; position:static; width:100%; }
+  }
+  @media (max-width:900px){
+    .camp-main .camp-info{ grid-template-columns:1fr; gap:36px; padding:32px 22px; }
+  }
+  @media (max-width:760px){
+    .apply-card{ padding:26px 20px 22px; border-radius:22px; }
+    .apply-card-title{ font-size:22px; }
+  }
   .camp-btn--ghost:hover{ background: rgba(255,255,255,0.08); }
   .camp-poster{
     display:block;
@@ -593,60 +702,88 @@
     <h1 class="page-title">캠프 안내</h1>
   </header>
 
-  <!-- CAMP INFO -->
+  <!-- 왼쪽: 캠프 안내 · 시간표 / 오른쪽: 신청 카드 (따라 내려옴) -->
   <section class="page-section first reveal">
-    <div class="page-inner">
-      <div class="camp-info">
-        <div>
-          <span class="camp-dday" id="campDday">D-DAY</span>
-          <h2 class="camp-info-title">2027 WHOLEGEN<br>WINTER CAMP</h2>
-          <dl class="camp-info-list">
-            <div><dt>주제</dt><dd>순전함<small>예수 그리스도 안에서 온전히 세워지는 세대 · 빌 2:15</small></dd></div>
-            <div><dt>일정</dt><dd>2027.01.21 (목) – 01.22 (금)<small>무박 2일</small></dd></div>
-            <div><dt>장소</dt><dd>세상의 빛 동광교회<small>경기도 부천시 소사구 경인옛로 130</small></dd></div>
-            <div><dt>대상</dt><dd>청소년</dd></div>
-          </dl>
-          <div class="camp-actions">
-            <!-- TODO: 신청서 링크(구글폼 등)로 교체하세요 -->
-            <a class="camp-btn camp-btn--solid" href="#">신청하기 <span aria-hidden="true">↗</span></a>
-            <a class="camp-btn camp-btn--ghost" href="index.html#location">오시는 길</a>
+    <div class="page-inner camp-layout">
+      <div class="camp-main">
+        <div class="camp-info">
+          <div>
+            <span class="camp-dday" id="campDday">D-DAY</span> <span class="camp-recruit">모집중</span>
+            <h2 class="camp-info-title">2027 WHOLEGEN<br>WINTER CAMP</h2>
+            <dl class="camp-info-list">
+              <div><dt>주제</dt><dd>순전함<small>예수 그리스도 안에서 온전히 세워지는 세대 · 빌 2:15</small></dd></div>
+              <div><dt>일정</dt><dd>2027.01.21 (목) – 01.22 (금)<small>무박 2일 · 숙박 없음</small></dd></div>
+              <div><dt>장소</dt><dd>세상의 빛 동광교회<small>경기도 부천시 소사구 경인옛로 130</small></dd></div>
+              <div><dt>대상</dt><dd>청소년, 교사, 교역자</dd></div>
+              <div><dt>정원</dt><dd>500명 한정<small>홀젠 연합캠프 1차</small></dd></div>
+            </dl>
           </div>
-        </div>
-        <a class="camp-poster" href="poster.jpg" target="_blank" rel="noopener" aria-label="포스터 크게 보기"><img src="poster.jpg" alt="2027 WHOLEGEN WINTER CAMP 포스터"></a>
-      </div>
-    </div>
-  </section>
+          <a class="camp-poster" href="poster.jpg" target="_blank" rel="noopener" aria-label="포스터 크게 보기"><img src="poster.jpg" alt="2027 WHOLEGEN WINTER CAMP 포스터"></a>
 
-  <!-- TIMETABLE -->
-  <section class="page-section reveal">
-    <div class="page-inner">
-      <h2 class="section-title">시간표</h2>
-      <div class="tt">
-      <div class="tt-days">
-        <div class="tt-col">
-          <p class="tt-day"><b>DAY 1</b><span>01.21 THU</span></p>
-          <div class="tt-groups">
-              <div class="tt-card"><div class="tt-item"><p>접수</p><span>[ 09:00 - 10:00 ]</span></div><div class="tt-item"><p>WHOLE WORSHIP 1<small>이경현 목사 · 찬양 노수미</small></p><span>[ 10:00 - 12:00 ]</span></div></div>
-              <p class="tt-break">12:00 점심식사</p>
-              <div class="tt-card"><div class="tt-item"><p>WHOLE UP!<small>김형기</small></p><span>[ 13:30 - 14:30 ]</span></div><div class="tt-item"><p>마임 콘서트<small>조인정 아티스트</small></p><span>[ 14:30 - 15:00 ]</span></div><div class="tt-item"><p>WHOLE RE:VIEW<small>다시, 세상을 보다 · 유경상 교수</small></p><span>[ 15:00 - 17:00 ]</span></div></div>
-              <p class="tt-break">17:00 저녁식사</p>
-              <div class="tt-card is-key"><div class="tt-item"><p>WHOLE WORSHIP 2<small>우성환 목사 · 찬양 이경현 목사</small></p><span>[ 18:30 - 21:30 ]</span></div></div>
-              <p class="tt-break">21:30 집으로~!</p>
+          <!-- 오시는 길: 카드 폭 전체 지도 -->
+          <div class="camp-loc" id="location">
+            <div class="loc-map" id="mapBox">
+              <!-- 카카오맵 지도퍼가기 (메인 페이지와 같은 지도) -->
+              <div id="daumRoughmapContainer1791734562245" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+              <!-- 교회 위치(지도 가운데)에 로고 표시. 지도를 움직이면 위치가 어긋나므로 사라짐 -->
+              <div class="loc-pin" aria-hidden="true"><img src="partners/donggwang.png" alt=""></div>
+            </div>
+            <div class="loc-row">
+              <p class="loc-addr"><b>오시는 길</b>경기도 부천시 소사구 경인옛로 130 · 세상의 빛 동광교회</p>
+              <div class="loc-actions">
+                <a class="camp-btn camp-btn--solid" href="https://map.kakao.com/link/map/%EC%84%B8%EC%83%81%EC%9D%98%EB%B9%9B%EB%8F%99%EA%B4%91%EA%B5%90%ED%9A%8C,37.4813546,126.8055173" target="_blank" rel="noopener noreferrer">카카오맵 <span aria-hidden="true">↗</span></a>
+                <a class="camp-btn camp-btn--ghost" href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EA%B2%BD%EC%9D%B8%EC%98%9B%EB%A1%9C%20130" target="_blank" rel="noopener noreferrer">네이버 지도 <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="camp-tt">
+            <h2 class="section-title">시간표</h2>
+            <div class="tt">
+            <div class="tt-days">
+              <div class="tt-col">
+                <p class="tt-day"><b>DAY 1</b><span>01.21 THU</span></p>
+                <div class="tt-groups">
+                    <div class="tt-card"><div class="tt-item"><p>접수</p><span>[ 09:00 - 10:00 ]</span></div><div class="tt-item"><p>WHOLE WORSHIP 1<small>이경현 목사 · 찬양 노수미</small></p><span>[ 10:00 - 12:00 ]</span></div></div>
+                    <p class="tt-break">12:00 점심식사</p>
+                    <div class="tt-card"><div class="tt-item"><p>WHOLE UP!<small>김형기</small></p><span>[ 13:30 - 14:30 ]</span></div><div class="tt-item"><p>마임 콘서트<small>조인정 아티스트</small></p><span>[ 14:30 - 15:00 ]</span></div><div class="tt-item"><p>WHOLE RE:VIEW<small>다시, 세상을 보다 · 유경상 교수</small></p><span>[ 15:00 - 17:00 ]</span></div></div>
+                    <p class="tt-break">17:00 저녁식사</p>
+                    <div class="tt-card is-key"><div class="tt-item"><p>WHOLE WORSHIP 2<small>우성환 목사 · 찬양 이경현 목사</small></p><span>[ 18:30 - 21:30 ]</span></div></div>
+                    <p class="tt-break">21:30 집으로~!</p>
+                </div>
+              </div>
+              <div class="tt-col">
+                <p class="tt-day"><b>DAY 2</b><span>01.22 FRI</span></p>
+                <div class="tt-groups">
+                    <div class="tt-card"><div class="tt-item"><p>접수 &amp; WHOLE UP!</p><span>[ 09:00 - 10:00 ]</span></div><div class="tt-item"><p>WHOLE WORSHIP 3<small>류재상 목사 · 찬양 노수미</small></p><span>[ 10:00 - 12:00 ]</span></div></div>
+                    <p class="tt-break">12:00 점심식사</p>
+                    <div class="tt-card"><div class="tt-item"><p>찬양콘서트<small>웨이홈</small></p><span>[ 13:30 - 14:30 ]</span></div><div class="tt-item"><p>WHOLE VISION<small>비전토크콘서트</small></p><span>[ 14:30 - 17:00 ]</span></div></div>
+                    <p class="tt-break">17:00 저녁식사</p>
+                    <div class="tt-card is-key"><div class="tt-item"><p>WHOLE WORSHIP 4<small>이경현 목사 · 찬양 조세아</small></p><span>[ 18:30 - 22:00 ]</span></div></div>
+                </div>
+              </div>
+            </div>
+            </div>
           </div>
         </div>
-        <div class="tt-col">
-          <p class="tt-day"><b>DAY 2</b><span>01.22 FRI</span></p>
-          <div class="tt-groups">
-              <div class="tt-card"><div class="tt-item"><p>접수 &amp; WHOLE UP!</p><span>[ 09:00 - 10:00 ]</span></div><div class="tt-item"><p>WHOLE WORSHIP 3<small>류재상 목사 · 찬양 노수미</small></p><span>[ 10:00 - 12:00 ]</span></div></div>
-              <p class="tt-break">12:00 점심식사</p>
-              <div class="tt-card"><div class="tt-item"><p>찬양콘서트<small>웨이홈</small></p><span>[ 13:30 - 14:30 ]</span></div><div class="tt-item"><p>WHOLE VISION<small>비전토크콘서트</small></p><span>[ 14:30 - 17:00 ]</span></div></div>
-              <p class="tt-break">17:00 저녁식사</p>
-              <div class="tt-card is-key"><div class="tt-item"><p>WHOLE WORSHIP 4<small>이경현 목사 · 찬양 조세아</small></p><span>[ 18:30 - 22:00 ]</span></div></div>
-          </div>
-        </div>
-      </div>
       </div>
 
+      <aside class="camp-side" id="apply">
+        <div class="apply-card">
+          <p class="apply-card-eyebrow">APPLY</p>
+          <h2 class="apply-card-title">신청하기</h2>
+          <ul class="apply-fee">
+            <li><span>12월까지 신청 시 <em>얼리버드</em></span><b>70,000원</b></li>
+            <li class="is-late"><span>이후 캠프 당일까지</span><b>75,000원</b></li>
+          </ul>
+          <ul class="apply-notes">
+            <li>무박 2일(목, 금) 참가 기준이며, 식사 4식이 제공됩니다.</li>
+            <li>그 외 저녁 집회 참석만 희망하시는 분들은 식사가 따로 제공되지 않습니다.</li>
+          </ul>
+          <a class="apply-go" id="applyGo" href="#" target="_blank" rel="noopener noreferrer" aria-disabled="true">신청서 작성하기 <span aria-hidden="true">↗</span></a>
+          <p class="apply-help">문의는 <a href="https://pf.kakao.com/_xaxnyFX/chat" target="_blank" rel="noopener noreferrer">카카오톡 채널</a>로 남겨 주세요.</p>
+        </div>
+      </aside>
     </div>
   </section>
   <div class="page-end"></div>
@@ -723,6 +860,21 @@
     });
   })();
 
+  // 신청서: 구글폼으로 이동
+  (function(){
+    // TODO: 구글폼 신청서 주소를 넣으세요. 비어 있으면 버튼이 '신청서 준비 중'으로 표시됩니다.
+    var FORM_URL = '';
+    var go = document.getElementById('applyGo');
+    if (!go) return;
+    if (FORM_URL){
+      go.href = FORM_URL;
+      go.setAttribute('aria-disabled', 'false');
+    } else {
+      go.textContent = '신청서 준비 중';
+      go.addEventListener('click', function(e){ e.preventDefault(); });
+    }
+  })();
+
   (function(){
     var el = document.getElementById('campDday');
     if (!el) return;
@@ -730,6 +882,26 @@
     var start = new Date(2027, 0, 21), end = new Date(2027, 0, 22);
     var d = Math.round((start - today) / 86400000);
     el.textContent = d > 0 ? 'D-' + d : (today <= end ? 'D-DAY' : 'THANK YOU');
+  })();
+</script>
+
+<!-- 카카오맵 지도퍼가기: 설치 스크립트 + 실행 (지도 칸 크기에 맞춰 렌더) -->
+<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://t1.kakaocdn.net/kakaomapweb/roughmap/loader/prod/roughmapLoader.js"></script>
+<script charset="UTF-8">
+  (function(){
+    var box = document.getElementById('mapBox');
+    if (!box || !window.daum || !daum.roughmap) return;
+    new daum.roughmap.Lander({
+      "timestamp" : "1791734562245",
+      "key" : "34oadzfhhps",
+      "mapWidth" : String(Math.round(box.clientWidth) || 640),
+      "mapHeight" : String(Math.round(box.clientHeight) || 360)
+    }).render();
+    // 지도를 끌거나 확대·축소하면 로고 표시가 핀과 어긋나므로 숨김
+    var pin = box.querySelector('.loc-pin');
+    if (pin) ['pointerdown', 'wheel', 'touchstart'].forEach(function(ev){
+      box.addEventListener(ev, function(){ pin.classList.add('is-hidden'); box.classList.add('pin-off'); }, { once:true, passive:true });
+    });
   })();
 </script>
 
