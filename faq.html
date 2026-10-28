@@ -433,6 +433,37 @@
     .footer-links{ flex-wrap:wrap; gap:16px 20px; }
     .footer-bottom{ flex-direction:column; gap:8px; }
   }
+  /* 모바일 하단 고정 바: 어느 페이지에서든 바로 신청 · 문의 */
+  .m-cta{ display:none; }
+  @media (max-width:760px){
+    .m-cta{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      z-index:60;
+      display:flex;
+      gap:8px;
+      padding:10px var(--content-px-mobile) calc(10px + env(safe-area-inset-bottom));
+      background: rgba(11,15,23,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+    .m-cta a{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:48px;
+      border-radius:999px;
+      font-size:15px;
+      font-weight:700;
+      text-decoration:none;
+    }
+    .m-cta .m-cta-apply{ flex:1.4; background: var(--pw-accent); color:#0B0F17; }
+    .m-cta .m-cta-ask{ background:#fff; color:#0B0F17; }
+    /* 바에 가려지지 않도록 페이지 맨 아래 여백 */
+    body{ padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+  }
 </style>
 </head>
 <body>
@@ -519,6 +550,12 @@
     </div>
   </div>
 </footer>
+
+<!-- 모바일 하단 고정 바 -->
+<nav class="m-cta" aria-label="빠른 메뉴">
+  <a class="m-cta-apply" href="camp.html#apply">캠프 신청</a>
+  <a class="m-cta-ask" href="https://pf.kakao.com/_xaxnyFX/chat" target="_blank" rel="noopener noreferrer">카카오톡 문의</a>
+</nav>
 
 <script>
   // Header: transparent over hero, solid after
