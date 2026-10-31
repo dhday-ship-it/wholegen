@@ -113,6 +113,7 @@
   .chip{ padding:6px 12px; border:0; border-radius:7px; background:transparent; color:#64748b; font-size:12px; font-weight:600; cursor:pointer; }
   .chip:hover{ color: var(--ink); }
   .chip[aria-pressed="true"]{ background:#fff; color: var(--brand-deep); box-shadow: 0 1px 2px rgba(30,41,59,0.08); }
+  .chip small{ margin-left:2px; font-size:10.5px; font-weight:500; color: var(--mute); }
 
   /* 홈: 바로가기 줄 오른쪽 — 현재 시각 · 디데이 카드 */
   .clock{ flex:1; min-width:360px; height:96px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:0 28px; border-radius:16px; border:1px solid #e3e8f3; background: linear-gradient(120deg, #ffffff 0%, #f3f6fc 55%, #e6ebf7 100%); box-shadow: 0 1px 2px rgba(30,41,59,0.04); }
@@ -251,7 +252,12 @@
   .ct-form[hidden]{ display:none; }
   .ct-tel{ color: var(--ink); text-decoration:none; font-family:'Geist Mono', monospace; font-size:12px; }
   .ct-tel:hover{ color: var(--brand); text-decoration:underline; }
-  .ct-role{ display:inline-block; padding:2px 8px; border-radius:99px; background:#eef1f6; color: var(--brand-deep); font-size:11px; font-weight:600; white-space:nowrap; }
+  .ct-role{ display:inline-block; padding:2px 9px; border-radius:99px; border:1px solid; font-size:11px; font-weight:700; white-space:nowrap; }
+  .ct-role.g0{ background:#eef1fd; border-color:#dbe0fa; color:#5568b8; }
+  .ct-role.g1{ background:#fff7ed; border-color:#fed7aa; color:#d97a3a; }
+  .ct-role.g2{ background:#ecfdf5; border-color:#d1fae5; color:#10b981; }
+  .ct-role.g3{ background:#f1f5f9; border-color:#e2e8f0; color:#64748b; }
+  select.input{ appearance:none; background-image: linear-gradient(45deg, transparent 50%, #94a3b8 50%), linear-gradient(135deg, #94a3b8 50%, transparent 50%); background-position: calc(100% - 16px) 52%, calc(100% - 11px) 52%; background-size:5px 5px; background-repeat:no-repeat; padding-right:30px; cursor:pointer; }
   @media (max-width:900px){ .ac-form{ grid-template-columns:1fr 1fr; } .ac-form .grow, .ac-form-btns{ grid-column: 1 / -1; } }
 
   /* 표 */
@@ -481,14 +487,14 @@
         <div class="head">
           <div>
             <h1>전화부</h1>
-            <p>스태프 · 강사 · 교회 담당자 연락처 · 구글 시트 「전화부」 탭에 저장돼요</p>
+            <p>캠프팀 · 강사 · 헬퍼 · 기타(협력) 연락처 · 구글 시트 「전화부」 탭에 저장돼요</p>
           </div>
           <button class="btn-primary" id="ctNew" type="button">＋ 연락처 추가</button>
         </div>
         <form class="ac-form ct-form" id="ctForm" autocomplete="off" hidden>
           <label><span>이름</span><input class="input" id="cName" type="text" placeholder="예: 김홀젠" required></label>
           <label><span>소속</span><input class="input" id="cOrg" type="text" placeholder="예: 세상의 빛 동광교회"></label>
-          <label><span>역할</span><input class="input" id="cRole" type="text" placeholder="예: 스태프 · 강사 · 담당자"></label>
+          <label><span>구분</span><select class="input" id="cRole" required><option value="캠프팀">캠프팀</option><option value="강사">강사</option><option value="헬퍼">헬퍼</option><option value="기타(협력)">기타(협력)</option></select></label>
           <label><span>전화번호</span><input class="input" id="cPhone" type="tel" placeholder="010-0000-0000"></label>
           <label><span>이메일</span><input class="input" id="cEmail" type="email" placeholder="name@example.com"></label>
           <label class="grow"><span>메모</span><input class="input" id="cMemo" type="text" placeholder="메모"></label>
@@ -497,10 +503,13 @@
             <button class="btn-primary" id="ctSave" type="submit">저장</button>
           </div>
         </form>
-        <div class="tools"><input class="input" id="ctQ" type="search" placeholder="이름 · 소속 · 역할 · 번호로 찾기" autocomplete="off"></div>
+        <div class="tools">
+          <input class="input" id="ctQ" type="search" placeholder="이름 · 소속 · 번호로 찾기" autocomplete="off">
+          <div class="chips" role="group" aria-label="구분" id="ctChips"></div>
+        </div>
         <div class="table ac-table">
           <table>
-            <thead><tr><th>이름</th><th>소속</th><th>역할</th><th>전화번호</th><th>이메일</th><th>메모</th><th></th></tr></thead>
+            <thead><tr><th>구분</th><th>이름</th><th>소속</th><th>전화번호</th><th>이메일</th><th>메모</th><th></th></tr></thead>
             <tbody id="ctRows"><tr><td colspan="7" class="empty">불러오는 중…</td></tr></tbody>
           </table>
         </div>
@@ -890,10 +899,14 @@
     });
 
     // 전화부 (Apps Script 'contacts' · 'contact_save' · 'contact_delete', 시트 '전화부' 탭)
-    var ct = { list: [], q: '', edit: null, loaded: false };
+    var GROUPS = ['캠프팀', '강사', '헬퍼', '기타(협력)'];
+    // 예전에 적은 역할도 구분으로 맞춤 (스태프 → 캠프팀, 모르는 값 → 기타(협력))
+    function groupOf(r){ r = String(r || ''); if (GROUPS.indexOf(r) >= 0) return r; if (/스태프|캠프/.test(r)) return '캠프팀'; if (/강사/.test(r)) return '강사'; if (/헬퍼|봉사/.test(r)) return '헬퍼'; return '기타(협력)'; }
+    var ct = { list: [], q: '', g: '', edit: null, loaded: false };
     var demoCt = [
-      { id:'c1', name:'정대희', org:'LOIND', role:'스태프', phone:'010-0000-0001', email:'', memo:'총괄', updated:'' },
-      { id:'c2', name:'이경현', org:'홀젠', role:'강사', phone:'010-0000-0002', email:'', memo:'', updated:'' }
+      { id:'c1', name:'정대희', org:'LOIND', role:'캠프팀', phone:'010-0000-0001', email:'', memo:'총괄', updated:'' },
+      { id:'c2', name:'이경현', org:'홀젠', role:'강사', phone:'010-0000-0002', email:'', memo:'', updated:'' },
+      { id:'c3', name:'김헬퍼', org:'동광교회', role:'헬퍼', phone:'010-0000-0003', email:'', memo:'접수 담당', updated:'' }
     ];
     function ctCall(body){
       if (!DEMO) return call(body);
@@ -908,11 +921,19 @@
     }
     function renderContacts(){
       var q = ct.q.replace(/[\s-]/g, '').toLowerCase();
-      var list = ct.list.filter(function(c){ return !q || (c.name + c.org + c.role + c.phone + c.email + c.memo).replace(/[\s-]/g, '').toLowerCase().indexOf(q) >= 0; });
+      $('ctChips').innerHTML = [''].concat(GROUPS).map(function(g){
+        var n = g ? ct.list.filter(function(c){ return groupOf(c.role) === g; }).length : ct.list.length;
+        return '<button class="chip" type="button" data-g="' + g + '" aria-pressed="' + (ct.g === g) + '">' + (g || '전체') + ' <small>' + n + '</small></button>';
+      }).join('');
+      var list = ct.list.filter(function(c){
+        if (ct.g && groupOf(c.role) !== ct.g) return false;
+        return !q || (c.name + c.org + c.role + c.phone + c.email + c.memo).replace(/[\s-]/g, '').toLowerCase().indexOf(q) >= 0;
+      }).sort(function(a, b){ return GROUPS.indexOf(groupOf(a.role)) - GROUPS.indexOf(groupOf(b.role)) || a.name.localeCompare(b.name, 'ko'); });
       $('ctRows').innerHTML = list.length ? list.map(function(c){
         var tel = c.phone.replace(/[^\d+]/g, '');
-        return '<tr data-id="' + esc(c.id) + '"><td class="ac-svc">' + esc(c.name) + '</td><td>' + esc(c.org || '') + '</td>' +
-          '<td>' + (c.role ? '<span class="ct-role">' + esc(c.role) + '</span>' : '') + '</td>' +
+        var g = groupOf(c.role);
+        return '<tr data-id="' + esc(c.id) + '"><td><span class="ct-role g' + GROUPS.indexOf(g) + '">' + esc(g) + '</span></td>' +
+          '<td class="ac-svc">' + esc(c.name) + '</td><td>' + esc(c.org || '') + '</td>' +
           '<td><span class="ac-val">' + (c.phone ? '<a class="ct-tel" href="tel:' + esc(tel) + '">' + esc(c.phone) + '</a><button class="ac-mini" type="button" data-act="copy">복사</button>' : '–') + '</span></td>' +
           '<td>' + (c.email ? '<a class="ct-tel" href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a>' : '') + '</td><td>' + esc(c.memo || '') + '</td>' +
           '<td class="ac-acts"><button class="ac-mini" type="button" data-act="edit">수정</button><button class="ac-mini danger" type="button" data-act="del">삭제</button></td></tr>';
@@ -929,13 +950,17 @@
     function openCtForm(c){
       ct.edit = c ? c.id : null;
       $('ctForm').hidden = false;
-      $('cName').value = c ? c.name : ''; $('cOrg').value = c ? c.org : ''; $('cRole').value = c ? c.role : '';
+      $('cName').value = c ? c.name : ''; $('cOrg').value = c ? c.org : ''; $('cRole').value = c ? groupOf(c.role) : (ct.g || '캠프팀');
       $('cPhone').value = c ? c.phone : ''; $('cEmail').value = c ? c.email : ''; $('cMemo').value = c ? c.memo : '';
       $('cName').focus();
     }
     $('ctNew').addEventListener('click', function(){ openCtForm(null); });
     $('ctCancel').addEventListener('click', function(){ $('ctForm').hidden = true; ct.edit = null; });
     $('ctQ').addEventListener('input', function(){ ct.q = this.value.trim(); renderContacts(); });
+    $('ctChips').addEventListener('click', function(e){
+      var b = e.target.closest('.chip'); if (!b) return;
+      ct.g = b.dataset.g; renderContacts();
+    });
     $('ctForm').addEventListener('submit', function(e){
       e.preventDefault();
       var btn = $('ctSave'); btn.disabled = true;
