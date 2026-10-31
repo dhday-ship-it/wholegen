@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="../favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" href="../favicon.png" sizes="192x192">
+<title>어드민 · 홀젠캠프</title>
+<style>
+  /* LOIND WORKS 어드민 스타일 (밝은 그라데이션 바탕 + 흰 작업 카드 · 남색 강조) */
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;700&family=Quicksand:wght@600;700&display=swap');
+
+  :root{
+    --brand:#55689b; --brand-deep:#3f4e73; --brand-light:#8fa8c4;
+    --ink:#1e293b; --text:#475569; --mute:#94a3b8; --faint:#cbd5e1;
+    --line:#eef0f4; --line-soft:#f4f5f8; --hover:#fafbfd;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  [hidden]{ display:none !important; }
+  html,body{ min-height:100vh; }
+  body{
+    font-family:'DM Sans','Pretendard', system-ui, sans-serif; font-size:13px; line-height:1.55; color: var(--text);
+    background: linear-gradient(135deg, #f6f8fa 0%, #ebeff4 50%, #ccd2e1 100%) fixed;
+    -webkit-font-smoothing:antialiased;
+  }
+  button,input{ font: inherit; }
+  .mono{ font-family:'Geist Mono', ui-monospace, monospace; }
+
+  .btn-primary{ display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:9px 16px; border-radius:9px; border:1px solid var(--brand); background: var(--brand); color:#fff; font-size:12.5px; font-weight:600; cursor:pointer; transition: background .18s ease; white-space:nowrap; }
+  .btn-primary:hover{ background: var(--brand-deep); }
+  .btn-ghost{ display:inline-flex; align-items:center; gap:4px; padding:6px 12px; border-radius:8px; border:1px solid var(--line); background:#f8fafc; color:#64748b; font-size:12px; font-weight:600; cursor:pointer; text-decoration:none; white-space:nowrap; transition: all .18s ease; }
+  .btn-ghost:hover{ background: var(--line); color: var(--ink); }
+  .input{ width:100%; padding:10px 13px; border-radius:10px; border:1px solid #e2e5ec; background:#fff; color: var(--ink); font-size:13px; outline:none; transition: all .2s ease; }
+  .input:focus{ border-color: var(--brand-light); box-shadow: 0 0 0 3px rgba(85,104,155,0.12); }
+  .input::placeholder{ color: var(--faint); }
+
+  /* 로그인: LOIND WORKS 처럼 왼쪽 이미지 · 오른쪽 폼 */
+  .login{ display:flex; min-height:100vh; background:#fff; }
+  .login-art{ position:relative; width:50%; overflow:hidden; background:#070707; }
+  .login-art img{ position:absolute; left:50%; top:50%; width:min(72%, 760px); transform: translate(-50%, -50%); }
+  .login-art p{ position:absolute; left:40px; top:36px; z-index:1; font-size:14px; font-weight:800; letter-spacing:-0.01em; color:#fff; text-shadow: 0 1px 6px rgba(0,0,0,0.35); }
+  .login-panel{ display:flex; flex-direction:column; width:50%; min-height:100vh; background: radial-gradient(900px 500px at 70% 20%, #eef5ff 0%, #ffffff 55%); }
+  .login-center{ flex:1; display:flex; align-items:center; padding:0 80px; }
+  .login form{ width:100%; max-width:384px; margin:0 auto; }
+  .login h1{ font-size:40px; font-weight:700; line-height:1.1; letter-spacing:-0.025em; color:#0f172a; }
+  .login p.sub{ margin-top:14px; font-size:14px; line-height:1.7; color: var(--mute); }
+  .pill{ display:flex; align-items:center; gap:10px; margin-top:32px; padding:14px 20px; border-radius:999px; border:1px solid #e2e8f0; background: rgba(248,250,252,0.8); transition: all .2s ease; }
+  .pill:focus-within{ border-color:#0f172a; background:#fff; box-shadow: 0 0 0 4px rgba(15,23,42,0.05); }
+  .pill svg{ width:16px; height:16px; flex-shrink:0; color: var(--mute); }
+  .pill input{ flex:1; min-width:0; border:0; background:transparent; outline:none; font-size:14px; color:#334155; }
+  .pill input::placeholder{ color: var(--faint); }
+  .pill .eye{ border:0; background:none; padding:0; color: var(--faint); cursor:pointer; display:flex; }
+  .pill .eye:hover{ color:#475569; }
+  .err{ margin-top:14px; padding:10px 14px; border-radius:12px; background:#fef2f2; color:#ef4444; font-size:12px; font-weight:500; text-align:center; }
+  .err:empty{ display:none; }
+  .btn-login{ width:100%; margin-top:16px; padding:14px; border:0; border-radius:999px; background:#0f172a; color:#fff; font-size:14px; font-weight:700; cursor:pointer; box-shadow: 0 10px 15px -3px rgba(15,23,42,0.15); transition: all .2s ease; }
+  .btn-login:hover{ background:#1e293b; box-shadow: 0 20px 25px -5px rgba(15,23,42,0.2); }
+  .btn-login:active{ transform: scale(0.99); }
+  .btn-login:disabled{ opacity:0.5; box-shadow:none; }
+  .login-foot{ padding:28px 40px; text-align:center; font-family:'Geist Mono', monospace; font-size:11px; color: var(--mute); }
+  @media (max-width:1023px){
+    .login-art{ display:none; }
+    .login-panel{ width:100%; }
+    .login-center{ padding:0 32px; }
+  }
+  @media (max-width:640px){ .login h1{ font-size:34px; } .login-center{ padding:0 24px; } }
+
+  /* 작업 화면: 그라데이션 위 흰 카드 */
+  .app{ display:none; min-height:100vh; background:#fff; }
+  .is-in .login{ display:none; }
+  .is-auto .login{ visibility:hidden; }
+  .is-in .app{ display:block; }
+  .shell{ display:flex; flex-direction:column; min-height:100vh; background:#fff; }
+  .topbar{ position:sticky; top:0; z-index:5; background:#fff; }
+  .topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; height:54px; padding:0 24px; border-bottom:1px solid #f1f5f9; }
+  .top-actions{ display:flex; gap:6px; }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-name{ font-family:'Quicksand', sans-serif; font-size:19px; font-weight:700; letter-spacing:-0.01em; color: var(--ink); }
+  .brand-div{ width:1px; height:14px; background:#e2e8f0; }
+  .brand-tag{ font-family:'Geist Mono', monospace; font-size:9.5px; letter-spacing:0.16em; text-transform:uppercase; color: var(--mute); }
+  /* 왼쪽 메뉴 (LOIND WORKS 사이드바) */
+  .body{ flex:1; display:flex; }
+  .side{ width:220px; flex-shrink:0; padding:18px 0 16px; border-right:1px solid #f1f5f9; }
+  .side-label{ padding:0 14px 8px; font-size:11px; font-weight:700; color:#64748b; }
+  .side-item{ display:flex; align-items:center; gap:10px; margin:0 8px 2px; padding:8px 12px; border-radius:9px; border:1px solid transparent; color: var(--mute); font-size:13px; font-weight:500; text-decoration:none; cursor:pointer; transition: all .15s ease; }
+  .side-item:hover{ background:#f8fafc; color: var(--ink); }
+  .side-item.active{ background:#eef1f6; border-color:#dde3ee; color: var(--brand-deep); }
+  .side-ico{ display:flex; align-items:center; justify-content:center; width:24px; height:24px; flex-shrink:0; border-radius:6px; background:#f1f5f9; color:#64748b; }
+  .side-item.active .side-ico{ background: var(--brand); color:#fff; }
+  .side-ico svg{ width:14px; height:14px; }
+  .main{ flex:1; min-width:0; padding:24px 24px 28px; }
+
+  .head{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:18px; }
+  .head h1{ font-size:22px; font-weight:700; color: var(--ink); letter-spacing:-0.01em; }
+  .head p{ margin-top:2px; font-size:12px; color: var(--mute); }
+  .head p .mono{ font-size:11px; }
+  .demo{ margin-bottom:16px; padding:10px 14px; border-radius:10px; background:#eef1fd; border:1px solid #dbe0fa; color:#5568b8; font-size:12.5px; }
+
+  .stats{ display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; }
+  .stat{ padding:16px 18px; border-radius:14px; background:#fff; border:1px solid var(--line); box-shadow: 0 1px 2px rgba(30,41,59,0.04); transition: border-color .2s ease; }
+  .stat:hover{ border-color:#e2e5ec; }
+  .stat span{ display:flex; align-items:center; gap:6px; font-family:'Geist Mono','Pretendard', monospace; font-size:10.5px; letter-spacing:0.02em; text-transform:uppercase; color: var(--mute); }
+  .stat span i{ width:6px; height:6px; border-radius:50%; background: var(--dot, var(--faint)); }
+  .stat b{ display:block; margin-top:6px; font-size:26px; font-weight:700; letter-spacing:-0.02em; color: var(--ink); }
+  .stat b small{ margin-left:4px; font-size:12px; font-weight:500; color: var(--mute); letter-spacing:0; }
+  .stat.s0{ --dot:#94a3b8; } .stat.s1{ --dot:#5568b8; } .stat.s2{ --dot:#10b981; }
+
+  .tools{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:20px; }
+  .tools .input{ flex:1; min-width:220px; width:auto; }
+  .chips{ display:flex; gap:4px; padding:3px; border-radius:10px; background:#f8fafc; border:1px solid var(--line); }
+  .chip{ padding:6px 12px; border:0; border-radius:7px; background:transparent; color:#64748b; font-size:12px; font-weight:600; cursor:pointer; }
+  .chip:hover{ color: var(--ink); }
+  .chip[aria-pressed="true"]{ background:#fff; color: var(--brand-deep); box-shadow: 0 1px 2px rgba(30,41,59,0.08); }
+
+  /* 홈: 바로가기 줄 오른쪽 — 현재 시각 · 디데이 카드 */
+  .clock{ flex:1; min-width:360px; height:96px; display:flex; align-items:center; justify-content:space-between; gap:24px; padding:0 28px; border-radius:16px; border:1px solid #e3e8f3; background: linear-gradient(120deg, #ffffff 0%, #f3f6fc 55%, #e6ebf7 100%); box-shadow: 0 1px 2px rgba(30,41,59,0.04); }
+  .clock-now, .clock-dday{ display:flex; flex-direction:column; }
+  .clock-dday{ align-items:flex-end; text-align:right; }
+  .clock-label{ font-size:12px; font-weight:500; color:#64748b; }
+  .clock b{ margin-top:2px; font-size:32px; font-weight:700; line-height:1.1; letter-spacing:-0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .clock b em{ margin-left:3px; font-size:15px; font-style:normal; font-weight:500; letter-spacing:0; color:#a3b0c6; }
+  .clock-dday b{ color: var(--brand); }
+  .clock-chip{ margin-top:4px; padding:2px 9px; border-radius:99px; background: rgba(85,104,155,0.10); font-size:11px; font-weight:500; color: var(--brand-deep); white-space:nowrap; }
+  @media (max-width:760px){ .quick .q-item{ width: calc((100% - 30px) / 4); height:auto; aspect-ratio:1; } }
+  @media (max-width:760px){ .clock{ flex-basis:100%; min-width:0; padding:0 18px; gap:12px; } .clock b{ font-size:26px; } }
+
+  /* 홈: 바로가기 배너 */
+  .quick{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  .q-item{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; width:96px; height:96px; padding:10px 6px; border-radius:16px; background:#fff; border:1px solid var(--line); box-shadow: 0 1px 2px rgba(30,41,59,0.04); text-decoration:none; transition: all .18s ease; }
+  .q-item:hover{ border-color:#dde3ee; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(85,104,155,0.10); }
+  .q-item.is-off{ cursor:default; opacity:.5; }
+  .q-item.is-off:hover{ transform:none; box-shadow: 0 1px 2px rgba(30,41,59,0.04); border-color: var(--line); }
+  .q-ico{ display:flex; align-items:center; justify-content:center; width:38px; height:38px; flex-shrink:0; border-radius:11px; color:#fff; }
+  .q-ico svg{ width:20px; height:20px; }
+  .q-home{ background:none; border-radius:50%; overflow:hidden; }
+  .q-home img{ width:100%; height:100%; display:block; }
+  .q-insta{ background: linear-gradient(45deg, #f9ce34, #ee2a7b 50%, #6228d7); }
+  .q-yt{ background:#fff; border:1px solid var(--line); color:#ff0000; }
+  .q-yt svg{ width:24px; height:24px; }
+  .q-share{ background:#0f9d58; }
+  .q-text{ text-align:center; }
+  .q-text b{ display:block; font-size:12px; font-weight:700; color: var(--ink); white-space:nowrap; }
+  .q-text small{ display:none; }
+
+  /* 홈 */
+  .home-grid{ display:grid; grid-template-columns: 1.7fr 1fr; gap:12px; align-items:start; }
+  .stats-sm{ margin-top:6px; gap:8px; }
+  .stats-sm .stat{ padding:12px 14px; border-radius:12px; box-shadow:none; background:#fcfcfd; }
+  .stats-sm .stat b{ margin-top:4px; font-size:22px; }
+  .card-sub{ margin:20px 0 2px; font-size:12px; font-weight:700; color:#64748b; }
+  .card{ padding:18px 20px; border-radius:16px; background:#fff; border:1px solid var(--line); box-shadow: 0 1px 2px rgba(30,41,59,0.04); }
+  .card-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .card-head b{ font-size:14px; font-weight:700; color: var(--ink); }
+  .card-more{ font-size:12px; font-weight:600; color: var(--brand); text-decoration:none; }
+  .card-more:hover{ color: var(--brand-deep); }
+  .recent{ list-style:none; }
+  .recent li{ display:grid; grid-template-columns: 1fr auto auto; align-items:center; gap:12px; padding:11px 0; border-top:1px solid var(--line-soft); }
+  .recent li:first-child{ border-top:0; }
+  .recent b{ display:block; font-size:13px; font-weight:600; color: var(--ink); }
+  .recent span{ font-size:12px; color: var(--mute); }
+  .recent time{ font-family:'Geist Mono', monospace; font-size:11px; color: var(--mute); }
+  .recent .empty-li{ display:block; padding:24px 0; text-align:center; color: var(--mute); }
+  .badge{ display:inline-block; padding:3px 9px; border-radius:99px; border:1px solid; font-size:11px; font-weight:700; white-space:nowrap; }
+  .badge.s0{ background:#f1f5f9; border-color:#e2e8f0; color:#64748b; }
+  .badge.s1{ background:#eef1fd; border-color:#dbe0fa; color:#5568b8; }
+  .badge.s2{ background:#ecfdf5; border-color:#d1fae5; color:#10b981; }
+  /* 홈: 구글 캘린더 월 달력 */
+  .cal-nav{ display:flex; align-items:center; gap:6px; }
+  .cal-nav b{ min-width:92px; text-align:center; font-size:14px; font-weight:700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .cal-nav button{ width:26px; height:26px; border-radius:8px; border:1px solid var(--line); background:#fff; color:#64748b; font-size:16px; line-height:1; cursor:pointer; }
+  .cal-nav button:hover{ background:#f8fafc; color: var(--ink); }
+  .cal-nav button:disabled{ opacity:.35; cursor:default; }
+  .cal-week, .cal-grid{ display:grid; grid-template-columns: repeat(7, 1fr); }
+  .cal-week{ margin-top:6px; padding-bottom:6px; border-bottom:1px solid var(--line); }
+  .cal-week span{ text-align:center; font-size:11px; font-weight:600; color: var(--mute); }
+  .cal-week span:first-child{ color:#e5484d; } .cal-week span:last-child{ color:#5568b8; }
+  .cal-cell{ min-height:66px; padding:5px 4px; border-bottom:1px solid var(--line-soft); cursor:pointer; transition: background .12s ease; overflow:hidden; }
+  .cal-cell:hover{ background:#fafbfd; }
+  .cal-cell.is-out{ cursor:default; background:none; }
+  .cal-cell.is-out .cal-num{ color: var(--faint); }
+  .cal-num{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; font-size:11.5px; font-weight:600; color: var(--text); font-variant-numeric: tabular-nums; }
+  .cal-cell.sun .cal-num{ color:#e5484d; } .cal-cell.sat .cal-num{ color:#5568b8; }
+  .cal-cell.is-today .cal-num{ background: var(--brand); color:#fff; }
+  .cal-cell.is-out .cal-num, .cal-cell.is-out.sun .cal-num, .cal-cell.is-out.sat .cal-num{ color: var(--faint); }
+  .cal-cell.is-sel{ background:#f1f4fa; }
+  .cal-ev{ display:block; margin-top:2px; padding:1px 5px; border-radius:4px; background:#eef1fd; color:#4655a0; font-size:10px; font-weight:600; line-height:1.5; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .cal-more{ display:block; margin-top:1px; padding-left:5px; font-size:10px; color: var(--mute); }
+  .cal-day-title{ margin:14px 0 2px; font-size:12px; font-weight:700; color:#64748b; }
+  .events{ list-style:none; }
+  .events li{ display:grid; grid-template-columns: 56px 1fr; gap:10px; align-items:baseline; padding:9px 0; border-top:1px solid var(--line-soft); }
+  .events li:first-child{ border-top:0; }
+  .ev-time{ font-family:'Geist Mono', monospace; font-size:11px; color: var(--mute); white-space:nowrap; }
+  .ev-body b{ display:block; font-size:13px; font-weight:600; color: var(--ink); line-height:1.4; word-break:keep-all; }
+  .ev-body span{ display:block; margin-top:1px; font-size:11.5px; color: var(--mute); }
+  .events .ev-empty{ display:block; padding:16px 0; text-align:center; color: var(--mute); font-size:12.5px; line-height:1.6; }
+  .links{ list-style:none; }
+  .links a{ display:flex; align-items:center; justify-content:space-between; padding:11px 12px; margin:0 -12px; border-radius:10px; color: var(--text); font-size:13px; font-weight:500; text-decoration:none; transition: background .15s ease; }
+  .links a:hover{ background:#f8fafc; color: var(--ink); }
+  .links i{ font-style:normal; color: var(--faint); }
+  @media (max-width:900px){ .home-grid{ grid-template-columns:1fr; } }
+  @media (max-width:760px){ .stats-sm{ grid-template-columns: repeat(2, 1fr); } }
+
+  /* 회의록 */
+  #viewNotes .head{ align-items:center; }
+  .notes{ display:grid; grid-template-columns: 320px 1fr; gap:14px; align-items:start; }
+  .note-list{ display:flex; flex-direction:column; gap:10px; }
+  .note-list ul{ list-style:none; max-height: calc(100vh - 260px); overflow-y:auto; scrollbar-width:thin; scrollbar-color: var(--faint) transparent; }
+  .note-list li{ padding:12px 14px; margin-bottom:6px; border-radius:12px; border:1px solid var(--line); background:#fff; cursor:pointer; transition: all .15s ease; }
+  .note-list li:hover{ border-color:#dde3ee; background:#fafbfd; }
+  .note-list li.is-sel{ border-color:#c9d3ea; background:#eef1f6; }
+  .note-list li time{ font-family:'Geist Mono', monospace; font-size:11px; color: var(--mute); }
+  .note-list li b{ display:block; margin-top:2px; font-size:13.5px; font-weight:600; color: var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .note-list li span{ display:block; margin-top:2px; font-size:11.5px; color: var(--mute); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .note-list .note-empty{ cursor:default; text-align:center; color: var(--mute); border-style:dashed; }
+  .note-list .note-empty:hover{ background:#fff; border-color: var(--line); }
+  .note-edit{ display:flex; flex-direction:column; gap:12px; padding:20px; border-radius:16px; border:1px solid var(--line); background:#fff; box-shadow: 0 1px 2px rgba(30,41,59,0.04); }
+  .note-edit label{ display:flex; flex-direction:column; gap:5px; }
+  .note-edit label > span{ font-family:'Geist Mono','Pretendard', monospace; font-size:10.5px; font-weight:700; color: var(--mute); }
+  .note-row{ display:flex; gap:12px; }
+  .note-row label:first-child{ width:170px; flex-shrink:0; }
+  .note-row .grow{ flex:1; }
+  .note-edit textarea{ min-height:360px; resize:vertical; line-height:1.7; font-family: inherit; }
+  .note-actions{ display:flex; align-items:center; gap:8px; }
+  .note-meta{ flex:1; font-size:11.5px; color: var(--mute); }
+  .note-mode{ font-size:14px; font-weight:700; color: var(--ink); }
+  .note-edit.is-view .input{ background:#f8fafc; border-color: var(--line); color: var(--ink); }
+  .note-edit.is-view .input:focus{ box-shadow:none; border-color: var(--line); }
+  @media (max-width:900px){ .notes{ grid-template-columns:1fr; } .note-list ul{ max-height:260px; } .note-row{ flex-direction:column; } .note-row label:first-child{ width:auto; } }
+
+  /* ID / PW */
+  #viewAccounts .head{ align-items:center; }
+  .ac-form{ display:grid; grid-template-columns: 1fr 1fr 1fr 1.4fr auto; gap:10px; align-items:end; padding:16px; border-radius:14px; border:1px solid #dde3ee; background:#f8f9fc; }
+  .ac-form label{ display:flex; flex-direction:column; gap:5px; }
+  .ac-form label > span{ font-family:'Geist Mono','Pretendard', monospace; font-size:10.5px; font-weight:700; color: var(--mute); }
+  .ac-form-btns{ display:flex; gap:6px; }
+  .ac-form-btns .btn-ghost{ padding:9px 14px; font-size:12.5px; }
+  .ac-form[hidden]{ display:none; }
+  .table.ac-table td, .table.ac-table th{ text-align:left; }
+  .ac-table td.ac-svc{ font-weight:700; color: var(--ink); white-space:nowrap; }
+  .ac-val{ display:inline-flex; align-items:center; gap:6px; }
+  .ac-val code{ font-family:'Geist Mono', monospace; font-size:12px; color: var(--ink); }
+  .ac-mini{ padding:2px 8px; border-radius:6px; border:1px solid var(--line); background:#fff; color:#64748b; font-size:11px; font-weight:600; cursor:pointer; }
+  .ac-mini:hover{ background:#f1f5f9; color: var(--ink); }
+  .ac-mini.danger:hover{ background:#fef2f2; border-color:#fcd7d7; color:#d6595a; }
+  .table.ac-table .ac-acts{ white-space:nowrap; text-align:right; }
+  .ac-acts .ac-mini + .ac-mini{ margin-left:4px; }
+  .ac-note{ margin-top:10px; font-size:11.5px; color: var(--mute); }
+  .ct-form{ grid-template-columns: 1fr 1.3fr 1fr 1.1fr 1.3fr 1.3fr auto; }
+  .ct-form[hidden]{ display:none; }
+  .ct-tel{ color: var(--ink); text-decoration:none; font-family:'Geist Mono', monospace; font-size:12px; }
+  .ct-tel:hover{ color: var(--brand); text-decoration:underline; }
+  .ct-role{ display:inline-block; padding:2px 8px; border-radius:99px; background:#eef1f6; color: var(--brand-deep); font-size:11px; font-weight:600; white-space:nowrap; }
+  @media (max-width:900px){ .ac-form{ grid-template-columns:1fr 1fr; } .ac-form .grow, .ac-form-btns{ grid-column: 1 / -1; } }
+
+  /* 표 */
+  .table{ margin-top:14px; border:1px solid var(--line); border-radius:16px; overflow-x:auto; scrollbar-width:thin; scrollbar-color: var(--faint) transparent; }
+  .table table{ width:100%; border-collapse:collapse; }
+  .table th{ padding:12px 12px 10px; text-align:center; font-family:'Geist Mono','Pretendard', monospace; font-size:10.5px; font-weight:700; letter-spacing:0.02em; color: var(--mute); white-space:nowrap; border-bottom:1px solid var(--line); background:#fcfcfd; }
+  .table td{ padding:11px 12px; text-align:center; font-size:12.5px; line-height:1.45; color: var(--text); vertical-align:middle; border-bottom:1px solid var(--line-soft); word-break:keep-all; overflow-wrap:anywhere; }
+  .table th:first-child, .table td:first-child{ padding-left:16px; }
+  .table tr:last-child td{ border-bottom:0; }
+  .table tbody tr:hover td{ background: var(--hover); }
+  .table .c-st, .table .c-no, .table .c-ok{ width:1%; white-space:nowrap; }
+  /* 등록상태 칸: 오른쪽 끝 고정 · 바탕과 구분선으로 분리 */
+  .table th.c-st, .table td.c-st{ position:sticky; right:0; z-index:1; background:#f6f8fc; border-left:1px solid #e3e8f3; padding-left:16px; padding-right:16px; }
+  .table th.c-st{ z-index:2; color: var(--brand-deep); }
+  .table tbody tr:hover td.c-st{ background:#eef2fa; }
+  .st-hint{ margin-left:4px; padding:1px 6px; border-radius:99px; background: rgba(85,104,155,0.12); font-family:'Pretendard', sans-serif; font-size:9.5px; font-weight:600; letter-spacing:0; color: var(--brand); }
+  .st-guide{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin-top:14px; padding:10px 14px; border-radius:10px; background:#f6f8fc; border:1px solid #e3e8f3; font-size:12.5px; color: var(--text); word-break:keep-all; }
+  .st-guide b{ margin-right:4px; color: var(--brand-deep); font-weight:700; }
+  .st-guide em{ font-style:normal; font-weight:600; color: var(--ink); }
+  .st-guide .badge{ font-size:10.5px; padding:2px 8px; }
+  .table .c-no{ font-family:'Geist Mono', monospace; font-size:11px; color: var(--faint); }
+  .table .c-ok{ text-align:center; color:#10b981; font-weight:700; }
+  .table th.c-ok{ color: var(--mute); }
+  .table td.date{ font-family:'Geist Mono', monospace; font-size:11.5px; color:#64748b; white-space:nowrap; }
+  .table .dim{ color: var(--faint); }
+  .empty{ padding:40px 12px !important; text-align:center; color: var(--mute) !important; }
+
+  /* 등록상태: 누르면 바뀌는 배지 3개 (선택된 것만 색) */
+  .seg{ display:inline-flex; gap:4px; }
+  .seg button{ padding:3px 10px; border-radius:99px; border:1px solid var(--line); background:#fff; color: var(--faint); font-size:11px; font-weight:700; cursor:pointer; transition: all .15s ease; }
+  .seg button:hover{ color:#64748b; border-color:#e2e5ec; }
+  .seg button.s0[aria-pressed="true"]{ background:#f1f5f9; border-color:#e2e8f0; color:#64748b; }
+  .seg button.s1[aria-pressed="true"]{ background:#eef1fd; border-color:#dbe0fa; color:#5568b8; }
+  .seg button.s2[aria-pressed="true"]{ background:#ecfdf5; border-color:#d1fae5; color:#10b981; }
+  .seg.is-saving{ opacity:0.5; pointer-events:none; }
+
+  .toast{ position:fixed; left:50%; bottom:28px; transform: translate(-50%, 16px); padding:10px 16px; border-radius:10px; background: var(--ink); color:#fff; font-size:12.5px; font-weight:600; opacity:0; pointer-events:none; transition: opacity .2s ease, transform .2s ease; box-shadow: 0 8px 24px rgba(30,41,59,0.18); }
+  .toast.show{ opacity:1; transform: translate(-50%, 0); }
+  .toast.is-err{ background:#d6595a; }
+
+  @media (max-width:760px){
+    .topbar{ padding:0 16px; }
+    .topbar .brand-tag, .topbar .brand-div{ display:none; }
+    .body{ flex-direction:column; min-height:0; }
+    .side{ width:auto; display:flex; align-items:center; gap:4px; padding:10px 8px; border-right:0; border-bottom:1px solid #f1f5f9; overflow-x:auto; }
+    .side-label{ display:none; }
+    .side-item{ margin:0; white-space:nowrap; }
+    .main{ padding:18px 14px 20px; }
+    .stats{ grid-template-columns: repeat(2, 1fr); gap:8px; }
+    .stat b{ font-size:22px; }
+    .chips{ width:100%; }
+    .chip{ flex:1; }
+    .table table{ min-width:900px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="login">
+  <div class="login-art">
+    <img src="logo.png" alt="WHOLEGEN">
+  </div>
+  <div class="login-panel">
+    <div class="login-center">
+      <form id="loginForm">
+        <h1>Welcome back!</h1>
+        <p class="sub">홀젠캠프 등록 관리 페이지예요.<br>스태프 비밀번호를 입력해 로그인해주세요.</p>
+        <label class="pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <input id="pw" type="password" placeholder="비밀번호" autocomplete="current-password" required>
+          <button class="eye" id="pwEye" type="button" tabindex="-1" aria-label="비밀번호 보기">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </label>
+        <p class="err" id="loginErr"></p>
+        <button class="btn-login" id="loginBtn" type="submit">로그인</button>
+      </form>
+    </div>
+    <div class="login-foot">© 2026 WHOLEGEN · LOIND Corporation. All rights reserved.</div>
+  </div>
+</div>
+
+<div class="app">
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand"><span class="brand-name">WHOLEGEN</span><span class="brand-div"></span><span class="brand-tag">Registration Admin</span></div>
+    </div>
+    <div class="body">
+    <nav class="side" aria-label="메뉴">
+      <p class="side-label">메뉴</p>
+      <a class="side-item" href="#home" data-view="home">
+        <span class="side-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-5h4v5h3a1 1 0 0 0 1-1v-9"/></svg></span>
+        홈
+      </a>
+      <a class="side-item" href="#reg" data-view="reg">
+        <span class="side-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h6a1 1 0 0 1 1 1v1H8V5a1 1 0 0 1 1-1z"/><path d="M8 6H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-2"/><path d="M9 13l2 2 4-4"/></svg></span>
+        등록 관리
+      </a>
+      <a class="side-item" href="#notes" data-view="notes">
+        <span class="side-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg></span>
+        회의록
+      </a>
+      <a class="side-item" href="#accounts" data-view="accounts">
+        <span class="side-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M10.8 12.2L20 3"/><path d="M17 6l3 3"/><path d="M15 8l2 2"/></svg></span>
+        ID / PW
+      </a>
+      <a class="side-item" href="#contacts" data-view="contacts">
+        <span class="side-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
+        전화부
+      </a>
+    </nav>
+    <div class="main">
+      <section id="viewHome" hidden>
+        <div class="head">
+          <div>
+            <h1>홈</h1>
+            <p>2027 WHOLEGEN WINTER CAMP · 2027.01.21 – 01.22</p>
+          </div>
+        </div>
+        <div class="quick" id="quick">
+          <a class="q-item" data-key="home" href="../index.html" target="_blank" rel="noopener">
+            <span class="q-ico q-home"><img src="../favicon.png" alt=""></span>
+            <span class="q-text"><b>홈페이지</b><small>wholegencamp.com</small></span>
+          </a>
+          <a class="q-item" data-key="instagram" target="_blank" rel="noopener">
+            <span class="q-ico q-insta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+            <span class="q-text"><b>인스타</b><small></small></span>
+          </a>
+          <a class="q-item" data-key="youtube" target="_blank" rel="noopener">
+            <span class="q-ico q-yt"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8z"/><path fill="#fff" d="M10 15.2V8.8l5.5 3.2z"/></svg></span>
+            <span class="q-text"><b>유튜브</b><small></small></span>
+          </a>
+          <a class="q-item" data-key="share" target="_blank" rel="noopener">
+            <span class="q-ico q-share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 11v5"/><path d="M9.5 13.5L12 11l2.5 2.5"/></svg></span>
+            <span class="q-text"><b>자료공유</b><small></small></span>
+          </a>
+          <div class="clock">
+            <div class="clock-now">
+              <span class="clock-label" id="nowDate"></span>
+              <b id="nowTime"></b>
+            </div>
+            <div class="clock-dday">
+              <span class="clock-label">WINTER CAMP까지</span>
+              <b id="dday"></b>
+              <span class="clock-chip">2027.01.21 목 – 01.22 금</span>
+            </div>
+          </div>
+        </div>
+        <div class="home-grid">
+          <div class="card">
+            <div class="card-head"><b>등록 관리</b><a href="#reg" class="card-more">전체 보기 →</a></div>
+            <div class="stats stats-sm" id="homeStats"></div>
+            <p class="card-sub">최근 신청</p>
+            <ul class="recent" id="recent"></ul>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div class="cal-nav"><button type="button" id="calPrev" aria-label="이전 달">‹</button><b id="calTitle"></b><button type="button" id="calNext" aria-label="다음 달">›</button></div>
+              <a href="https://calendar.google.com/" target="_blank" rel="noopener" class="card-more">구글 캘린더 ↗</a>
+            </div>
+            <div class="cal-week"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+            <div class="cal-grid" id="calGrid"></div>
+            <p class="cal-day-title" id="calDayTitle"></p>
+            <ul class="events" id="events"><li class="ev-empty">불러오는 중…</li></ul>
+          </div>
+        </div>
+      </section>
+      <section id="viewNotes" hidden>
+        <div class="head">
+          <div>
+            <h1>회의록</h1>
+            <p>스태프 회의 기록 · 구글 시트 「회의록」 탭에 저장돼요</p>
+          </div>
+          <button class="btn-primary" id="noteNew" type="button">＋ 새 회의록</button>
+        </div>
+        <div class="notes">
+          <div class="note-list">
+            <input class="input" id="noteQ" type="search" placeholder="제목 · 내용 · 참석자로 찾기" autocomplete="off">
+            <ul id="noteList"><li class="note-empty">불러오는 중…</li></ul>
+          </div>
+          <form class="note-edit" id="noteForm" autocomplete="off">
+            <p class="note-mode" id="nMode">새 회의록</p>
+            <div class="note-row">
+              <label><span>날짜</span><input class="input" id="nDate" type="date" required></label>
+              <label class="grow"><span>제목</span><input class="input" id="nTitle" type="text" placeholder="예: 11월 1차 스태프 회의" required></label>
+            </div>
+            <label><span>참석자</span><input class="input" id="nAtt" type="text" placeholder="예: 정대희, 이경현, 노수미"></label>
+            <label class="grow"><span>내용</span><textarea class="input" id="nBody" placeholder="회의 내용, 결정 사항, 할 일을 적어 주세요."></textarea></label>
+            <div class="note-actions">
+              <span class="note-meta" id="nMeta"></span>
+              <button class="btn-ghost" id="noteDel" type="button" hidden>삭제</button>
+              <button class="btn-ghost" id="noteCancel" type="button" hidden>취소</button>
+              <button class="btn-primary" id="noteEdit" type="button" hidden>수정</button>
+              <button class="btn-primary" id="noteSave" type="submit">저장</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section id="viewAccounts" hidden>
+        <div class="head">
+          <div>
+            <h1>ID / PW</h1>
+            <p>단체 계정 목록 · 구글 시트 「계정」 탭에 저장돼요</p>
+          </div>
+          <button class="btn-primary" id="acNew" type="button">＋ 계정 추가</button>
+        </div>
+        <form class="ac-form" id="acForm" autocomplete="off" hidden>
+          <label><span>서비스</span><input class="input" id="aService" type="text" placeholder="예: 인스타그램" required></label>
+          <label><span>아이디</span><input class="input" id="aLogin" type="text" placeholder="아이디 · 이메일"></label>
+          <label><span>비밀번호</span><input class="input" id="aPw" type="text" placeholder="비밀번호"></label>
+          <label class="grow"><span>메모</span><input class="input" id="aMemo" type="text" placeholder="예: 2단계 인증은 정대희 폰"></label>
+          <div class="ac-form-btns">
+            <button class="btn-ghost" id="acCancel" type="button">취소</button>
+            <button class="btn-primary" id="acSave" type="submit">저장</button>
+          </div>
+        </form>
+        <div class="tools"><input class="input" id="acQ" type="search" placeholder="서비스 · 아이디 · 메모로 찾기" autocomplete="off"></div>
+        <div class="table ac-table">
+          <table>
+            <thead><tr><th>서비스</th><th>아이디</th><th>비밀번호</th><th>메모</th><th>수정일</th><th></th></tr></thead>
+            <tbody id="acRows"><tr><td colspan="6" class="empty">불러오는 중…</td></tr></tbody>
+          </table>
+        </div>
+        <p class="ac-note">비밀번호는 시트에 그대로 저장돼요. 시트와 어드민 비밀번호는 스태프에게만 공유해 주세요.</p>
+      </section>
+      <section id="viewContacts" hidden>
+        <div class="head">
+          <div>
+            <h1>전화부</h1>
+            <p>스태프 · 강사 · 교회 담당자 연락처 · 구글 시트 「전화부」 탭에 저장돼요</p>
+          </div>
+          <button class="btn-primary" id="ctNew" type="button">＋ 연락처 추가</button>
+        </div>
+        <form class="ac-form ct-form" id="ctForm" autocomplete="off" hidden>
+          <label><span>이름</span><input class="input" id="cName" type="text" placeholder="예: 김홀젠" required></label>
+          <label><span>소속</span><input class="input" id="cOrg" type="text" placeholder="예: 세상의 빛 동광교회"></label>
+          <label><span>역할</span><input class="input" id="cRole" type="text" placeholder="예: 스태프 · 강사 · 담당자"></label>
+          <label><span>전화번호</span><input class="input" id="cPhone" type="tel" placeholder="010-0000-0000"></label>
+          <label><span>이메일</span><input class="input" id="cEmail" type="email" placeholder="name@example.com"></label>
+          <label class="grow"><span>메모</span><input class="input" id="cMemo" type="text" placeholder="메모"></label>
+          <div class="ac-form-btns">
+            <button class="btn-ghost" id="ctCancel" type="button">취소</button>
+            <button class="btn-primary" id="ctSave" type="submit">저장</button>
+          </div>
+        </form>
+        <div class="tools"><input class="input" id="ctQ" type="search" placeholder="이름 · 소속 · 역할 · 번호로 찾기" autocomplete="off"></div>
+        <div class="table ac-table">
+          <table>
+            <thead><tr><th>이름</th><th>소속</th><th>역할</th><th>전화번호</th><th>이메일</th><th>메모</th><th></th></tr></thead>
+            <tbody id="ctRows"><tr><td colspan="7" class="empty">불러오는 중…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section id="viewReg" hidden>
+      <div class="head">
+        <div>
+          <h1>등록 관리</h1>
+          <p>구글폼 신청서 · <span class="mono" id="updated"></span></p>
+        </div>
+      </div>
+      <p class="demo" id="demo" hidden>예시 데이터예요. reg-config.js 에 Apps Script 주소를 넣으면 실제 신청자가 보이고, 바꾼 상태가 저장돼요.</p>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="tools">
+        <input class="input" id="q" type="search" placeholder="시트의 모든 내용에서 찾기" autocomplete="off">
+        <div class="chips" role="group" aria-label="상태 필터" id="chips"></div>
+      </div>
+
+      <p class="st-guide"><b>등록상태 변경</b> 등록상태에 따라 버튼을 통해 상황을 반영해주세요. 홈페이지 등록현황에 공유됩니다.</p>
+      <div class="table">
+        <table>
+          <thead id="thead"></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      </section>
+    </div>
+    </div>
+  </div>
+</div>
+
+<p class="toast" id="toast" role="status"></p>
+
+<script src="../reg-config.js"></script>
+<script>
+  (function(){
+    var API = window.REG_API, DEMO = !API;
+    var STATUSES = window.REG_STATUSES;
+    var KEY = 'wg-admin-pw';
+    var all = [], headers = [], filter = '', query = '';
+    var $ = function(id){ return document.getElementById(id); };
+
+    function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return '&#' + c.charCodeAt(0) + ';'; }); }
+    function fmt(t){
+      var d = new Date(t);
+      if (isNaN(d)) return esc(t);
+      return (d.getMonth() + 1) + '.' + d.getDate() + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    }
+    // 시트 열 제목 → 짧은 이름 (앞에 있는 규칙부터)
+    var LABELS = [
+      [/타임스탬프|timestamp/i, '신청일'], [/개인\s*정보/, '개인정보 동의'], [/전부 동의|동의하며/, '접수 동의'],
+      [/일정/, '참석 일정'], [/성함|신청인|이름/, '신청인'], [/번호|연락처|전화/, '연락처'],
+      [/교회/, '교회'], [/인원/, '인원'], [/참가방법|참가 방법/, '참가방법'], [/어디서|경로/, '알게 된 곳']
+    ];
+    function label(h){
+      for (var i = 0; i < LABELS.length; i++) if (LABELS[i][0].test(h)) return LABELS[i][1];
+      return h.length > 12 ? h.slice(0, 11) + '…' : h;
+    }
+    function isConsent(h){ return /동의/.test(label(h)); }
+    // 열 순서: 신청일 · 교회 · 신청인 · 연락처 → 나머지 → 동의 칸은 맨 오른쪽
+    var ORDER = ['신청일', '교회', '신청인', '연락처', '참석 일정', '참가방법', '인원', '알게 된 곳'];
+    function colOrder(){
+      var rank = function(c){
+        var h = headers[c] || '', i = ORDER.indexOf(label(h));
+        return isConsent(h) ? 1000 + c : i >= 0 ? i : 100 + c;
+      };
+      return headers.map(function(h, c){ return c; }).sort(function(a, b){ return rank(a) - rank(b); });
+    }
+    // '2026.10.23 01:42' → '10.23 01:42'
+    function shortCell(v){ return String(v).replace(/^\d{4}[.\-](\d{2})[.\-](\d{2})[ T](\d{2}:\d{2}).*$/, '$1.$2 $3'); }
+    function people(c){ c = String(c || '').trim(); return !c ? '–' : /^\d+$/.test(c) ? c + '명' : c; }
+    // 로그인 유지: 이 브라우저에서 14일 (새 탭 · 다시 열어도 그대로)
+    var KEEP = 14 * 86400000;
+    function getPw(){
+      try {
+        var d = JSON.parse(localStorage.getItem(KEY) || 'null');
+        if (d && d.pw && Date.now() - d.at < KEEP) return d.pw;
+        localStorage.removeItem(KEY);
+      } catch (e){}
+      return '';
+    }
+    function setPw(v){
+      try { v ? localStorage.setItem(KEY, JSON.stringify({ pw: v, at: Date.now() })) : localStorage.removeItem(KEY); } catch (e){}
+    }
+
+    var toastTimer;
+    function toast(msg, isErr){
+      var t = $('toast');
+      t.textContent = msg;
+      t.classList.toggle('is-err', !!isErr);
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+    }
+
+    // Apps Script 호출 (text/plain 이라 브라우저 사전 요청 없이 감)
+    function call(body){
+      if (DEMO){
+        if (body.action === 'list'){
+          var items = JSON.parse(JSON.stringify(window.REG_DEMO)).map(function(r){
+            r.cells = [r.time.slice(0, 16).replace('T', ' '), r.church, r.name + ' 목사', r.schedule, r.count, r.phone];
+            return r;
+          });
+          return Promise.resolve({ ok:true, headers: ['타임스탬프', '교회명', '성함(신청인) / 직분', '참석 일정', '참가인원 (교사 포함)', '연락처'], items: items });
+        }
+        return Promise.resolve({ ok:true });
+      }
+      body.pw = getPw();
+      return fetch(API, { method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+        .then(function(r){ return r.json(); });
+    }
+
+    function dday(){
+      var t = new Date(); t.setHours(0,0,0,0);
+      var d = Math.round((new Date(2027, 0, 21) - t) / 86400000);
+      $('dday').textContent = d > 0 ? 'D-' + d : d === 0 || d === -1 ? 'D-DAY' : '캠프 종료';
+    }
+
+    // 현재 시각 (1초마다)
+    function clock(){
+      var n = new Date(), p2 = function(x){ return String(x).padStart(2, '0'); };
+      $('nowDate').textContent = (n.getMonth() + 1) + '월 ' + n.getDate() + '일 ' + '일월화수목금토'[n.getDay()] + '요일';
+      $('nowTime').innerHTML = p2(n.getHours()) + ':' + p2(n.getMinutes()) + '<em>' + p2(n.getSeconds()) + '</em>';
+    }
+    clock();
+    setInterval(clock, 1000);
+    dday();
+
+    function recent(){
+      var list = all.slice().sort(function(a, b){ return String(b.time).localeCompare(String(a.time)); }).slice(0, 5);
+      $('recent').innerHTML = list.length ? list.map(function(r){
+        var i = Math.max(0, STATUSES.indexOf(r.status));
+        return '<li><div><b>' + esc(r.church || '–') + '</b><span>' + esc(r.name || '') + '</span></div>' +
+          '<span class="badge s' + i + '">' + esc(STATUSES[i]) + '</span><time>' + fmt(r.time) + '</time></li>';
+      }).join('') : '<li class="empty-li">아직 신청자가 없어요.</li>';
+    }
+
+    // 바로가기 배너 주소 (비어 있으면 '링크 준비 중')
+    var QUICK = {
+      instagram: 'https://www.instagram.com/wholegen.camp/',
+      youtube: 'https://www.youtube.com/@wholegencamp',
+      share: ''
+    };
+    document.querySelectorAll('#quick .q-item').forEach(function(a){
+      var key = a.dataset.key;
+      if (!(key in QUICK)) return;
+      var url = QUICK[key], sub = a.querySelector('small');
+      if (url){
+        a.href = url;
+        sub.textContent = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+      } else {
+        a.classList.add('is-off');
+        sub.textContent = '링크 준비 중';
+        a.addEventListener('click', function(e){ e.preventDefault(); });
+      }
+    });
+
+    // 메뉴: #home · #reg
+    function show(){
+      var v = { '#reg':'reg', '#notes':'notes', '#accounts':'accounts', '#contacts':'contacts' }[location.hash] || 'home';
+      $('viewContacts').hidden = v !== 'contacts';
+      if (v === 'contacts' && document.body.classList.contains('is-in') && !ct.loaded) loadContacts();
+      $('viewAccounts').hidden = v !== 'accounts';
+      if (v === 'accounts' && document.body.classList.contains('is-in') && !acc.loaded) loadAccounts();
+      $('viewHome').hidden = v !== 'home';
+      $('viewReg').hidden = v !== 'reg';
+      $('viewNotes').hidden = v !== 'notes';
+      if (v === 'notes' && document.body.classList.contains('is-in') && !notes.loaded) loadNotes().then(function(){ if (!notes.sel) openNote(null); });
+      document.querySelectorAll('.side-item').forEach(function(a){
+        var on = a.dataset.view === v;
+        a.classList.toggle('active', on);
+        if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      });
+    }
+    window.addEventListener('hashchange', show);
+    show();
+
+    function stats(){
+      var heads = all.reduce(function(n, r){ return n + (parseInt(String(r.count).replace(/[^\d]/g, ''), 10) || 0); }, 0);
+      $('stats').innerHTML = '<div class="stat"><span>전체 신청</span><b>' + all.length + '<small>곳 · ' + heads + '명</small></b></div>' + STATUSES.map(function(s, i){
+        var n = all.filter(function(r){ return r.status === s; }).length;
+        return '<div class="stat s' + i + '"><span><i></i>' + s + '</span><b>' + n + '</b></div>';
+      }).join('');
+      $('homeStats').innerHTML = $('stats').innerHTML;
+      recent();
+      dday();
+    }
+
+    $('chips').innerHTML = [''].concat(STATUSES).map(function(s){
+      return '<button class="chip" type="button" data-f="' + s + '" aria-pressed="' + (s === '') + '">' + (s || '전체') + '</button>';
+    }).join('');
+
+    function render(){
+      var cols = colOrder();
+      $('thead').innerHTML = '<tr>' +
+        cols.map(function(c){ var h = headers[c];
+          // 짧은 이름으로 (마우스를 올리면 시트 원래 제목)
+          return '<th title="' + esc(h) + '"' + (isConsent(h) ? ' class="c-ok"' : '') + '>' + esc(label(h)) + '</th>';
+        }).join('') + '<th class="c-st">등록상태 <span class="st-hint">눌러서 변경</span></th></tr>';
+      var q = query.replace(/[\s-]/g, '');
+      var rows = all.map(function(r, i){ return { r:r, no:i + 1 }; }).filter(function(x){
+        if (filter && x.r.status !== filter) return false;
+        return !q || (x.r.cells || []).join('').replace(/[\s-]/g, '').indexOf(q) >= 0;
+      });
+      if (!rows.length){
+        $('rows').innerHTML = '<tr><td class="empty" colspan="' + (headers.length + 1) + '">' + (all.length ? '찾는 신청자가 없어요.' : '아직 신청자가 없어요.') + '</td></tr>';
+        return;
+      }
+      $('rows').innerHTML = rows.map(function(x){
+        var r = x.r;
+        var seg = STATUSES.map(function(s, i){
+          return '<button class="s' + i + '" type="button" data-s="' + s + '" aria-pressed="' + (r.status === s) + '">' + s + '</button>';
+        }).join('');
+        return '<tr data-row="' + r.row + '">' +
+          cols.map(function(c){ var v = (r.cells || [])[c]; if (v == null) v = '';
+            if (v === '') return '<td><span class="dim">–</span></td>';
+            // 동의 칸은 내용 대신 체크 표시 (마우스를 올리면 원래 답)
+            if (isConsent(headers[c] || '')) return '<td class="c-ok" title="' + esc(v) + '">✓</td>';
+            var sv = shortCell(v);
+            return '<td' + (sv !== String(v) ? ' class="date"' : '') + '>' + esc(sv) + '</td>';
+          }).join('') +
+          '<td class="c-st"><span class="seg">' + seg + '</span></td></tr>';
+      }).join('');
+    }
+
+    // 회의록 (Apps Script 'notes' · 'note_save' · 'note_delete', 시트 '회의록' 탭)
+    var notes = { list: [], sel: null, mode: 'new', q: '', loaded: false };
+    var demoNotes = [
+      { id:'d1', date:'2026-10-28', title:'10월 4차 스태프 회의', attendees:'정대희, 이경현, 노수미', body:'1. 포스터 최종본 확정\n2. 교회별 홍보 일정 정리\n3. 얼리버드 마감일 12/31로 확정', updated:'' },
+      { id:'d2', date:'2026-10-14', title:'강사 섭외 회의', attendees:'정대희, 우성환', body:'강사 라인업 확정 및 시간표 초안 공유', updated:'' }
+    ];
+    function noteCall(body){
+      if (!DEMO) return call(body);
+      if (body.action === 'notes') return Promise.resolve({ ok:true, notes: demoNotes.slice().sort(function(a, b){ return b.date.localeCompare(a.date); }) });
+      if (body.action === 'note_save'){
+        var n = body.note, f = demoNotes.filter(function(x){ return x.id === n.id; })[0];
+        if (f) Object.assign(f, n); else { n.id = 'd' + Date.now(); demoNotes.push(n); }
+        return Promise.resolve({ ok:true, id: n.id });
+      }
+      demoNotes = demoNotes.filter(function(x){ return x.id !== body.id; });
+      return Promise.resolve({ ok:true });
+    }
+    function todayStr(){ var t = new Date(); return t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0'); }
+    function renderNotes(){
+      var q = notes.q.replace(/\s/g, '');
+      var list = notes.list.filter(function(n){ return !q || (n.title + n.body + n.attendees).replace(/\s/g, '').indexOf(q) >= 0; });
+      $('noteList').innerHTML = list.length ? list.map(function(n){
+        return '<li data-id="' + esc(n.id) + '"' + (notes.sel === n.id ? ' class="is-sel"' : '') + '><time>' + esc(n.date.replace(/-/g, '.')) + '</time>' +
+          '<b>' + esc(n.title || '(제목 없음)') + '</b><span>' + esc(n.attendees || n.body.split('\n')[0] || '') + '</span></li>';
+      }).join('') : '<li class="note-empty">' + (notes.list.length ? '찾는 회의록이 없어요.' : '아직 회의록이 없어요.<br>「＋ 새 회의록」으로 시작해 보세요.') + '</li>';
+    }
+    // 모드: new(빈 새 회의록) · view(읽기 전용) · edit(수정 중)
+    function openNote(n, mode){
+      mode = n ? (mode || 'view') : 'new';
+      notes.sel = n ? n.id : null; notes.mode = mode;
+      $('nDate').value = n ? n.date : todayStr();
+      $('nTitle').value = n ? n.title : '';
+      $('nAtt').value = n ? n.attendees : '';
+      $('nBody').value = n ? n.body : '';
+      var ro = mode === 'view';
+      ['nDate', 'nTitle', 'nAtt', 'nBody'].forEach(function(id){ $(id).readOnly = ro; });
+      $('noteForm').classList.toggle('is-view', ro);
+      $('nMode').textContent = { new:'새 회의록', view:'회의록 보기', edit:'회의록 수정' }[mode];
+      $('noteSave').hidden = ro;
+      $('noteSave').textContent = mode === 'new' ? '새 회의록 저장' : '수정 저장';
+      $('noteEdit').hidden = !ro;
+      $('noteDel').hidden = !ro;
+      $('noteCancel').hidden = mode !== 'edit';
+      $('nMeta').textContent = n && n.updated ? '마지막 수정 ' + fmt(n.updated) : (mode === 'new' ? '저장하면 목록에 차곡차곡 쌓여요' : '');
+      renderNotes();
+    }
+    function loadNotes(){
+      return noteCall({ action:'notes' }).then(function(d){
+        if (!d.ok) throw new Error();
+        notes.list = d.notes; notes.loaded = true;
+        renderNotes();
+      }).catch(function(){
+        $('noteList').innerHTML = '<li class="note-empty">회의록을 불러오지 못했어요.<br>Apps Script를 새 버전으로 배포해 주세요.</li>';
+      });
+    }
+    function byId(id){ return notes.list.filter(function(n){ return n.id === id; })[0]; }
+    $('noteNew').addEventListener('click', function(){ openNote(null); $('nTitle').focus(); });
+    $('noteQ').addEventListener('input', function(){ notes.q = this.value.trim(); renderNotes(); });
+    $('noteList').addEventListener('click', function(e){
+      var li = e.target.closest('li[data-id]');
+      if (li) openNote(byId(li.dataset.id), 'view');
+    });
+    $('noteEdit').addEventListener('click', function(){ openNote(byId(notes.sel), 'edit'); $('nBody').focus(); });
+    $('noteCancel').addEventListener('click', function(){ openNote(byId(notes.sel), 'view'); });
+    $('noteForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      var isNew = notes.mode === 'new';
+      var btn = $('noteSave'); btn.disabled = true; btn.textContent = '저장 중…';
+      var note = { id: isNew ? '' : notes.sel, date: $('nDate').value, title: $('nTitle').value.trim(), attendees: $('nAtt').value.trim(), body: $('nBody').value };
+      noteCall({ action:'note_save', note: note }).then(function(d){
+        if (!d.ok) throw new Error();
+        return loadNotes().then(function(){
+          if (isNew){ toast('회의록이 추가됐어요 · 총 ' + notes.list.length + '건'); openNote(null); }
+          else { toast('수정했어요'); openNote(byId(d.id), 'view'); }
+        });
+      }).catch(function(){ toast('저장하지 못했어요. 다시 시도해 주세요.', true); })
+        .then(function(){ btn.disabled = false; if (!btn.hidden) btn.textContent = notes.mode === 'new' ? '새 회의록 저장' : '수정 저장'; });
+    });
+    $('noteDel').addEventListener('click', function(){
+      if (!notes.sel || !confirm('이 회의록을 삭제할까요? 되돌릴 수 없어요.')) return;
+      noteCall({ action:'note_delete', id: notes.sel }).then(function(d){
+        if (!d.ok) throw new Error();
+        toast('삭제했어요');
+        return loadNotes().then(function(){ openNote(null); });
+      }).catch(function(){ toast('삭제하지 못했어요.', true); });
+    });
+
+    // ID / PW (Apps Script 'accounts' · 'account_save' · 'account_delete', 시트 '계정' 탭)
+    var acc = { list: [], q: '', edit: null, open: {}, loaded: false };
+    var demoAcc = [
+      { id:'a1', service:'인스타그램', login:'wholegen.camp', password:'demo-pass-1', memo:'2단계 인증: 담당자 폰', updated:'2026.10.20 14:00' },
+      { id:'a2', service:'유튜브 (구글)', login:'wholegencamp@gmail.com', password:'demo-pass-2', memo:'', updated:'2026.10.18 10:30' }
+    ];
+    function acCall(body){
+      if (!DEMO) return call(body);
+      if (body.action === 'accounts') return Promise.resolve({ ok:true, accounts: demoAcc.slice() });
+      if (body.action === 'account_save'){
+        var a = body.account, f = demoAcc.filter(function(x){ return x.id === a.id; })[0];
+        if (f) Object.assign(f, a); else { a.id = 'a' + Date.now(); demoAcc.push(a); }
+        return Promise.resolve({ ok:true });
+      }
+      demoAcc = demoAcc.filter(function(x){ return x.id !== body.id; });
+      return Promise.resolve({ ok:true });
+    }
+    function copyText(t, label){
+      if (navigator.clipboard) navigator.clipboard.writeText(t).then(function(){ toast(label + ' 복사했어요'); });
+    }
+    function renderAccounts(){
+      var q = acc.q.replace(/\s/g, '').toLowerCase();
+      var list = acc.list.filter(function(a){ return !q || (a.service + a.login + a.memo).replace(/\s/g, '').toLowerCase().indexOf(q) >= 0; });
+      $('acRows').innerHTML = list.length ? list.map(function(a){
+        var shown = acc.open[a.id];
+        return '<tr data-id="' + esc(a.id) + '"><td class="ac-svc">' + esc(a.service) + '</td>' +
+          '<td><span class="ac-val"><code>' + esc(a.login || '–') + '</code>' + (a.login ? '<button class="ac-mini" type="button" data-act="copy-id">복사</button>' : '') + '</span></td>' +
+          '<td><span class="ac-val"><code>' + (a.password ? (shown ? esc(a.password) : '••••••••') : '–') + '</code>' +
+            (a.password ? '<button class="ac-mini" type="button" data-act="show">' + (shown ? '숨기기' : '보기') + '</button><button class="ac-mini" type="button" data-act="copy-pw">복사</button>' : '') + '</span></td>' +
+          '<td>' + esc(a.memo || '') + '</td><td class="date">' + esc(a.updated || '') + '</td>' +
+          '<td class="ac-acts"><button class="ac-mini" type="button" data-act="edit">수정</button><button class="ac-mini danger" type="button" data-act="del">삭제</button></td></tr>';
+      }).join('') : '<tr><td colspan="6" class="empty">' + (acc.list.length ? '찾는 계정이 없어요.' : '아직 등록된 계정이 없어요. 「＋ 계정 추가」로 넣어 주세요.') + '</td></tr>';
+    }
+    function loadAccounts(){
+      return acCall({ action:'accounts' }).then(function(d){
+        if (!d.ok) throw new Error();
+        acc.list = d.accounts; acc.loaded = true; renderAccounts();
+      }).catch(function(){
+        $('acRows').innerHTML = '<tr><td colspan="6" class="empty">목록을 불러오지 못했어요. Apps Script를 새 버전으로 배포해 주세요.</td></tr>';
+      });
+    }
+    function openAcForm(a){
+      acc.edit = a ? a.id : null;
+      $('acForm').hidden = false;
+      $('aService').value = a ? a.service : ''; $('aLogin').value = a ? a.login : '';
+      $('aPw').value = a ? a.password : ''; $('aMemo').value = a ? a.memo : '';
+      $('aService').focus();
+    }
+    $('acNew').addEventListener('click', function(){ openAcForm(null); });
+    $('acCancel').addEventListener('click', function(){ $('acForm').hidden = true; acc.edit = null; });
+    $('acQ').addEventListener('input', function(){ acc.q = this.value.trim(); renderAccounts(); });
+    $('acForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = $('acSave'); btn.disabled = true;
+      acCall({ action:'account_save', account: { id: acc.edit || '', service: $('aService').value.trim(), login: $('aLogin').value.trim(), password: $('aPw').value, memo: $('aMemo').value.trim() } })
+        .then(function(d){ if (!d.ok) throw new Error(); toast('저장했어요'); $('acForm').hidden = true; acc.edit = null; return loadAccounts(); })
+        .catch(function(){ toast('저장하지 못했어요. 다시 시도해 주세요.', true); })
+        .then(function(){ btn.disabled = false; });
+    });
+    $('acRows').addEventListener('click', function(e){
+      var b = e.target.closest('button[data-act]'); if (!b) return;
+      var id = b.closest('tr').dataset.id, a = acc.list.filter(function(x){ return x.id === id; })[0];
+      if (!a) return;
+      var act = b.dataset.act;
+      if (act === 'copy-id') copyText(a.login, '아이디를');
+      else if (act === 'copy-pw') copyText(a.password, '비밀번호를');
+      else if (act === 'show'){ acc.open[id] = !acc.open[id]; renderAccounts(); }
+      else if (act === 'edit') openAcForm(a);
+      else if (act === 'del' && confirm(a.service + ' 계정을 목록에서 삭제할까요?')){
+        acCall({ action:'account_delete', id: id }).then(function(d){ if (!d.ok) throw new Error(); toast('삭제했어요'); return loadAccounts(); })
+          .catch(function(){ toast('삭제하지 못했어요.', true); });
+      }
+    });
+
+    // 전화부 (Apps Script 'contacts' · 'contact_save' · 'contact_delete', 시트 '전화부' 탭)
+    var ct = { list: [], q: '', edit: null, loaded: false };
+    var demoCt = [
+      { id:'c1', name:'정대희', org:'LOIND', role:'스태프', phone:'010-0000-0001', email:'', memo:'총괄', updated:'' },
+      { id:'c2', name:'이경현', org:'홀젠', role:'강사', phone:'010-0000-0002', email:'', memo:'', updated:'' }
+    ];
+    function ctCall(body){
+      if (!DEMO) return call(body);
+      if (body.action === 'contacts') return Promise.resolve({ ok:true, contacts: demoCt.slice() });
+      if (body.action === 'contact_save'){
+        var c = body.contact, f = demoCt.filter(function(x){ return x.id === c.id; })[0];
+        if (f) Object.assign(f, c); else { c.id = 'c' + Date.now(); demoCt.push(c); }
+        return Promise.resolve({ ok:true });
+      }
+      demoCt = demoCt.filter(function(x){ return x.id !== body.id; });
+      return Promise.resolve({ ok:true });
+    }
+    function renderContacts(){
+      var q = ct.q.replace(/[\s-]/g, '').toLowerCase();
+      var list = ct.list.filter(function(c){ return !q || (c.name + c.org + c.role + c.phone + c.email + c.memo).replace(/[\s-]/g, '').toLowerCase().indexOf(q) >= 0; });
+      $('ctRows').innerHTML = list.length ? list.map(function(c){
+        var tel = c.phone.replace(/[^\d+]/g, '');
+        return '<tr data-id="' + esc(c.id) + '"><td class="ac-svc">' + esc(c.name) + '</td><td>' + esc(c.org || '') + '</td>' +
+          '<td>' + (c.role ? '<span class="ct-role">' + esc(c.role) + '</span>' : '') + '</td>' +
+          '<td><span class="ac-val">' + (c.phone ? '<a class="ct-tel" href="tel:' + esc(tel) + '">' + esc(c.phone) + '</a><button class="ac-mini" type="button" data-act="copy">복사</button>' : '–') + '</span></td>' +
+          '<td>' + (c.email ? '<a class="ct-tel" href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a>' : '') + '</td><td>' + esc(c.memo || '') + '</td>' +
+          '<td class="ac-acts"><button class="ac-mini" type="button" data-act="edit">수정</button><button class="ac-mini danger" type="button" data-act="del">삭제</button></td></tr>';
+      }).join('') : '<tr><td colspan="7" class="empty">' + (ct.list.length ? '찾는 연락처가 없어요.' : '아직 연락처가 없어요. 「＋ 연락처 추가」로 넣어 주세요.') + '</td></tr>';
+    }
+    function loadContacts(){
+      return ctCall({ action:'contacts' }).then(function(d){
+        if (!d.ok) throw new Error();
+        ct.list = d.contacts; ct.loaded = true; renderContacts();
+      }).catch(function(){
+        $('ctRows').innerHTML = '<tr><td colspan="7" class="empty">전화부를 불러오지 못했어요. Apps Script를 새 버전으로 배포해 주세요.</td></tr>';
+      });
+    }
+    function openCtForm(c){
+      ct.edit = c ? c.id : null;
+      $('ctForm').hidden = false;
+      $('cName').value = c ? c.name : ''; $('cOrg').value = c ? c.org : ''; $('cRole').value = c ? c.role : '';
+      $('cPhone').value = c ? c.phone : ''; $('cEmail').value = c ? c.email : ''; $('cMemo').value = c ? c.memo : '';
+      $('cName').focus();
+    }
+    $('ctNew').addEventListener('click', function(){ openCtForm(null); });
+    $('ctCancel').addEventListener('click', function(){ $('ctForm').hidden = true; ct.edit = null; });
+    $('ctQ').addEventListener('input', function(){ ct.q = this.value.trim(); renderContacts(); });
+    $('ctForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = $('ctSave'); btn.disabled = true;
+      ctCall({ action:'contact_save', contact: { id: ct.edit || '', name: $('cName').value.trim(), org: $('cOrg').value.trim(), role: $('cRole').value.trim(), phone: $('cPhone').value.trim(), email: $('cEmail').value.trim(), memo: $('cMemo').value.trim() } })
+        .then(function(d){ if (!d.ok) throw new Error(); toast('저장했어요'); $('ctForm').hidden = true; ct.edit = null; return loadContacts(); })
+        .catch(function(){ toast('저장하지 못했어요. 다시 시도해 주세요.', true); })
+        .then(function(){ btn.disabled = false; });
+    });
+    $('ctRows').addEventListener('click', function(e){
+      var b = e.target.closest('button[data-act]'); if (!b) return;
+      var id = b.closest('tr').dataset.id, c = ct.list.filter(function(x){ return x.id === id; })[0];
+      if (!c) return;
+      if (b.dataset.act === 'copy') copyText(c.phone, '전화번호를');
+      else if (b.dataset.act === 'edit') openCtForm(c);
+      else if (b.dataset.act === 'del' && confirm(c.name + ' 연락처를 삭제할까요?')){
+        ctCall({ action:'contact_delete', id: id }).then(function(d){ if (!d.ok) throw new Error(); toast('삭제했어요'); return loadContacts(); })
+          .catch(function(){ toast('삭제하지 못했어요.', true); });
+      }
+    });
+
+    // 구글 캘린더 월 달력 (Apps Script 'events' · 앞으로 1년)
+    var cal = { evs: [], err: false, y: 0, m: 0, sel: null };
+    (function(){ var t = new Date(); t.setHours(0,0,0,0); cal.y = t.getFullYear(); cal.m = t.getMonth(); cal.sel = t; })();
+    function p2(x){ return String(x).padStart(2, '0'); }
+    function dayEvents(d){
+      var a = d.getTime(), b = a + 86400000;
+      return cal.evs.filter(function(ev){ return ev.s < b && ev.e > a; });
+    }
+    function renderCal(){
+      var today = new Date(); today.setHours(0,0,0,0);
+      var first = new Date(cal.y, cal.m, 1), start = new Date(cal.y, cal.m, 1 - first.getDay());
+      $('calTitle').textContent = cal.y + '년 ' + (cal.m + 1) + '월';
+      $('calPrev').disabled = cal.y === today.getFullYear() && cal.m === today.getMonth();
+      var html = '';
+      for (var i = 0; i < 42; i++){
+        var d = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
+        if (i >= 35 && d.getMonth() !== cal.m) break;
+        var out = d.getMonth() !== cal.m, evs = out ? [] : dayEvents(d);
+        var cls = 'cal-cell' + (out ? ' is-out' : '') + (d.getDay() === 0 ? ' sun' : d.getDay() === 6 ? ' sat' : '') +
+          (+d === +today ? ' is-today' : '') + (cal.sel && +d === +cal.sel && !out ? ' is-sel' : '');
+        html += '<div class="' + cls + '" data-t="' + d.getTime() + '"><span class="cal-num">' + d.getDate() + '</span>' +
+          evs.slice(0, 2).map(function(ev){ return '<span class="cal-ev" title="' + esc(ev.title) + '">' + esc(ev.title) + '</span>'; }).join('') +
+          (evs.length > 2 ? '<span class="cal-more">+' + (evs.length - 2) + '</span>' : '') + '</div>';
+      }
+      $('calGrid').innerHTML = html;
+      renderDay();
+    }
+    function renderDay(){
+      var d = cal.sel;
+      $('calDayTitle').textContent = (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + '일월화수목금토'[d.getDay()] + '요일';
+      if (cal.err){
+        $('events').innerHTML = '<li class="ev-empty">캘린더를 불러오지 못했어요.<br>Apps Script에서 authorize 함수를 실행해 캘린더 권한을 허용해 주세요.</li>';
+        return;
+      }
+      var evs = dayEvents(d);
+      $('events').innerHTML = evs.length ? evs.map(function(ev){
+        var st = new Date(ev.s), en = new Date(ev.e);
+        var when = ev.allDay ? '하루 종일' : p2(st.getHours()) + ':' + p2(st.getMinutes());
+        return '<li><span class="ev-time">' + when + '</span><div class="ev-body"><b>' + esc(ev.title || '(제목 없음)') + '</b>' +
+          '<span>' + (ev.allDay ? '' : p2(st.getHours()) + ':' + p2(st.getMinutes()) + ' – ' + p2(en.getHours()) + ':' + p2(en.getMinutes())) + (ev.location ? (ev.allDay ? '' : ' · ') + esc(ev.location) : '') + '</span></div></li>';
+      }).join('') : '<li class="ev-empty">일정이 없어요.</li>';
+    }
+    $('calPrev').addEventListener('click', function(){ cal.m--; if (cal.m < 0){ cal.m = 11; cal.y--; } renderCal(); });
+    $('calNext').addEventListener('click', function(){ cal.m++; if (cal.m > 11){ cal.m = 0; cal.y++; } renderCal(); });
+    $('calGrid').addEventListener('click', function(e){
+      var c = e.target.closest('.cal-cell');
+      if (!c || c.classList.contains('is-out')) return;
+      cal.sel = new Date(+c.dataset.t);
+      renderCal();
+    });
+    function events(){
+      var req = DEMO ? Promise.resolve({ ok:true, events: (function(){
+        var t = new Date(), at = function(d, h){ var x = new Date(t); x.setDate(x.getDate() + d); x.setHours(h, 0, 0, 0); return x.toISOString(); };
+        return [
+          { title:'스태프 회의', start: at(0, 19), end: at(0, 21), allDay:false, location:'동광교회' },
+          { title:'포스터 · 홍보물 마감', start: at(3, 0), end: at(4, 0), allDay:true, location:'' },
+          { title:'교회 방문 홍보', start: at(3, 14), end: at(3, 16), allDay:false, location:'' },
+          { title:'찬양팀 리허설', start: at(3, 19), end: at(3, 21), allDay:false, location:'' },
+          { title:'얼리버드 신청 마감', start: at(61, 0), end: at(62, 0), allDay:true, location:'' }
+        ];
+      })() }) : call({ action:'events' });
+      req.then(function(d){
+        if (!d.ok || !d.events) throw new Error();
+        cal.err = false;
+        cal.evs = d.events.map(function(ev){ return { title: ev.title, location: ev.location, allDay: ev.allDay, s: new Date(ev.start).getTime(), e: new Date(ev.end).getTime() }; });
+      }).catch(function(){ cal.err = true; cal.evs = []; }).then(renderCal);
+    }
+
+    function load(){
+      return call({ action:'list' }).then(function(d){
+        if (!d.ok) throw new Error(d.error || 'fail');
+        all = d.items;
+        headers = d.headers || [];
+        // 예전 버전 스크립트(모든 열을 안 보냄)면 기본 항목으로 표시
+        if (!headers.length){
+          headers = ['신청일', '교회', '담당자', '참석 일정', '참가인원', '연락처'];
+          all.forEach(function(r){ r.cells = [fmt(r.time), r.church || '', r.name || '', r.schedule || '', r.count || '', r.phone || '']; });
+        }
+        var now = new Date();
+        $('updated').textContent = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + '에 불러옴';
+        stats();
+        render();
+      });
+    }
+
+    function enter(){
+      document.body.classList.add('is-in');
+      events();
+      if (location.hash === '#notes') loadNotes().then(function(){ openNote(null); });
+      if (location.hash === '#accounts') loadAccounts();
+      if (location.hash === '#contacts') loadContacts();
+      $('demo').hidden = !DEMO;
+    }
+
+    $('pwEye').addEventListener('click', function(){
+      var pw = $('pw');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+    });
+
+    $('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      setPw($('pw').value);
+      $('loginErr').textContent = '';
+      $('loginBtn').disabled = true;
+      $('loginBtn').textContent = '로그인 중...';
+      var done = function(){ $('loginBtn').disabled = false; $('loginBtn').textContent = '로그인'; };
+      load().then(function(){ done(); enter(); }).catch(function(err){
+        done();
+        setPw('');
+        $('loginErr').textContent = err.message === 'auth' ? '비밀번호가 올바르지 않습니다.' : '불러오지 못했어요. 잠시 후 다시 시도해 주세요.';
+      });
+    });
+
+
+
+    $('q').addEventListener('input', function(){ query = this.value.trim(); render(); });
+    $('chips').addEventListener('click', function(e){
+      var b = e.target.closest('.chip');
+      if (!b) return;
+      filter = b.dataset.f;
+      $('chips').querySelectorAll('.chip').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      render();
+    });
+
+    // 상태 바꾸기: 바로 시트에 저장
+    $('rows').addEventListener('click', function(e){
+      var btn = e.target.closest('.seg button');
+      if (!btn || btn.getAttribute('aria-pressed') === 'true') return;
+      var rowEl = btn.closest('tr'), seg = btn.parentNode;
+      var item = all.find(function(r){ return String(r.row) === rowEl.dataset.row; });
+      if (!item) return;
+      var prev = item.status, next = btn.dataset.s;
+      seg.classList.add('is-saving');
+      call({ action:'set', row: item.row, status: next }).then(function(d){
+        if (!d.ok) throw new Error();
+        item.status = next;
+        stats();
+        render();
+        toast((item.church || item.name) + ' · ' + next);
+      }).catch(function(){
+        item.status = prev;
+        seg.classList.remove('is-saving');
+        toast('저장하지 못했어요. 다시 시도해 주세요.', true);
+      });
+    });
+
+    // 저장된 로그인이 있으면 로그인 화면 없이 바로 들어감
+    if (getPw()){
+      document.body.classList.add('is-auto');
+      load().then(enter).catch(function(){ setPw(''); }).then(function(){ document.body.classList.remove('is-auto'); });
+    }
+  })();
+</script>
+</body>
+</html>

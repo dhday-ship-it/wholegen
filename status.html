@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" href="favicon.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="naver-site-verification" content="6877376ed9505cfbfa389b0d683d20d5976947e8" />
+<title>등록 현황 · 홀젠캠프 WHOLEGEN WINTER CAMP</title>
+<!-- 카카오톡·SNS 링크 미리보기 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="홀젠캠프 WHOLEGENCAMP">
+<meta property="og:title" content="등록 현황 · 홀젠캠프 WHOLEGEN WINTER CAMP">
+<meta property="og:description" content="홀젠캠프(WHOLEGEN WINTER CAMP) 2027 · 2027.01.21–22 · 무박 2일 청소년 캠프 · 세상의 빛 동광교회(부천)">
+<meta property="og:url" content="https://www.wholegencamp.com/status.html">
+<link rel="canonical" href="https://www.wholegencamp.com/status.html">
+<meta property="og:image" content="https://www.wholegencamp.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="홀젠캠프(WHOLEGEN WINTER CAMP) 2027 · 2027.01.21–22 · 무박 2일 청소년 캠프 · 세상의 빛 동광교회(부천)">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --sage: #1A1A1A;
+    --sage-light: #E5E5E5;
+    --cream: #FFFFFF;
+    --tan: #CCCCCC;
+    --brown: #4D4D4D;
+    --ink: #000000;
+    --pw-accent: #9DB1EE;
+    --surface: #121826;
+    --surface-2: #1A2132;
+    --line: rgba(255,255,255,0.07);
+
+    /* Spacing scale */
+    --section-gap: 128px;
+    --section-gap-mobile: 80px;
+    --head-gap: 44px;          /* section heading → content */
+    --head-gap-mobile: 28px;
+    --content-px: 40px;
+    --content-px-mobile: 20px;
+
+    /* Type scale */
+    --fs-display: 48px;
+    --fs-h2: 40px;
+    --fs-h3: 24px;
+    --fs-body: 15px;
+    --fs-small: 13px;
+    --fs-xs: 11.5px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ scroll-behavior:smooth; scroll-padding-top:72px; }
+
+  html,body{
+    width:100%;
+    min-height:100vh;
+    font-family:'Pretendard', sans-serif;
+    background: #0B0F17;
+    color: #EDEFF3;
+    overflow-x:clip;
+    position:relative;
+    font-size: var(--fs-body);
+    line-height: 1.6;
+  }
+
+  .site-top{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    background: transparent;
+    border-bottom:1px solid transparent;
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .site-top.is-solid,
+  .site-top.menu-open{
+    background: rgba(11,15,23,0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+  .site-top .logo,
+  .site-top .logo b,
+  .site-top .nav-links li,
+  .site-top .inquiry-btn{ transition: color .3s ease, background .3s ease, transform .2s ease; }
+  .site-top .logo{ color:#fff; }
+  .site-top .logo b{ color: rgba(255,255,255,0.6); }
+  .site-top .inquiry-btn{ background:#fff; color:#0B0F17; }
+  .site-top .inquiry-btn:hover{ background: var(--pw-accent); }
+  .site-top .nav-toggle span{ background:#fff; }
+  @media (min-width:901px){
+    .site-top .nav-links li{ color:#fff; }
+    .site-top .nav-links li:hover{ color: rgba(255,255,255,0.65); }
+  }
+
+  /* ---------- NAV ---------- */
+  .nav-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: 24px var(--content-px) 0;
+    position:relative;
+    z-index:40;
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:48px;
+    width:100%;
+    max-width:1280px;
+    position:relative;
+  }
+  .logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    font-weight:700;
+    color: var(--ink);
+    letter-spacing:0.5px;
+  }
+  .logo b{ color: var(--brown); font-weight:700; }
+
+  .nav-links{
+    display:flex;
+    gap:40px;
+    list-style:none;
+  }
+  .nav-links li{
+    font-size: var(--fs-body);
+    font-weight:600;
+    letter-spacing:0.6px;
+    color: var(--ink);
+    cursor:pointer;
+    transition: color .2s ease;
+  }
+  .nav-links li a{ color:inherit; text-decoration:none; }
+  .nav-links li:hover{ color: var(--brown); }
+
+  .inquiry-btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-small);
+    padding:9px 20px;
+    border-radius:999px;
+    background: var(--ink);
+    color: var(--cream);
+    font-weight:600;
+    text-decoration:none;
+    white-space:nowrap;
+    transition: background .2s ease, transform .2s ease;
+    display:inline-block;
+  }
+  .inquiry-btn:hover{
+    background: var(--brown);
+    transform: translateY(-1px);
+  }
+
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:28px;
+    height:22px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    flex-shrink:0;
+  }
+  .nav-toggle span{
+    display:block;
+    width:100%;
+    height:2px;
+    background: var(--ink);
+    border-radius:2px;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2){ opacity:0; }
+  .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width:900px){
+    .nav-toggle{ display:flex; order:3; }
+    .nav-links{
+      display:none;
+      position:absolute;
+      top:calc(100% + 12px);
+      left:0;
+      right:0;
+      flex-direction:column;
+      gap:0;
+      background: rgba(18,24,38,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius:20px;
+      padding:8px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.07);
+      z-index:30;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-links li{ padding:0; }
+    .nav-links li a{
+      display:block;
+      padding:14px 16px;
+      border-radius:12px;
+    }
+    .nav-links li{ color:#fff; }
+    .nav-links li:hover{ background: rgba(255,255,255,0.06); }
+    .inquiry-btn{ order:2; margin-left:auto; }
+    .logo{ order:1; }
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .js .reveal{
+    opacity:0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .js .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .js .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+
+  /* ---------- PAGE ---------- */
+  .page-head{
+    width:100%;
+    padding:160px var(--content-px) 0;
+    text-align:center;
+  }
+  .page-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:3px;
+    color: var(--pw-accent);
+  }
+  .page-title{
+    margin-top:12px;
+    font-size:56px;
+    font-weight:800;
+    letter-spacing:-0.03em;
+    line-height:1.1;
+  }
+  .page-section{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: var(--section-gap) var(--content-px) 0;
+  }
+  .page-section.first{ padding-top: var(--head-gap); }
+  .page-inner{ width:100%; max-width:1280px; }
+  .section-title{
+    font-size: var(--fs-h2);
+    font-weight:800;
+    letter-spacing:-0.5px;
+    text-align:center;
+    color:#fff;
+  }
+  .page-end{ height: var(--section-gap); }
+  @media (max-width:760px){
+    .page-head{ padding:112px var(--content-px-mobile) 0; }
+    .page-title{ font-size:36px; }
+    .page-section{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .page-section.first{ padding-top: var(--head-gap-mobile); }
+    .section-title{ font-size:28px; }
+    .page-end{ height: var(--section-gap-mobile); }
+  }
+
+  /* ---------- 등록 현황 ---------- */
+  .reg-inner{ max-width:1080px; }
+  .reg-guide{ margin-bottom:20px; padding:22px 24px; border-radius:20px; background: var(--surface); border:1px solid var(--line); }
+  .reg-guide b{ display:block; font-size:16px; font-weight:800; color:#fff; }
+  .reg-guide ul{ margin-top:10px; list-style:none; }
+  .reg-guide-text{ margin-top:10px; font-size:14px; line-height:1.75; color: var(--w-sub, #4E5968); word-break:keep-all; }
+  .reg-guide-text + .reg-guide-text{ margin-top:6px; }
+  @media (max-width:900px){ .br-pc{ display:none; } }
+  .reg-guide-text .nw{ white-space:nowrap; }
+  .reg-guide-text strong{ color: var(--w-ink, #191F28); font-weight:600; }
+  /* 등록상태 안내: 명단과 같은 상태 알약 + 한 줄 설명 */
+  .reg-pills{ margin-top:12px; list-style:none; }
+  .reg-guide .reg-pills li{ display:flex; align-items:center; gap:12px; padding:5px 0; font-size:14px; line-height:1.55; color: var(--w-sub, #4E5968); word-break:keep-all; }
+  .reg-pills li::before{ content:none !important; }
+  .reg-pills .reg-badge{ flex-shrink:0; min-width:64px; text-align:center; }
+  /* 반반: 왼쪽 확인 안내 · 오른쪽 등록상태 안내 (좁은 화면에서는 위아래) */
+  .reg-guide{ display:grid; grid-template-columns: 1fr 1fr; gap:0; }
+  .reg-guide-col{ min-width:0; }
+  .reg-guide-col + .reg-guide-col{ padding-left:28px; margin-left:28px; border-left:1px solid rgba(0,0,0,0.07); }
+  @media (max-width:900px){
+    .reg-guide{ grid-template-columns:1fr; }
+    .reg-guide-col + .reg-guide-col{ margin:18px 0 0; padding:18px 0 0; border-left:0; border-top:1px solid rgba(0,0,0,0.07); }
+  }
+  .reg-guide ul li{ position:relative; padding-left:14px; font-size:14px; line-height:1.8; color: rgba(255,255,255,0.65); word-break:keep-all; }
+  .reg-guide ul li::before{ content:""; position:absolute; left:0; top:0.8em; width:4px; height:4px; border-radius:50%; background: rgba(255,255,255,0.35); }
+  .reg-guide strong{ color:#fff; font-weight:600; }
+  .reg-guide mark{ padding:0 1px; background: linear-gradient(transparent 58%, #C9D5FA 58%); color: inherit; font-weight:700; }
+  .reg-guide em{ display:inline-block; min-width:52px; margin-right:6px; text-align:center; padding:1px 8px; border-radius:999px; font-size:12.5px; font-style:normal; font-weight:700; white-space:nowrap; }
+  .reg-guide em.s0{ background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); }
+  .reg-guide em.s1{ background: rgba(157,177,238,0.16); color: var(--pw-accent); }
+  .reg-guide em.s2{ background: var(--pw-accent); color:#0B0F17; }
+  @media (max-width:760px){ .reg-guide{ padding:18px; border-radius:16px; } .reg-guide ul li{ font-size:13.5px; } }
+  .reg-tools{ display:flex; gap:8px; flex-wrap:wrap; }
+  .reg-search{
+    flex:1; min-width:220px; height:46px; padding:0 18px;
+    border-radius:999px; border:1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
+    color:#fff; font: inherit; font-size:15px; outline:none;
+  }
+  .reg-search::placeholder{ color: rgba(255,255,255,0.35); }
+  .reg-search:focus{ border-color: var(--pw-accent); }
+  .reg-find{ display:flex; gap:8px; flex:1; min-width:300px; }
+  .reg-find .reg-search{ min-width:0; }
+  .reg-go{ height:46px; padding:0 22px; border:0; border-radius:999px; background: var(--pw-accent); color:#0B0F17; font: inherit; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap; }
+  .reg-go:hover{ background:#fff; }
+  .reg-result{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; padding:12px 18px; border-radius:14px; background: rgba(157,177,238,0.1); font-size:13.5px; color: var(--pw-accent); }
+  .reg-result[hidden]{ display:none; }
+  .reg-result button{ border:0; background:transparent; color:#fff; font: inherit; font-size:13px; font-weight:600; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+  .reg-list{ margin-top:16px; list-style:none; border-radius:20px; background: var(--surface); border:1px solid var(--line); overflow:hidden; }
+  .reg-row{ display:grid; grid-template-columns: 1.4fr 0.9fr 1.4fr 0.8fr 110px; align-items:center; gap:16px; padding:16px 24px; font-size:15px; }
+  .reg-row + .reg-row{ border-top:1px solid var(--line); }
+  .reg-row.head{ padding-top:14px; padding-bottom:14px; font-size:12.5px; font-weight:600; color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.02); }
+  .reg-row.head span:last-child{ justify-self:end; }
+  .reg-church{ font-weight:700; color:#fff; word-break:keep-all; }
+  .reg-name{ color: rgba(255,255,255,0.75); }
+  .reg-sched{ color: rgba(255,255,255,0.65); word-break:keep-all; }
+  .reg-count{ color: rgba(255,255,255,0.8); font-weight:600; }
+  .reg-badge{ justify-self:end; padding:5px 12px; border-radius:999px; font-size:12.5px; font-weight:700; white-space:nowrap; }
+  .reg-badge.s0{ background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
+  .reg-badge.s1{ background: rgba(157,177,238,0.16); color: var(--pw-accent); }
+  .reg-badge.s2{ background: var(--pw-accent); color:#0B0F17; }
+  .reg-count .reg-badge{ display:inline-block; }
+  .reg-badge.is-hidden{ background:transparent; border:1px dashed rgba(255,255,255,0.18); color: rgba(255,255,255,0.4); font-weight:600; }
+  .reg-hidden{ color: rgba(255,255,255,0.35); font-weight:500; }
+  .reg-empty{ padding:56px 20px; text-align:center; font-size:14px; color: rgba(255,255,255,0.45); }
+  .reg-foot{ margin-top:14px; font-size:12.5px; line-height:1.7; color: rgba(255,255,255,0.4); word-break:keep-all; }
+  .reg-foot a{ color: rgba(255,255,255,0.75); text-decoration:underline; text-underline-offset:3px; }
+
+  @media (max-width:760px){
+    .reg-find{ min-width:0; width:100%; flex-wrap:wrap; }
+    .reg-find .reg-search{ flex:1 1 40%; }
+    .reg-go{ width:100%; }
+    .reg-row.head{ display:none; }
+    .reg-row{ grid-template-columns: 1fr auto; grid-template-areas: "church badge" "name badge" "sched sched" "count count"; gap:2px 12px; padding:16px 18px; }
+    .reg-church{ grid-area:church; }
+    .reg-name{ grid-area:name; font-size:13.5px; }
+    .reg-name::before{ content:"담당 "; color: rgba(255,255,255,0.4); }
+    .reg-sched{ grid-area:sched; margin-top:6px; font-size:13.5px; }
+    .reg-count{ grid-area:count; font-size:13.5px; font-weight:500; color: rgba(255,255,255,0.65); }
+    .reg-count::before{ content:"참가인원 "; color: rgba(255,255,255,0.4); }
+    .reg-badge{ grid-area:badge; align-self:start; }
+  }
+
+  main{ min-height: calc(100vh - 160px); }
+
+  @media (max-width:760px){
+    .nav-wrap{ padding-left: var(--content-px-mobile); padding-right: var(--content-px-mobile); }
+    .site-top .nav-wrap{ padding-top:12px; padding-bottom:12px; }
+    nav{ gap:16px; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    width:100%;
+    background:#06080D;
+    border-top:1px solid var(--line);
+    padding: 52px var(--content-px) 36px;
+  }
+  .footer-inner{
+    max-width:1280px;
+    margin:0 auto;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    color: var(--cream);
+    letter-spacing:0.5px;
+  }
+  .footer-logo b{ color: rgba(255,255,255,0.5); font-weight:600; }
+  .footer-links{
+    display:flex;
+    gap:28px;
+    list-style:none;
+  }
+  .footer-links a{
+    color: rgba(255,255,255,0.7);
+    text-decoration:none;
+    font-size: var(--fs-body);
+    transition: color .2s ease;
+  }
+  .footer-links a:hover{ color: var(--cream); }
+  .footer-divider{
+    margin:32px 0 24px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing:0.3px;
+    color: rgba(255,255,255,0.4);
+  }
+  .footer-account b{ padding:1px 7px; border-radius:5px; background: var(--pw-accent); color:#0c1424; font-weight:700; } /* 계좌번호 하이라이트 (메인 배너 강조색과 동일) */
+  .copy-btn{
+    margin-left:6px;
+    padding:2px 9px;
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:999px;
+    background:transparent;
+    color: rgba(255,255,255,0.6);
+    font: inherit;
+    cursor:pointer;
+  }
+  .copy-btn:hover{ color:#fff; border-color: rgba(255,255,255,0.5); }
+
+  @media (max-width:600px){
+    .site-footer{ padding:36px var(--content-px-mobile) 24px; }
+    .footer-top{ flex-direction:column; align-items:flex-start; gap:16px; }
+    .footer-links{ flex-wrap:wrap; gap:16px 20px; }
+    .footer-bottom{ flex-direction:column; gap:8px; }
+  }
+  /* 모바일 하단 고정 바: 어느 페이지에서든 바로 캠프 신청 (문의는 상단 메뉴에 있음) */
+  .m-cta{ display:none; }
+  @media (max-width:760px){
+    .m-cta{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      z-index:60;
+      display:flex;
+      gap:8px;
+      padding:10px var(--content-px-mobile) calc(10px + env(safe-area-inset-bottom));
+      background: rgba(11,15,23,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+    .m-cta a{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:48px;
+      border-radius:999px;
+      font-size:15px;
+      font-weight:700;
+      text-decoration:none;
+    }
+    .m-cta .m-cta-apply{ background: var(--pw-accent); color:#0B0F17; }
+    /* 바에 가려지지 않도록 페이지 맨 아래 여백 */
+    body{ padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+  }
+
+  /* ---------- 흰 바탕 테마 (이 페이지만 · 푸터는 어둡게 유지) ----------
+     글자 #191F28 / 보조 #4E5968 / 옅은 #8B95A1 · 강조 #4C63C9(원래 강조색의 진한 톤) · 버튼 검정 */
+  :root{
+    --w-ink:#191F28; --w-sub:#4E5968; --w-mute:#8B95A1;
+    --w-accent:#4C63C9; --w-accent-soft:#EEF1FC; --w-accent-mid:#DCE3FB;
+    --w-bg-soft:#F6F7F9; --w-border: rgba(0,0,0,0.08);
+    --surface:#fff; --line: rgba(0,0,0,0.07);
+  }
+  html, body{ background:#fff; color: var(--w-ink); }
+  .site-top.is-solid, .site-top.menu-open{ background: rgba(255,255,255,0.92); border-bottom-color: rgba(0,0,0,0.06); }
+  .site-top .logo{ color: var(--w-ink); }
+  .site-top .logo b{ color: var(--w-mute); }
+  .site-top .inquiry-btn{ background: var(--w-ink); color:#fff; }
+  .site-top .inquiry-btn:hover{ background:#3A4250; }
+  .site-top .nav-toggle span{ background: var(--w-ink); }
+  @media (min-width:901px){
+    .site-top .nav-links li{ color: var(--w-ink); }
+    .site-top .nav-links li:hover{ color: var(--w-mute); }
+    .site-top .nav-links a[aria-current="page"]{ color: var(--w-accent); }
+  }
+  @media (max-width:900px){
+    .nav-links{ background: rgba(255,255,255,0.98); border-color: var(--w-border); box-shadow: 0 12px 32px rgba(0,0,0,0.10); }
+    .nav-links li{ color: var(--w-ink); }
+    .nav-links li:hover{ background: var(--w-bg-soft); }
+  }
+  .page-eyebrow{ color: var(--w-accent); }
+  .page-title{ color: var(--w-ink); }
+  @media (max-width:760px){
+    .m-cta{ background: rgba(255,255,255,0.94); border-top-color: rgba(0,0,0,0.06); }
+    .m-cta .m-cta-apply{ background: var(--w-ink); color:#fff; }
+  }
+
+  /* 안내 · 입력 · 목록 */
+  .reg-guide{ background: var(--w-bg-soft); border-color: transparent; }
+  .reg-guide b{ color: var(--w-ink); }
+  .reg-guide ul li{ color: var(--w-sub); }
+  .reg-guide ul li::before{ background: var(--w-mute); }
+  .reg-guide strong{ color: var(--w-ink); }
+  .reg-guide mark{ background: linear-gradient(transparent 55%, #C3CFF8 55%); color: var(--w-ink); }
+  .reg-guide em.s0, .reg-badge.s0{ background: rgba(0,0,0,0.06); color: var(--w-sub); }
+  .reg-guide em.s1, .reg-badge.s1{ background: var(--w-accent-soft); color: var(--w-accent); }
+  .reg-guide em.s2, .reg-badge.s2{ background: var(--w-accent); color:#fff; }
+  .reg-search{ background:#fff; border-color: var(--w-border); color: var(--w-ink); }
+  .reg-search::placeholder{ color: var(--w-mute); }
+  .reg-search:focus{ border-color: var(--w-accent); }
+  .reg-go{ background: var(--w-ink); color:#fff; }
+  .reg-go:hover{ background:#3A4250; }
+  .reg-result{ background: var(--w-accent-soft); color: var(--w-accent); }
+  .reg-result button{ color: var(--w-ink); }
+  .reg-list{ background:#fff; border-color: var(--w-border); }
+  .reg-row.head{ background: var(--w-bg-soft); color: var(--w-mute); }
+  .reg-church{ color: var(--w-ink); }
+  .reg-name{ color: var(--w-ink); }
+  .reg-sched{ color: var(--w-sub); }
+  .reg-count{ color: var(--w-ink); }
+  .reg-name::before, .reg-count::before{ color: var(--w-mute) !important; }
+  .reg-hidden{ color: var(--w-mute); }
+  /* 인증 후 확인: 연한 강조색 */
+  .reg-badge.is-hidden{ background: var(--w-accent-soft); border:1px solid var(--w-accent-mid); color: var(--w-accent); font-weight:600; }
+  /* 표: 교회 · 담당자 · 일정은 왼쪽, 참가인원 · 등록상태는 가운데 정렬 */
+  @media (min-width:761px){
+    .reg-row{ grid-template-columns: 1.3fr 0.8fr 1.3fr 160px 140px; gap:16px; }
+    .reg-row > :nth-child(4), .reg-row > :nth-child(5){ justify-self:center; text-align:center; }
+    .reg-row.head span:last-child{ justify-self:center; }
+  }
+  .reg-empty, .reg-foot{ color: var(--w-mute); }
+  .reg-foot a{ color: var(--w-ink); }
+  @media (max-width:760px){ .reg-count{ color: var(--w-sub); } }
+</style>
+</head>
+<body>
+
+  <header class="site-top">
+    <!-- NAV -->
+    <div class="nav-wrap">
+      <nav>
+        <a class="logo" href="index.html" style="text-decoration:none">WHOLEGEN<b>CAMP</b></a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="about.html">소개</a></li>
+          <li><a href="camp.html">캠프 등록</a></li>
+          <li><a href="status.html" aria-current="page">등록상태</a></li>
+          <li><a href="#">자료실</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+        <a class="inquiry-btn" href="https://pf.kakao.com/_xaxnyFX/chat" target="_blank" rel="noopener noreferrer">문의</a>
+      </nav>
+    </div>
+  </header>
+
+<main>
+  <header class="page-head">
+    <h1 class="page-title">등록 현황</h1>
+  </header>
+
+  <section class="page-section first">
+    <div class="page-inner reg-inner">
+      <div class="reg-guide">
+        <div class="reg-guide-col">
+        <b>등록 현황 확인 안내</b>
+        <p class="reg-guide-text"><mark>개인정보 보호</mark>를 위해 목록에서는 담당자 이름 일부만 보이고,<br class="br-pc"> 참가 인원과 등록 상태는 <mark>가려져</mark> 있어요.</p>
+        <p class="reg-guide-text">신청서에 작성한 <strong>교회 이름</strong>과 <strong>담당자 이름</strong>을 입력하면<br class="br-pc"> <span class="nw">우리 교회 정보를</span> <mark>모두 볼 수 있어요</mark>.</p>
+        </div>
+        <div class="reg-guide-col">
+        <b class="reg-guide-sub">등록상태 안내</b>
+        <ul class="reg-pills">
+          <li><span class="reg-badge s0">접수</span>신청자가 신청서를 작성한 상태</li>
+          <li><span class="reg-badge s1">가등록</span>신청자가 접수 및 가등록금 납부를 마친 상태</li>
+          <li><span class="reg-badge s2">완등록</span>신청자가 최종 등록을 마무리한 상태</li>
+        </ul>
+        </div>
+      </div>
+      <div class="reg-tools">
+        <form class="reg-find" id="regFind">
+          <input class="reg-search" id="regChurch" type="search" placeholder="교회 이름" autocomplete="off" aria-label="교회 이름">
+          <input class="reg-search" id="regName" type="search" placeholder="담당자 이름" autocomplete="off" aria-label="담당자 이름">
+          <button class="reg-go" type="submit">인증</button>
+        </form>
+      </div>
+      <div class="reg-result" id="regResult" hidden><span id="regResultText"></span><button type="button" id="regReset">전체 목록 보기</button></div>
+      <ul class="reg-list" id="regList">
+        <li class="reg-row head"><span>교회</span><span>담당자</span><span>참석 일정</span><span>참가인원 (교사 포함)</span><span>등록상태</span></li>
+        <li class="reg-empty">불러오는 중…</li>
+      </ul>
+      <p class="reg-foot">상태가 다르거나 궁금한 점이 있으면 <a href="https://pf.kakao.com/_xaxnyFX/chat" target="_blank" rel="noopener noreferrer">카카오톡 채널</a>로 알려주세요.</p>
+    </div>
+  </section>
+  <div class="page-end"></div>
+</main>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">WHOLEGEN<b>CAMP</b></div>
+      <ul class="footer-links">
+        <li><a href="about.html">소개</a></li>
+        <li><a href="camp.html">캠프 등록</a></li>
+        <li><a href="status.html">등록상태</a></li>
+        <li><a href="#">자료실</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="https://pf.kakao.com/_xaxnyFX/chat" target="_blank" rel="noopener noreferrer">문의</a></li>
+      </ul>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div class="footer-account">계좌 · 하나은행 <b>161-910048-18805</b> · 예금주 홀젠(WHOLEGEN) <button class="copy-btn" type="button" data-copy="161-910048-18805">복사</button></div>
+      <div class="footer-copyright">&copy; 2026 LOIND CORPORATION. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- 모바일 하단 고정 바 -->
+<nav class="m-cta" aria-label="빠른 메뉴">
+  <a class="m-cta-apply" href="camp.html#apply">캠프 신청</a>
+</nav>
+
+<script>
+  // Header: transparent over hero, solid after
+  (function(){
+    var header = document.querySelector('.site-top');
+    var banner = document.querySelector('.banner');
+    if (!header) return;
+    if (!banner){ header.classList.add('is-solid'); return; }
+    function update(){
+      header.classList.toggle('is-solid', window.scrollY > banner.offsetHeight - header.offsetHeight);
+    }
+    update();
+    window.addEventListener('scroll', update, { passive:true });
+    window.addEventListener('resize', update);
+  })();
+
+  // Scroll reveal
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)){
+      els.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (!toggle || !links) return;
+    toggle.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('open');
+      document.querySelector('.site-top').classList.toggle('menu-open', isOpen);
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('open');
+        document.querySelector('.site-top').classList.remove('menu-open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
+<script src="reg-config.js"></script>
+<script>
+  // 등록 현황: 구글 시트(Apps Script)에서 불러와 교회별 명단 표시
+  (function(){
+    var STATUSES = window.REG_STATUSES;
+    var all = [], found = null, loading = false, seq = 0;
+    var list = document.getElementById('regList');
+    var HEAD = list.firstElementChild.outerHTML;
+
+    function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return '&#' + c.charCodeAt(0) + ';'; }); }
+    // 숫자만 적혀 있으면 '명'을 붙임
+    function people(c){ c = String(c || '').trim(); return !c ? '–' : /^\d+$/.test(c) ? c + '명' : c; }
+    // 서버(Code.gs churchKey_)와 같은 규칙: 띄어쓰기 · '교회' 빼고 비교
+    function churchKey(s){ return String(s).replace(/\s/g, '').replace(/교회/g, ''); }
+    function mask(n){ return n.length <= 1 ? n : n.length === 2 ? n[0] + '*' : n[0] + '*'.repeat(n.length - 2) + n[n.length - 1]; }
+
+    function render(){
+      if (loading){
+        list.innerHTML = HEAD + '<li class="reg-empty">찾는 중…</li>';
+        return;
+      }
+      // 인증 결과(교회 + 담당자 일치)는 담당자 이름 그대로, 기본 리스트는 가린 이름
+      var rows = found || all;
+      if (!rows.length){
+        list.innerHTML = HEAD + '<li class="reg-empty">' + (found ? '교회 이름과 담당자 이름이 맞는 신청이 없어요.' : all.length ? '해당하는 교회가 없어요.' : '아직 등록한 교회가 없어요.') + '</li>';
+        return;
+      }
+      // 기본 리스트는 참가인원 · 등록상태 '인증 후 확인' (서버가 보내지 않음)
+      list.innerHTML = HEAD + rows.map(function(r){
+        var open = !!found, i = Math.max(0, STATUSES.indexOf(r.status));
+        return '<li class="reg-row">' +
+          '<span class="reg-church">' + esc(r.church || '–') + '</span>' +
+          '<span class="reg-name">' + esc(r.name || '–') + '</span>' +
+          '<span class="reg-sched">' + esc(r.schedule || '–') + '</span>' +
+          (open ? '<span class="reg-count">' + esc(people(r.count)) + '</span>' : '<span class="reg-count"><span class="reg-badge is-hidden">인증 후 확인</span></span>') +
+          (open ? '<span class="reg-badge s' + i + '">' + esc(STATUSES[i]) + '</span>' : '<span class="reg-badge is-hidden">인증 후 확인</span>') + '</li>';
+      }).join('');
+    }
+
+    function showResult(on, text){
+      document.getElementById('regResult').hidden = !on;
+      document.getElementById('regResultText').textContent = text || '';
+    }
+
+    function reset(){
+      ++seq; found = null; loading = false;
+      showResult(false);
+      render();
+    }
+
+    document.getElementById('regFind').addEventListener('submit', function(e){
+      e.preventDefault();
+      var church = document.getElementById('regChurch').value.trim();
+      var name = document.getElementById('regName').value.trim();
+      if (!church || name.replace(/\s/g, '').length < 2){
+        showResult(true, '교회 이름과 담당자 이름을 모두 넣어 주세요.');
+        return;
+      }
+      var my = ++seq, label = church + ' · ' + name;
+      var done = function(items){
+        found = items; loading = false; render();
+        showResult(true, items.length ? label + ' 인증 완료' : label + ' — 맞는 신청이 없어요');
+      };
+      if (!window.REG_API){
+        var ck = churchKey(church), nk = name.replace(/\s/g, '');
+        done(window.REG_DEMO.filter(function(r){ return churchKey(r.church).indexOf(ck) >= 0 && r.name === nk; }));
+        return;
+      }
+      loading = true; render();
+      fetch(window.REG_API + '?church=' + encodeURIComponent(church) + '&name=' + encodeURIComponent(name)).then(function(res){ return res.json(); }).then(function(d){
+        if (my !== seq) return;
+        if (!d.ok || !d.search) throw new Error();
+        done(d.items);
+      }).catch(function(){
+        if (my !== seq) return;
+        loading = false; found = null; render();
+        showResult(true, '인증하지 못했어요. 잠시 후 다시 시도해 주세요.');
+      });
+    });
+    document.getElementById('regReset').addEventListener('click', function(){
+      document.getElementById('regChurch').value = '';
+      document.getElementById('regName').value = '';
+      reset();
+    });
+
+    function load(items){ all = items; render(); }
+
+    if (!window.REG_API){
+      // 연결 전: 예시 데이터
+      load(window.REG_DEMO.map(function(r){ return { church: r.church, name: mask(r.name), schedule: r.schedule }; }));
+      return;
+    }
+    fetch(window.REG_API).then(function(res){ return res.json(); }).then(function(d){
+      if (!d.ok) throw new Error();
+      load(d.items);
+    }).catch(function(){
+      list.innerHTML = HEAD + '<li class="reg-empty">등록 현황을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.</li>';
+    });
+  })();
+</script>
+
+<script>
+  // 푸터 계좌번호 복사
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var done = function(){ btn.textContent = '복사됨'; setTimeout(function(){ btn.textContent = '복사'; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(btn.dataset.copy).then(done);
+    });
+  });
+</script>
+</body>
+</html>
