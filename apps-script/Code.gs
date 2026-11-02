@@ -3,7 +3,8 @@
  *
  * 설치
  *  1. 구글폼 응답 시트 열기 → 확장 프로그램 → Apps Script → 이 파일 내용을 붙여넣고 저장
- *  2. 프로젝트 설정(톱니바퀴) → 스크립트 속성 → ADMIN_PASSWORD = 스태프 비밀번호
+ *  2. 프로젝트 설정(톱니바퀴) → 스크립트 속성 → ADMIN_PASSWORD = 스태프 비밀번호 (12자 이상 권장)
+ *     비밀번호를 바꾸면 모든 기기의 어드민 로그인이 풀림. 비밀번호는 그대로 두고 로그인만 풀려면 logoutAll 실행
  *  3. 배포 → 새 배포 → 유형: 웹 앱 · 실행: 나 · 액세스 권한: 모든 사용자 → 배포
  *  4. 나온 웹 앱 URL(…/exec)을 홈페이지 reg-config.js 의 REG_API 에 넣기
  *  코드를 고친 뒤에는 배포 → 배포 관리 → 연필 → 버전: 새 버전 → 배포 (주소는 그대로)
@@ -215,6 +216,65 @@ function readContacts_() {
   return list;
 }
 
+// ── 보안 ──────────────────────────────────────────────
+// 어드민 로그인: 비밀번호는 로그인할 때 한 번만 보내고, 그 뒤로는 14일짜리 로그인 토큰으로 요청함.
+// 토큰은 해시로만 스크립트 속성(sess_…)에 저장. ADMIN_PASSWORD 를 바꾸면 모든 기기의 로그인이 풀림.
+var SESSION_MS = 14 * 86400000;
+var MAX_FAILS = 10;          // 비밀번호 10번 틀리면
+var LOCK_SEC = 15 * 60;      // 15분 동안 로그인 막음
+
+function hash_(s) {
+  return Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(s), Utilities.Charset.UTF_8));
+}
+
+function login_(pw) {
+  var props = PropertiesService.getScriptProperties();
+  var cache = CacheService.getScriptCache();
+  var real = props.getProperty('ADMIN_PASSWORD');
+  var fails = Number(cache.get('login_fails') || 0);
+  if (fails >= MAX_FAILS) return { ok: false, error: 'locked' };
+  if (!real || typeof pw !== 'string' || hash_(pw) !== hash_(real)) {
+    cache.put('login_fails', String(fails + 1), LOCK_SEC);
+    Utilities.sleep(800);  // 빠르게 여러 번 넣어 보는 걸 늦춤
+    return { ok: false, error: fails + 1 >= MAX_FAILS ? 'locked' : 'auth' };
+  }
+  cache.remove('login_fails');
+  // 기한 지난 로그인 정리
+  var all = props.getProperties(), now = Date.now();
+  Object.keys(all).forEach(function (k) {
+    if (k.indexOf('sess_') !== 0) return;
+    try { if (JSON.parse(all[k]).exp < now) props.deleteProperty(k); } catch (e) { props.deleteProperty(k); }
+  });
+  var token = Utilities.getUuid().replace(/-/g, '') + Utilities.getUuid().replace(/-/g, '');
+  var exp = now + SESSION_MS;
+  props.setProperty('sess_' + hash_(token), JSON.stringify({ exp: exp, pw: hash_(real).slice(0, 16) }));
+  return { ok: true, token: token, expires: exp };
+}
+
+function session_(token) {
+  if (typeof token !== 'string' || token.length < 32) return false;
+  var props = PropertiesService.getScriptProperties();
+  var key = 'sess_' + hash_(token);
+  var raw = props.getProperty(key);
+  if (!raw) return false;
+  try {
+    var s = JSON.parse(raw);
+    var real = props.getProperty('ADMIN_PASSWORD');
+    if (s.exp > Date.now() && real && s.pw === hash_(real).slice(0, 16)) return true;
+  } catch (e) {}
+  props.deleteProperty(key);
+  return false;
+}
+
+// 시트에 쓰는 글: 길이 제한
+function str_(v, max) { return String(v == null ? '' : v).slice(0, max || 500); }
+
+// 모든 기기 로그아웃: 편집기에서 이 함수를 골라 '실행'
+function logoutAll() {
+  var props = PropertiesService.getScriptProperties();
+  Object.keys(props.getProperties()).forEach(function (k) { if (k.indexOf('sess_') === 0) props.deleteProperty(k); });
+}
+
 // 처음 한 번: 편집기에서 이 함수를 골라 '실행'하면 캘린더 권한 허용 창이 떠요
 function authorize() {
   Logger.log(CalendarApp.getDefaultCalendar().getName());
@@ -224,11 +284,20 @@ function authorize() {
 //  - 기본: 전체 명단, 담당자 이름은 가림
 //  - ?church=교회이름&name=담당자이름: 둘 다 맞는 신청만, 담당자 이름 그대로
 function doGet(e) {
-  var rows = readRows_().rows;
   var p = (e && e.parameter) || {};
-  var church = churchKey_(p.church || '');
-  var name = String(p.name || '').replace(/\s/g, '');
-  var search = church.length >= 1 && name.length >= 2;
+  var church = churchKey_(str_(p.church, 50));
+  var name = str_(p.name, 30).replace(/\s/g, '');
+  // 교회는 '교회'·띄어쓰기 빼고 2글자 이상이어야 조회 (한 글자로 아무 교회나 걸리지 않게)
+  var search = church.length >= 2 && name.length >= 2;
+  if (search) {
+    // 조회는 1분에 전체 60번까지 (이름을 바꿔 가며 계속 넣어 보는 걸 막음)
+    var cache = CacheService.getScriptCache();
+    var slot = 'lookup_' + Math.floor(Date.now() / 60000);
+    var n = Number(cache.get(slot) || 0) + 1;
+    cache.put(slot, String(n), 120);
+    if (n > 60) return json_({ ok: false, error: 'busy' });
+  }
+  var rows = readRows_().rows;
   if (search) rows = rows.filter(function (r) {
     return churchKey_(r.church).indexOf(church) >= 0 && nameMatch_(r.name, name);
   });
@@ -241,12 +310,16 @@ function doGet(e) {
   return json_({ ok: true, search: search, updated: new Date().toISOString(), items: items });
 }
 
-// 어드민: { pw, action: 'list' } · { pw, action: 'set', row, status }
+// 어드민: { action: 'login', pw } → 토큰 · 그 뒤로 { token, action: 'list' } · { token, action: 'set', row, status } …
 function doPost(e) {
   var body = {};
   try { body = JSON.parse(e.postData.contents); } catch (err) {}
-  var pw = PropertiesService.getScriptProperties().getProperty('ADMIN_PASSWORD');
-  if (!pw || body.pw !== pw) return json_({ ok: false, error: 'auth' });
+  if (body.action === 'login') return json_(login_(body.pw));
+  if (body.action === 'logout') {
+    if (typeof body.token === 'string') PropertiesService.getScriptProperties().deleteProperty('sess_' + hash_(body.token));
+    return json_({ ok: true });
+  }
+  if (!session_(body.token)) return json_({ ok: false, error: 'auth' });
 
   if (body.action === 'list') {
     var data = readRows_();
@@ -287,9 +360,11 @@ function doPost(e) {
         if (found) sh.deleteRow(found.row);
         return json_({ ok: true });
       }
-      var rowVals = [found ? found.id : Utilities.getUuid(), String(n.date || ''), String(n.title || ''), String(n.attendees || ''), String(n.body || ''), new Date()];
-      if (found) sh.getRange(found.row, 1, 1, rowVals.length).setValues([rowVals]);
-      else sh.appendRow(rowVals);
+      var rowVals = [found ? found.id : Utilities.getUuid(), str_(n.date, 20), str_(n.title, 200), str_(n.attendees, 500), str_(n.body, 30000), new Date()];
+      // 글 칸은 텍스트 서식으로 (=로 시작해도 수식으로 실행되지 않게)
+      var nr = found ? found.row : sh.getLastRow() + 1;
+      sh.getRange(nr, 1, 1, 5).setNumberFormat('@');
+      sh.getRange(nr, 1, 1, rowVals.length).setValues([rowVals]);
       return json_({ ok: true, id: rowVals[0] });
     } finally {
       lockN.releaseLock();
@@ -311,7 +386,7 @@ function doPost(e) {
         if (hit) shA.deleteRow(hit.row);
         return json_({ ok: true });
       }
-      var vals = [hit ? hit.id : Utilities.getUuid(), String(ac.service || ''), String(ac.login || ''), String(ac.password || ''), String(ac.memo || ''), new Date()];
+      var vals = [hit ? hit.id : Utilities.getUuid(), str_(ac.service, 100), str_(ac.login, 200), str_(ac.password, 200), str_(ac.memo, 1000), new Date()];
       var rng = hit ? shA.getRange(hit.row, 1, 1, vals.length) : shA.getRange(shA.getLastRow() + 1, 1, 1, vals.length);
       rng.setNumberFormat('@').setValues([vals.map(function (v) { return v instanceof Date ? Utilities.formatDate(v, Session.getScriptTimeZone(), 'yyyy.MM.dd HH:mm') : v; })]);
       return json_({ ok: true, id: vals[0] });
@@ -335,7 +410,7 @@ function doPost(e) {
         if (hitC) shC.deleteRow(hitC.row);
         return json_({ ok: true });
       }
-      var cvals = [hitC ? hitC.id : Utilities.getUuid(), String(ct.name || ''), String(ct.org || ''), String(ct.role || ''), String(ct.phone || ''), String(ct.email || ''), String(ct.memo || ''),
+      var cvals = [hitC ? hitC.id : Utilities.getUuid(), str_(ct.name, 100), str_(ct.org, 100), str_(ct.role, 50), str_(ct.phone, 50), str_(ct.email, 200), str_(ct.memo, 1000),
         Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy.MM.dd HH:mm')];
       var crng = hitC ? shC.getRange(hitC.row, 1, 1, cvals.length) : shC.getRange(shC.getLastRow() + 1, 1, 1, cvals.length);
       crng.setNumberFormat('@').setValues([cvals]);
