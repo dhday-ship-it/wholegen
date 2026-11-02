@@ -881,7 +881,8 @@
       instagram: 'https://www.instagram.com/wholegen.camp/',
       youtube: 'https://www.youtube.com/@wholegencamp',
       kakao: 'https://pf.kakao.com/_xaxnyFX',
-      share: ''
+      // 홀젠 구글 드라이브 공유 폴더
+      share: 'https://drive.google.com/drive/folders/1RI7K5aB9Mec9RRa2BjPrjxV6UWGaqBiA'
     };
     document.querySelectorAll('#quick .q-item').forEach(function(a){
       var key = a.dataset.key;
@@ -889,7 +890,7 @@
       var url = QUICK[key], sub = a.querySelector('small');
       if (url){
         a.href = url;
-        sub.textContent = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+        sub.textContent = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\?.*$/, '').replace(/\/$/, '');
       } else {
         a.classList.add('is-off');
         sub.textContent = '링크 준비 중';
