@@ -1047,6 +1047,8 @@
     cursor:pointer;
     transition: background .2s ease, color .2s ease, border-color .2s ease;
   }
+  .floor-tab.is-off{ opacity:.4; }
+  .floor-tab.is-off[aria-selected="true"]{ opacity:1; background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.3); color:#fff; }
   .floor-tab:hover{ color:#fff; border-color: rgba(255,255,255,0.4); }
   .floor-tab[aria-selected="true"]{ background: var(--pw-accent); border-color: var(--pw-accent); color:#0B0F17; }
   .floor-tab small{ display:none; margin-top:1px; font-family:'Pretendard',sans-serif; font-size:11px; font-weight:600; opacity:.75; }
@@ -1071,8 +1073,25 @@
   .floor-head-title{ font-size:20px; font-weight:800; letter-spacing:-0.02em; color:#fff; }
   .floor-body{
     display:grid;
-    grid-template-columns: minmax(0,1.5fr) minmax(0,1fr);
+    grid-template-columns: minmax(0,1fr) 340px;
   }
+  .floor-quick{ padding:24px; border-left:1px solid var(--line); }
+  .fq-title{ font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; letter-spacing:2px; color: rgba(255,255,255,0.45); padding:0 4px 12px; }
+  .fq-list{ display:flex; flex-direction:column; gap:6px; }
+  .fq-btn{
+    display:grid; grid-template-columns: 36px 1fr; align-items:center; gap:2px 12px;
+    width:100%; padding:12px 14px; border-radius:12px;
+    border:1px solid transparent; background: rgba(255,255,255,0.04);
+    color:#fff; font-family:'Pretendard',sans-serif; text-align:left; cursor:pointer;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .fq-btn:hover{ background: rgba(157,177,238,0.12); }
+  .fq-btn.is-on{ background: var(--pw-accent); border-color: var(--pw-accent); color:#0B0F17; }
+  .fq-btn.is-on .fq-floor{ color:#0B0F17; }
+  .fq-btn.is-on .fq-use{ color: rgba(11,15,23,0.7); }
+  .fq-floor{ grid-row: span 2; font-family:'JetBrains Mono', monospace; font-size:13px; font-weight:700; color: var(--pw-accent); }
+  .fq-name{ font-size:15px; font-weight:700; }
+  .fq-use{ font-size:12px; color: rgba(255,255,255,0.55); }
   .floor-map{
     position:relative;
     padding:28px;
@@ -1104,6 +1123,11 @@
   .fp-label{ fill: rgba(255,255,255,0.78); font-family:'Pretendard',sans-serif; font-weight:700; text-anchor:middle; dominant-baseline:middle; paint-order:stroke; stroke:#0E1320; stroke-width:6px; stroke-linejoin:round; pointer-events:none; }
   .fp-label{ transition: fill .2s ease; }
   .fp-label.is-on, .fp-label.is-small.is-on{ fill:#0B0F17; stroke:none; }
+  .fp-sub{ fill: var(--pw-accent); font-weight:600; }
+  .fp-restricted rect{ fill: rgba(255,120,110,0.14); stroke:#FF8A7E; stroke-width:3; }
+  .fp-restricted text{ fill:#FF8A7E; font-family:'Pretendard',sans-serif; font-weight:800; text-anchor:middle; dominant-baseline:middle; }
+  .fp-sub.is-on{ fill:#0B0F17; }
+  .fp-group{ pointer-events:none; }
   .fp-label.is-small{ fill: rgba(255,255,255,0.5); font-weight:600; }
   .fp-stair rect{ fill:#0E1320; stroke: rgba(255,255,255,0.45); stroke-width:2; }
   .fp-stair line{ stroke: rgba(255,255,255,0.45); stroke-width:2; }
@@ -1126,6 +1150,8 @@
   .room-tag.wc.none{ background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
   .room-tag.camp{ background: rgba(157,177,238,0.16); color: var(--pw-accent); }
   .room-tag.wc{ background: rgba(157,177,238,0.16); color: var(--pw-accent); }
+  #floorCard.is-off .floor-name span{ color: rgba(255,255,255,0.4); }
+  #floorCard.is-off .fp-lines{ opacity:.45; }
   .room-tag.etc{ background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
 
   .legend{ display:flex; flex-wrap:wrap; gap:8px 16px; font-size:12.5px; color: rgba(255,255,255,0.55); }
@@ -1135,6 +1161,10 @@
   @media (max-width:1000px){
     .floor-body{ grid-template-columns: 1fr; }
     .floor-map{ border-right:0; border-bottom:1px solid var(--line); min-height:0; }
+    .floor-quick{ order:-1; border-left:0; border-bottom:1px solid var(--line); padding:16px; }
+    .fq-list{ flex-direction:row; overflow-x:auto; scrollbar-width:none; }
+    .fq-list::-webkit-scrollbar{ display:none; }
+    .fq-btn{ flex:none; width:auto; min-width:150px; }
   }
   @media (max-width:760px){
     .floor-head{ padding:16px 16px 14px; }
@@ -1509,17 +1539,10 @@
       </div>
       <div class="floor-body" id="floorCard" role="tabpanel">
         <div class="floor-map"><span class="floor-badge" id="floorBadge"></span><div id="floorSvg"></div></div>
-        <div class="floor-info">
-          <div>
-            <h3 class="floor-name" id="floorName"></h3>
-            <p class="floor-desc" id="floorDesc"></p>
-          </div>
-          <ul class="room-list" id="roomList"></ul>
-          <div class="legend">
-            <span><i style="background:#9DB1EE"></i>공간 (올리거나 누르면 표시)</span>
-            <span><i style="background:#0E1320;border:1px solid rgba(255,255,255,.45)"></i>계단</span>
-            <span><i style="background:#9DB1EE;border-radius:50%"></i>출입구</span>
-          </div>
+        <!-- 캠프팀 운영 공간 바로가기: 누르면 그 층으로 바뀌고 해당 공간이 칠해짐 -->
+        <div class="floor-quick" role="navigation" aria-label="캠프 운영 공간 바로가기">
+          <p class="fq-title">캠프 운영 공간</p>
+          <div class="fq-list" id="floorQuick"></div>
         </div>
       </div>
     </section>
@@ -1774,36 +1797,45 @@
     // 도면 이미지: 교회 비상 대피로 도면 사진에서 선만 뽑고 화살표 · 글자를 지운 뒤, 사진 기울기를 펴서 평면으로 만든 것 (venue/plan-*.png)
     // 좌표 = 도면 이미지 픽셀 기준
     var FLOORS = [
-      { f:'1F', name:'로비 · 북카페 · 비전홀', desc:'주출입구로 들어오면 바로 로비예요. 로비에서 접수하고, 로비 옆 북카페에서 굿즈 판매와 대기를 해요.',
+      { f:'1F', name:'로비 · 북카페 · 비전홀', desc:'주출입구로 들어오면 바로 로비예요. 로비에서 접수하고, 로비 옆 북카페에서 굿즈 판매와 대기를 해요. 비전홀은 스텝이 운영해요.',
         img:'venue/plan-1f.png', w:1121, h:1050,
         rooms:[
-          { n:'로비', t:'camp', tag:'접수', p:[[724,45],[920,45],[920,212],[945,214],[945,600],[897,513],[846,482],[652,480],[652,352],[724,352]], at:[810,300] },
-          { n:'북카페', t:'camp', tag:'굿즈 · 대기', p:[[945,236],[1080,236],[1084,601],[945,601]], at:[1012,420] },
-          { n:'비전홀', t:'camp', tag:'', p:[[470,480],[840,479],[948,594],[945,1006],[438,1005],[439,722],[467,649]] }, // TODO: 용도 확인
+          { n:'로비', t:'camp', tag:'접수처', p:[[724,45],[920,45],[920,212],[945,214],[945,600],[897,513],[846,482],[652,480],[652,352],[724,352]], at:[810,300] },
+          { n:'북카페', t:'camp', tag:'굿즈샵', p:[[945,236],[1080,236],[1084,601],[945,601]], at:[1012,420] },
+          { n:'비전홀', t:'camp', tag:'스텝룸', p:[[470,480],[840,479],[948,594],[945,1006],[438,1005],[439,722],[467,649]] },
           { n:'화장실', t:'wc', tag:'남 · 녀', p:[[347,432],[651,430],[651,347],[545,243]], at:[544,381] }
         ],
         doors:[{ x:1005, y:41, n:'주출입구', ly:-7 }] },
-      { f:'3F', name:'본부 · 1·2·3호실', desc:'캠프 본부는 새가족실이에요. 1·2·3호실은 강사 대기실과 캠프 지원팀이 써요.',
+      { f:'2F', name:'카페', desc:'2층은 카페만 써요. 쉼터로 쓰고 캠프팀이 카페를 운영해요.',
+        img:'venue/plan-2f.png', w:872, h:873,
+        rooms:[
+          { n:'카페', t:'camp', tag:'쉼터 카페', p:[[500,44],[831,44],[831,412],[680,412],[680,365],[642,365],[642,378],[578,378],[578,138]], at:[705,220] }
+        ],
+        doors:[] },
+      { f:'3F', name:'본부 · 1·2·3호실 · 식당', desc:'캠프 본부는 새가족실이에요. 1·2·3호실은 강사 대기실과 캠프 지원팀이 쓰고, 식사는 3층 식당에서 해요.',
         img:'venue/plan-3f.png', w:936, h:912,
         rooms:[
-          { n:'새가족실', t:'camp', tag:'본부', p:[[535,42],[647,40],[651,171],[603,177],[501,79]] },
-          { n:'1호실', t:'camp', tag:'강사 대기 · 지원팀', p:[[436,428],[538,428],[538,531],[436,531]] }, // 도면의 소반실 · 청소년방 · 계수실 자리
-          { n:'2호실', t:'camp', tag:'강사 대기 · 지원팀', p:[[539,428],[641,428],[641,531],[539,531]] },
-          { n:'3호실', t:'camp', tag:'강사 대기 · 지원팀', p:[[642,428],[744,428],[744,531],[642,531]] },
-          { n:'화장실', t:'wc', tag:'남 · 녀', p:[[404,394],[549,392],[547,313],[465,314],[404,368]] }
+          { n:'새가족실', t:'camp', tag:'캠프 본부', p:[[535,42],[647,40],[651,171],[603,177],[501,79]] },
+          { n:'1호실', t:'camp', tag:'강사실 · 지원팀실', p:[[436,428],[538,428],[538,531],[436,531]] }, // 도면의 소반실 · 청소년방 · 계수실 자리
+          { n:'2호실', t:'camp', tag:'강사실 · 지원팀실', p:[[539,428],[641,428],[641,531],[539,531]] },
+          { n:'3호실', t:'camp', tag:'강사실 · 지원팀실', p:[[642,428],[744,428],[744,531],[642,531]] },
+          { n:'화장실', t:'wc', tag:'남 · 녀', p:[[404,394],[549,392],[547,313],[465,314],[404,368]] },
+          { n:'식당', t:'camp', tag:'식당', p:[[40,682],[195,682],[225,652],[225,665],[385,665],[385,600],[400,575],[655,575],[655,870],[40,870]], at:[400,770] }
         ],
         doors:[] },
       { f:'4F', name:'본당', desc:'집회와 모든 프로그램이 본당에서 진행돼요.',
         img:'venue/plan-4f.png', w:1300, h:1264,
         rooms:[
-          { n:'본당', t:'camp', tag:'집회 · 프로그램', big:1, at:[855,817],
+          { n:'본당', t:'camp', tag:'메인 홀', big:1, at:[855,817],
             p:[[919,324],[1264,322],[1260,1225],[40,1225],[40,901],[308,899],[345,848],[442,753],[315,631],[389,552],[551,390],[623,321],[759,444],[833,371],[901,309]] },
           { n:'화장실', t:'wc', tag:'없음 · 3층 이용', none:1, p:null }
         ],
-        doors:[] }
+        doors:[] },
+      { f:'5F', name:'통제구역', desc:'5층(본당 발코니석 · 방송실)은 통제구역이에요.', off:1, restricted:1,
+        img:'venue/plan-5f.png', w:1026, h:1002, rooms:[], doors:[] }
     ];
 
-    var tabs = document.getElementById('floorTabs');
+    var tabs = document.getElementById('floorTabs'), cur = 0;
     var svgBox = document.getElementById('floorSvg');
     var list = document.getElementById('roomList');
     function pts(p){ return p.map(function(q){ return q.join(','); }).join(' '); }
@@ -1823,13 +1855,32 @@
       fl.rooms.forEach(function(r, i){ // 마우스 · 터치 반응 영역 (투명)
         if (r.p) out += '<polygon class="fp-room" data-i="'+i+'" points="'+pts(r.p)+'"/>';
       });
+      var groupDone = {};
       fl.rooms.forEach(function(r, i){
         if (!r.p) return;
-        var c = (r.at || center(r.p)).slice(), size = r.big ? Math.round(fs*1.5) : r.t==='camp' ? fsS : fsS;
-        if (r.t==='wc' && r.tag) c[1] -= size*0.5; // 아래 줄(남·녀) 자리
-        out += '<text class="fp-label'+(r.t==='camp'?' is-camp':r.t==='wc'?' is-wc':'')+'" data-i="'+i+'" x="'+c[0]+'" y="'+c[1]+'" font-size="'+size+'">'+r.n+'</text>';
-        if (r.t==='wc' && r.tag) out += '<text class="fp-label is-small" data-i="'+i+'" x="'+c[0]+'" y="'+(c[1]+size*1.15)+'" font-size="'+Math.round(size*0.75)+'">'+r.tag.replace(/ /g,'')+'</text>';
+        var c = (r.at || center(r.p)).slice(), size = r.big ? Math.round(fs*1.5) : fsS, sub = Math.round(size*0.72);
+        var cls = 'fp-label'+(r.t==='camp'?' is-camp':r.t==='wc'?' is-wc':'');
+        var same = fl.rooms.filter(function(x){ return x.t==='camp' && x.p && x.tag && x.tag===r.tag; });
+        var grouped = r.t==='camp' && same.length > 1;
+        var showTag = r.tag && r.tag !== r.n;                       // 이름과 같으면 한 줄만
+        if (showTag && !grouped) c[1] -= sub*0.6;                   // 두 줄: 이름 위로
+        out += '<text class="'+cls+'" data-i="'+i+'" x="'+c[0]+'" y="'+c[1]+'" font-size="'+size+'">'+r.n+'</text>';
+        if (!showTag) return;
+        if (!grouped){
+          out += '<text class="'+cls+' fp-sub" data-i="'+i+'" x="'+c[0]+'" y="'+(c[1]+size*0.6+sub*0.75)+'" font-size="'+sub+'">'+r.tag+'</text>';
+        } else if (!groupDone[r.tag]){                              // 예: 1·2·3호실 → 묶음 아래에 한 번
+          groupDone[r.tag] = 1;
+          var xs=[], ys=[];
+          same.forEach(function(x){ x.p.forEach(function(q){ xs.push(q[0]); ys.push(q[1]); }); });
+          var gx = (Math.min.apply(null,xs)+Math.max.apply(null,xs))/2, gy = Math.max.apply(null,ys) + sub*1.7;
+          var ids = same.map(function(x){ return fl.rooms.indexOf(x); });
+          out += '<text class="fp-label fp-sub fp-group" data-g="'+ids.join(',')+'" x="'+gx+'" y="'+gy+'" font-size="'+sub+'">'+r.tag+'</text>';
+        }
       });
+      if (fl.restricted){
+        out += '<g class="fp-restricted"><rect x="'+(fl.w/2-fs*3.2)+'" y="'+(fl.h/2-fs*1.1)+'" width="'+(fs*6.4)+'" height="'+(fs*2.2)+'" rx="'+(fs*0.5)+'"/>'
+             + '<text x="'+(fl.w/2)+'" y="'+(fl.h/2)+'" font-size="'+Math.round(fs*1.2)+'">통제구역</text></g>';
+      }
       fl.doors.forEach(function(d){
         out += '<g class="fp-door"><circle cx="'+d.x+'" cy="'+d.y+'" r="'+Math.round(fsS*0.45)+'"/><text x="'+d.x+'" y="'+d.ly+'" font-size="'+fsS+'">'+d.n+'</text></g>';
       });
@@ -1839,10 +1890,9 @@
       var fl = FLOORS[i];
       tabs.querySelectorAll('.floor-tab').forEach(function(t, k){ t.setAttribute('aria-selected', k===i ? 'true' : 'false'); t.tabIndex = k===i ? 0 : -1; });
       document.getElementById('floorBadge').textContent = fl.f;
-      document.getElementById('floorName').innerHTML = '<span>'+fl.f+'</span>'+fl.name;
-      document.getElementById('floorDesc').textContent = fl.desc;
+      card.classList.toggle('is-off', !!fl.off);
       svgBox.innerHTML = draw(fl);
-      pinned = null;
+      pinned = null; cur = i;
       var seen = {}, items = [];
       fl.rooms.forEach(function(r, k){
         if (r.t !== 'camp' && r.t !== 'wc') return; // 캠프에서 쓰는 곳만 안내
@@ -1851,27 +1901,59 @@
         items.push({ html:'<li data-i="'+k+'">'+r.n+tag+'</li>', o: r.t==='camp'?0:r.t==='wc'?1:2 });
       });
       items.sort(function(a,b){ return a.o-b.o; });
-      list.innerHTML = items.map(function(x){ return x.html; }).join('');
+      if (list) list.innerHTML = items.map(function(x){ return x.html; }).join('');
+      if (quick) markQuick();
     }
     // 평소엔 색 없음 · 방이나 목록에 마우스를 올리면 그 방만 칠함 · 누르면 칠한 채로 고정 (한 번 더 누르면 해제)
-    var card = document.getElementById('floorCard'), pinned = null;
-    function paint(i){
-      card.querySelectorAll('.is-on').forEach(function(el){ el.classList.remove('is-on'); });
-      if (i == null) return;
-      card.querySelectorAll('[data-i="'+i+'"]').forEach(function(el){ el.classList.add('is-on'); });
+    var card = document.getElementById('floorCard'), pinned = null; // pinned: 고정된 방 번호 목록
+    var quick = document.getElementById('floorQuick');
+    function paint(ids){
+      card.querySelectorAll('.fp-fill.is-on, .fp-label.is-on, .room-list .is-on').forEach(function(el){ el.classList.remove('is-on'); });
+      (ids || []).forEach(function(i){
+        card.querySelectorAll('#floorSvg [data-i="'+i+'"], #roomList [data-i="'+i+'"]').forEach(function(el){ el.classList.add('is-on'); });
+      });
     }
-    function idxOf(e){ var el = e.target.closest('[data-i]'); return el && card.contains(el) ? el.getAttribute('data-i') : null; }
-    card.addEventListener('mouseover', function(e){ var i = idxOf(e); if (i != null) paint(i); });
+    function idxOf(e){ var el = e.target.closest('#floorSvg [data-i], #roomList [data-i]'); return el ? el.getAttribute('data-i') : null; }
+    function same(a, b){ return a && b && a.join() === b.join(); }
+    function markQuick(){ quick.querySelectorAll('.fq-btn').forEach(function(b){ b.classList.toggle('is-on', !!pinned && b.dataset.f == cur && same(b.dataset.ids.split(','), pinned)); }); }
+    card.addEventListener('mouseover', function(e){ var i = idxOf(e); if (i != null) paint([i]); });
     card.addEventListener('mouseleave', function(){ paint(pinned); });
-    card.addEventListener('mouseout', function(e){ if (!e.relatedTarget || !e.relatedTarget.closest || !e.relatedTarget.closest('[data-i]')) paint(pinned); });
+    card.addEventListener('mouseout', function(e){ if (!e.relatedTarget || !e.relatedTarget.closest || !e.relatedTarget.closest('#floorSvg [data-i], #roomList [data-i]')) paint(pinned); });
     card.addEventListener('click', function(e){
       var i = idxOf(e); if (i == null) return;
-      pinned = (pinned === i) ? null : i; paint(pinned != null ? pinned : i);
+      pinned = same(pinned, [i]) ? null : [i]; paint(pinned || [i]); markQuick();
+    });
+
+    // 바로가기 목록: 캠프팀이 운영하는 공간 (층 순서, 같은 층 · 같은 용도는 하나로 묶음 — 예: 1·2·3호실)
+    var groups = [];
+    FLOORS.forEach(function(fl, fi){
+      fl.rooms.forEach(function(r, k){
+        if (r.t !== 'camp' || !r.p) return;
+        var g = groups.filter(function(x){ return x.f === fi && x.tag === r.tag; })[0];
+        if (g){ g.ids.push(k); g.names.push(r.n); } else groups.push({ f:fi, tag:r.tag, ids:[k], names:[r.n] });
+      });
+    });
+    quick.innerHTML = groups.map(function(g){
+      var nm = g.names.length > 1 && g.names.every(function(n){ return /^\d호실$/.test(n); })
+        ? g.names.map(function(n){ return n[0]; }).join('·') + '호실' : g.names.join(' · ');
+      return '<button type="button" class="fq-btn" data-f="'+g.f+'" data-ids="'+g.ids.join(',')+'">'
+        + '<span class="fq-floor">'+FLOORS[g.f].f+'</span><span class="fq-name">'+(g.tag||nm)+'</span><span class="fq-use">'+(g.tag?nm:'')+'</span></button>';
+    }).join('');
+    quick.addEventListener('mouseover', function(e){
+      var b = e.target.closest('.fq-btn'); if (b && +b.dataset.f === cur) paint(b.dataset.ids.split(','));
+    });
+    quick.addEventListener('mouseleave', function(){ paint(pinned); });
+    quick.addEventListener('click', function(e){
+      var b = e.target.closest('.fq-btn'); if (!b) return;
+      var ids = b.dataset.ids.split(',');
+      var again = b.classList.contains('is-on');
+      show(+b.dataset.f);
+      pinned = again ? null : ids; paint(pinned); markQuick();
     });
 
     tabs.innerHTML = FLOORS.map(function(fl, i){
       var camp = fl.rooms.filter(function(r){ return r.t==='camp'; })[0];
-      return '<button type="button" class="floor-tab" role="tab" data-i="'+i+'">'+fl.f+'</button>';
+      return '<button type="button" class="floor-tab'+(fl.off?' is-off':'')+'" role="tab" data-i="'+i+'"'+(fl.off?' title="'+(fl.restricted?'통제구역':'캠프 미사용')+'"':'')+'>'+fl.f+'</button>';
     }).join('');
     tabs.addEventListener('click', function(e){ var b = e.target.closest('.floor-tab'); if (b) show(+b.dataset.i); });
     tabs.addEventListener('keydown', function(e){
@@ -1880,7 +1962,7 @@
       if (e.key === 'ArrowLeft') n = (cur-1+FLOORS.length) % FLOORS.length;
       if (n !== null){ show(n); tabs.children[n].focus(); e.preventDefault(); }
     });
-    show(FLOORS.length - 1); // 기본: 4층 본당
+    show(FLOORS.map(function(f){ return f.f; }).indexOf('4F')); // 기본: 4층 본당
   })();
 </script>
 
