@@ -900,15 +900,16 @@
   }
 
   /* Location card: row layout with taller map */
-  .spotlight.spotlight--location{
+  .spotlight--location{
+    display:flex;
     flex-direction:row;
   }
-  .spotlight.spotlight--location .location-image{
+  .spotlight--location .location-image{
     flex:1;
     height:auto;
     min-height:420px;
   }
-  .spotlight.spotlight--location .spotlight-info{
+  .spotlight--location .spotlight-info{
     flex:1;
     padding:64px 56px;
   }
@@ -1000,9 +1001,9 @@
   }
   .spotlight-btn--ghost:hover{ background: rgba(255,255,255,0.08); }
   @media (max-width:900px){
-    .spotlight.spotlight--location{ flex-direction:column; }
-    .spotlight.spotlight--location .location-image{ min-height:280px; }
-    .spotlight.spotlight--location .spotlight-info{ padding:32px 22px; }
+    .spotlight--location{ flex-direction:column; }
+    .spotlight--location .location-image{ min-height:280px; }
+    .spotlight--location .spotlight-info{ padding:32px 22px; }
     .spotlight-info dl.location-info > div{ grid-template-columns:1fr; gap:8px; }
     .spotlight-info dl.location-info dd .route{ word-break:keep-all; }
     .spotlight-info dl.location-info dd .route b{ flex-basis:96px; }
@@ -1030,12 +1031,127 @@
   }
 
   /* ---------- VENUE SLIDER (one wide box) ---------- */
+  /* ---------- 층별 안내 (교회 비상 대피로 도면을 다시 그림) ---------- */
+  /* 층 선택 */
+  .floor-tabs{ display:flex; gap:8px; flex-wrap:wrap; }
+  .floor-tab{
+    min-width:60px;
+    padding:7px 14px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.16);
+    background:transparent;
+    color: rgba(255,255,255,0.7);
+    font-family:'JetBrains Mono', monospace;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .floor-tab:hover{ color:#fff; border-color: rgba(255,255,255,0.4); }
+  .floor-tab[aria-selected="true"]{ background: var(--pw-accent); border-color: var(--pw-accent); color:#0B0F17; }
+  .floor-tab small{ display:none; margin-top:1px; font-family:'Pretendard',sans-serif; font-size:11px; font-weight:600; opacity:.75; }
+
+  .floor-card{
+    width:100%;
+    max-width:1280px;
+    border-radius:28px;
+    overflow:hidden;
+    background: var(--surface);
+    border:1px solid var(--line);
+  }
+  .floor-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    padding:20px 28px;
+    border-bottom:1px solid var(--line);
+  }
+  .floor-head-title{ font-size:20px; font-weight:800; letter-spacing:-0.02em; color:#fff; }
+  .floor-body{
+    display:grid;
+    grid-template-columns: minmax(0,1.5fr) minmax(0,1fr);
+  }
+  .floor-map{
+    position:relative;
+    padding:28px;
+    background:
+      radial-gradient(90% 80% at 15% 0%, rgba(157,177,238,0.10), transparent 60%),
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 24px 24px,
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px) 0 0 / 24px 24px,
+      #0E1320;
+    border-right:1px solid var(--line);
+    min-height:420px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  #floorSvg{ width:100%; }
+  .floor-map svg{ width:100%; height:auto; max-height:460px; display:block; }
+  .floor-badge{
+    position:absolute; left:24px; top:20px;
+    font-family:'JetBrains Mono', monospace; font-size:44px; font-weight:700; line-height:1;
+    color: rgba(255,255,255,0.08);
+  }
+  /* 도면 그림 */
+  .fp-outline{ fill: rgba(255,255,255,0.025); stroke: rgba(255,255,255,0.55); stroke-width:3; stroke-linejoin:round; }
+  .fp-lines{ opacity:.8; pointer-events:none; }
+  .fp-room{ fill: transparent; stroke:none; cursor:pointer; }
+  .fp-fill{ opacity:0; pointer-events:none; transition: opacity .2s ease; }
+  .fp-fill.is-on{ opacity:1; }
+  .fp-room.is-park{ fill: rgba(255,255,255,0.02); stroke-dasharray:8 6; }
+  .fp-label{ fill: rgba(255,255,255,0.78); font-family:'Pretendard',sans-serif; font-weight:700; text-anchor:middle; dominant-baseline:middle; paint-order:stroke; stroke:#0E1320; stroke-width:6px; stroke-linejoin:round; pointer-events:none; }
+  .fp-label{ transition: fill .2s ease; }
+  .fp-label.is-on, .fp-label.is-small.is-on{ fill:#0B0F17; stroke:none; }
+  .fp-label.is-small{ fill: rgba(255,255,255,0.5); font-weight:600; }
+  .fp-stair rect{ fill:#0E1320; stroke: rgba(255,255,255,0.45); stroke-width:2; }
+  .fp-stair line{ stroke: rgba(255,255,255,0.45); stroke-width:2; }
+  .fp-door circle{ fill: var(--pw-accent); }
+  .fp-door text{ fill: var(--pw-accent); font-family:'Pretendard',sans-serif; font-weight:800; text-anchor:middle; dominant-baseline:middle; }
+
+  .floor-info{ padding:32px 28px; display:flex; flex-direction:column; gap:20px; }
+  .floor-name{ font-size:24px; font-weight:800; letter-spacing:-0.02em; }
+  .floor-name span{ margin-right:10px; font-family:'JetBrains Mono', monospace; color: var(--pw-accent); }
+  .floor-desc{ margin-top:6px; font-size:14px; line-height:1.7; color: rgba(255,255,255,0.6); }
+  .room-list{ list-style:none; display:flex; flex-direction:column; border-top:1px solid var(--line); }
+  .room-list li{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:12px 2px; border-bottom:1px solid var(--line);
+    font-size:15px; font-weight:600; cursor:default;
+  }
+  .room-list li{ cursor:pointer; transition: color .2s ease; }
+  .room-list li:hover, .room-list li.is-on{ color: var(--pw-accent); }
+  .room-tag{ flex:none; padding:3px 9px; border-radius:6px; font-family:'Pretendard', sans-serif; font-size:12px; font-weight:700; }
+  .room-tag.wc.none{ background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+  .room-tag.camp{ background: rgba(157,177,238,0.16); color: var(--pw-accent); }
+  .room-tag.wc{ background: rgba(157,177,238,0.16); color: var(--pw-accent); }
+  .room-tag.etc{ background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+
+  .legend{ display:flex; flex-wrap:wrap; gap:8px 16px; font-size:12.5px; color: rgba(255,255,255,0.55); }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .legend i{ width:12px; height:12px; border-radius:3px; display:inline-block; }
+
+  @media (max-width:1000px){
+    .floor-body{ grid-template-columns: 1fr; }
+    .floor-map{ border-right:0; border-bottom:1px solid var(--line); min-height:0; }
+  }
+  @media (max-width:760px){
+    .floor-head{ padding:16px 16px 14px; }
+    .floor-head-title{ font-size:17px; }
+    .floor-tabs{ width:100%; }
+    .floor-tab{ min-width:0; flex:1; padding:9px 0; font-size:13px; }
+    .floor-card{ border-radius:20px; }
+    .floor-map{ padding:16px; }
+    .floor-badge{ font-size:32px; left:16px; top:14px; }
+    .floor-info{ padding:22px 20px; }
+  }
   .venue-slider{
     position:relative;
     width:100%;
     max-width:1280px;
     margin-bottom:16px;
-    aspect-ratio: 21 / 8;
+    aspect-ratio: 16 / 9;
     border-radius:28px;
     overflow:hidden;
     border:1px solid var(--line);
@@ -1054,6 +1170,7 @@
     height:100%;
     display:block;
     object-fit:cover;
+    object-position:center;
     transform: scale(1.04);
     transition: transform 5s ease-out;
   }
@@ -1126,7 +1243,7 @@
     .venue-slide, .venue-slide img{ transition:none; transform:none; }
   }
   @media (max-width:760px){
-    .venue-slider{ margin-bottom:10px; aspect-ratio: 16 / 10; border-radius:20px; }
+    .venue-slider{ margin-bottom:10px; aspect-ratio: 4 / 3; border-radius:20px; }
     .venue-caption{ left:18px; bottom:16px; font-size:15px; }
     .venue-dots{ right:18px; bottom:21px; }
     .venue-arrow{ display:none; }
@@ -1248,7 +1365,7 @@
           <li><a href="about.html">소개</a></li>
           <li><a href="camp.html">캠프 등록</a></li>
           <li><a href="status.html">등록상태</a></li>
-          <li><a href="#">자료실</a></li>
+          <li><a href="resources.html">자료실</a></li>
           <li><a href="faq.html">FAQ</a></li>
         </ul>
         <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
@@ -1372,18 +1489,53 @@
 
   <!-- LOCATION MAP -->
   <div class="spotlight-wrap reveal">
-    <!-- TODO: 실제 장소 사진으로 venue/venue1~4.jpg 파일을 교체하세요 (지금은 임시 사진) -->
+    <!-- 장소 사진: 교회본당 사진/@_분류/1_OK 의 (업로드) 사진 5장 — 무대 중심이 가운데 오도록 16:9로 잘라 웹용(1920×1080)으로 줄인 것 -->
     <div class="venue-slider" id="venueSlider" aria-roledescription="carousel" aria-label="장소 사진">
-      <div class="venue-slide active" data-label="본당"><img src="venue/venue1.jpg" alt="본당 (임시 사진)"></div>
-      <div class="venue-slide" data-label="로비"><img src="venue/venue2.jpg" alt="로비 (임시 사진)" loading="lazy"></div>
-      <div class="venue-slide" data-label="모임 공간"><img src="venue/venue3.jpg" alt="모임 공간 (임시 사진)" loading="lazy"></div>
-      <div class="venue-slide" data-label="주변"><img src="venue/venue4.jpg" alt="주변 (임시 사진)" loading="lazy"></div>
-      <p class="venue-caption"><span id="venueLabel">본당</span><span class="venue-count" id="venueCount">1 / 4</span></p>
+      <div class="venue-slide active" data-label="본당 · 2층 발코니"><img src="venue/venue-balcony2.jpg" alt="세상의 빛 동광교회 본당 — 2층 발코니 뒤쪽에서 내려다본 전경"></div>
+      <div class="venue-slide" data-label="본당 · 발코니"><img src="venue/venue-balcony.jpg" alt="본당 — 발코니 앞쪽에서 본 무대와 좌석" loading="lazy"></div>
+      <div class="venue-slide" data-label="본당 · 정면"><img src="venue/venue-front.jpg" alt="본당 — 가운데 통로에서 본 무대 정면" loading="lazy"></div>
+      <div class="venue-slide" data-label="본당 · 무대"><img src="venue/venue-stage.jpg" alt="본당 무대 정면 — 스크린과 강대상" loading="lazy"></div>
+      <div class="venue-slide" data-label="본당 · 뒤쪽"><img src="venue/venue-back.jpg" alt="본당 — 뒤쪽에서 본 좌석과 무대" loading="lazy"></div>
+      <p class="venue-caption"><span id="venueLabel">본당 · 2층 발코니</span><span class="venue-count" id="venueCount">1 / 5</span></p>
       <div class="venue-dots" id="venueDots"></div>
       <button class="venue-arrow prev" type="button" aria-label="이전 사진">‹</button>
       <button class="venue-arrow next" type="button" aria-label="다음 사진">›</button>
     </div>
-    <section class="spotlight spotlight--location">
+    <!-- 층별 안내 (사진 아래 · 지도 위 · 교회 비상 대피로 도면을 다시 그림) -->
+    <section class="floor-card" id="floors" aria-labelledby="floorsTitle">
+      <div class="floor-head">
+        <h3 class="floor-head-title" id="floorsTitle">캠프 공간 안내</h3>
+        <div class="floor-tabs" role="tablist" aria-label="층 선택" id="floorTabs"></div>
+      </div>
+      <div class="floor-body" id="floorCard" role="tabpanel">
+        <div class="floor-map"><span class="floor-badge" id="floorBadge"></span><div id="floorSvg"></div></div>
+        <div class="floor-info">
+          <div>
+            <h3 class="floor-name" id="floorName"></h3>
+            <p class="floor-desc" id="floorDesc"></p>
+          </div>
+          <ul class="room-list" id="roomList"></ul>
+          <div class="legend">
+            <span><i style="background:#9DB1EE"></i>공간 (올리거나 누르면 표시)</span>
+            <span><i style="background:#0E1320;border:1px solid rgba(255,255,255,.45)"></i>계단</span>
+            <span><i style="background:#9DB1EE;border-radius:50%"></i>출입구</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- DIRECTIONS HEADING -->
+  <div class="programs-wrap reveal" id="directions">
+    <div class="programs">
+      <h2 class="programs-title">오시는 길</h2>
+    </div>
+  </div>
+
+  <!-- DIRECTIONS MAP -->
+  <div class="spotlight-wrap reveal">
+    <section class="spotlight" aria-label="오시는 길">
+      <div class="spotlight--location">
       <div class="location-image" id="mapBox">
         <!-- 카카오맵 지도퍼가기 -->
         <div id="daumRoughmapContainer1791734562245" class="root_daum_roughmap root_daum_roughmap_landing"></div>
@@ -1419,6 +1571,7 @@
           <a class="spotlight-btn spotlight-btn--ghost" href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EA%B2%BD%EC%9D%B8%EC%98%9B%EB%A1%9C%20130" target="_blank" rel="noopener noreferrer">네이버 지도 <span class="arrow-icon">↗</span></a>
         </div>
       </div>
+      </div>
     </section>
   </div>
 
@@ -1443,7 +1596,7 @@
         <li><a href="about.html">소개</a></li>
         <li><a href="camp.html">캠프 등록</a></li>
         <li><a href="status.html">등록상태</a></li>
-        <li><a href="#">자료실</a></li>
+        <li><a href="resources.html">자료실</a></li>
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="https://pf.kakao.com/_xaxnyFX/chat" target="_blank" rel="noopener noreferrer">문의</a></li>
       </ul>
@@ -1614,6 +1767,124 @@
 </script>
 
 <script>
+  // 층별 안내 — 좌표는 교회 비상 대피로 도면 사진 위 위치(px)를 그대로 옮김
+  // type: camp(캠프 사용) · wc(화장실) · park(주차장) · etc
+  (function(){
+    function R(x1,y1,x2,y2){ return [[x1,y1],[x2,y1],[x2,y2],[x1,y2]]; }
+    // 도면 이미지: 교회 비상 대피로 도면 사진에서 선만 뽑고 화살표 · 글자를 지운 뒤, 사진 기울기를 펴서 평면으로 만든 것 (venue/plan-*.png)
+    // 좌표 = 도면 이미지 픽셀 기준
+    var FLOORS = [
+      { f:'1F', name:'로비 · 북카페 · 비전홀', desc:'주출입구로 들어오면 바로 로비예요. 로비에서 접수하고, 로비 옆 북카페에서 굿즈 판매와 대기를 해요.',
+        img:'venue/plan-1f.png', w:1121, h:1050,
+        rooms:[
+          { n:'로비', t:'camp', tag:'접수', p:[[724,45],[920,45],[920,212],[945,214],[945,600],[897,513],[846,482],[652,480],[652,352],[724,352]], at:[810,300] },
+          { n:'북카페', t:'camp', tag:'굿즈 · 대기', p:[[945,236],[1080,236],[1084,601],[945,601]], at:[1012,420] },
+          { n:'비전홀', t:'camp', tag:'', p:[[470,480],[840,479],[948,594],[945,1006],[438,1005],[439,722],[467,649]] }, // TODO: 용도 확인
+          { n:'화장실', t:'wc', tag:'남 · 녀', p:[[347,432],[651,430],[651,347],[545,243]], at:[544,381] }
+        ],
+        doors:[{ x:1005, y:41, n:'주출입구', ly:-7 }] },
+      { f:'3F', name:'본부 · 1·2·3호실', desc:'캠프 본부는 새가족실이에요. 1·2·3호실은 강사 대기실과 캠프 지원팀이 써요.',
+        img:'venue/plan-3f.png', w:936, h:912,
+        rooms:[
+          { n:'새가족실', t:'camp', tag:'본부', p:[[535,42],[647,40],[651,171],[603,177],[501,79]] },
+          { n:'1호실', t:'camp', tag:'강사 대기 · 지원팀', p:[[436,428],[538,428],[538,531],[436,531]] }, // 도면의 소반실 · 청소년방 · 계수실 자리
+          { n:'2호실', t:'camp', tag:'강사 대기 · 지원팀', p:[[539,428],[641,428],[641,531],[539,531]] },
+          { n:'3호실', t:'camp', tag:'강사 대기 · 지원팀', p:[[642,428],[744,428],[744,531],[642,531]] },
+          { n:'화장실', t:'wc', tag:'남 · 녀', p:[[404,394],[549,392],[547,313],[465,314],[404,368]] }
+        ],
+        doors:[] },
+      { f:'4F', name:'본당', desc:'집회와 모든 프로그램이 본당에서 진행돼요.',
+        img:'venue/plan-4f.png', w:1300, h:1264,
+        rooms:[
+          { n:'본당', t:'camp', tag:'집회 · 프로그램', big:1, at:[855,817],
+            p:[[919,324],[1264,322],[1260,1225],[40,1225],[40,901],[308,899],[345,848],[442,753],[315,631],[389,552],[551,390],[623,321],[759,444],[833,371],[901,309]] },
+          { n:'화장실', t:'wc', tag:'없음 · 3층 이용', none:1, p:null }
+        ],
+        doors:[] }
+    ];
+
+    var tabs = document.getElementById('floorTabs');
+    var svgBox = document.getElementById('floorSvg');
+    var list = document.getElementById('roomList');
+    function pts(p){ return p.map(function(q){ return q.join(','); }).join(' '); }
+    function center(p){
+      var x=0,y=0; p.forEach(function(q){ x+=q[0]; y+=q[1]; });
+      return [x/p.length, y/p.length];
+    }
+    function draw(fl){
+      var fs = Math.round(fl.w/22), fsS = Math.round(fl.w/30);
+      var top = fl.doors.length ? 70 : 0; // 출입구 이름이 위로 나가면 여백
+      var out = '<svg viewBox="0 '+(-top)+' '+fl.w+' '+(fl.h+top)+'" role="img" aria-label="'+fl.f+' 도면">';
+      var key = fl.img.replace('.png','');
+      fl.rooms.forEach(function(r, i){ // 벽선에 딱 맞춘 색 (venue/plan-*f-번호.png)
+        if (r.p) out += '<image class="fp-fill" data-i="'+i+'" href="'+key+'-'+i+'.png" x="0" y="0" width="'+fl.w+'" height="'+fl.h+'"/>';
+      });
+      out += '<image href="'+fl.img+'" x="0" y="0" width="'+fl.w+'" height="'+fl.h+'" class="fp-lines"/>';
+      fl.rooms.forEach(function(r, i){ // 마우스 · 터치 반응 영역 (투명)
+        if (r.p) out += '<polygon class="fp-room" data-i="'+i+'" points="'+pts(r.p)+'"/>';
+      });
+      fl.rooms.forEach(function(r, i){
+        if (!r.p) return;
+        var c = (r.at || center(r.p)).slice(), size = r.big ? Math.round(fs*1.5) : r.t==='camp' ? fsS : fsS;
+        if (r.t==='wc' && r.tag) c[1] -= size*0.5; // 아래 줄(남·녀) 자리
+        out += '<text class="fp-label'+(r.t==='camp'?' is-camp':r.t==='wc'?' is-wc':'')+'" data-i="'+i+'" x="'+c[0]+'" y="'+c[1]+'" font-size="'+size+'">'+r.n+'</text>';
+        if (r.t==='wc' && r.tag) out += '<text class="fp-label is-small" data-i="'+i+'" x="'+c[0]+'" y="'+(c[1]+size*1.15)+'" font-size="'+Math.round(size*0.75)+'">'+r.tag.replace(/ /g,'')+'</text>';
+      });
+      fl.doors.forEach(function(d){
+        out += '<g class="fp-door"><circle cx="'+d.x+'" cy="'+d.y+'" r="'+Math.round(fsS*0.45)+'"/><text x="'+d.x+'" y="'+d.ly+'" font-size="'+fsS+'">'+d.n+'</text></g>';
+      });
+      return out + '</svg>';
+    }
+    function show(i){
+      var fl = FLOORS[i];
+      tabs.querySelectorAll('.floor-tab').forEach(function(t, k){ t.setAttribute('aria-selected', k===i ? 'true' : 'false'); t.tabIndex = k===i ? 0 : -1; });
+      document.getElementById('floorBadge').textContent = fl.f;
+      document.getElementById('floorName').innerHTML = '<span>'+fl.f+'</span>'+fl.name;
+      document.getElementById('floorDesc').textContent = fl.desc;
+      svgBox.innerHTML = draw(fl);
+      pinned = null;
+      var seen = {}, items = [];
+      fl.rooms.forEach(function(r, k){
+        if (r.t !== 'camp' && r.t !== 'wc') return; // 캠프에서 쓰는 곳만 안내
+        if (seen[r.n]) return; seen[r.n] = 1;
+        var tag = r.t==='camp' ? (r.tag ? '<span class="room-tag camp">'+r.tag+'</span>' : '') : r.t==='wc' ? '<span class="room-tag wc'+(r.none?' none':'')+'">'+(r.tag||'WC')+'</span>' : '';
+        items.push({ html:'<li data-i="'+k+'">'+r.n+tag+'</li>', o: r.t==='camp'?0:r.t==='wc'?1:2 });
+      });
+      items.sort(function(a,b){ return a.o-b.o; });
+      list.innerHTML = items.map(function(x){ return x.html; }).join('');
+    }
+    // 평소엔 색 없음 · 방이나 목록에 마우스를 올리면 그 방만 칠함 · 누르면 칠한 채로 고정 (한 번 더 누르면 해제)
+    var card = document.getElementById('floorCard'), pinned = null;
+    function paint(i){
+      card.querySelectorAll('.is-on').forEach(function(el){ el.classList.remove('is-on'); });
+      if (i == null) return;
+      card.querySelectorAll('[data-i="'+i+'"]').forEach(function(el){ el.classList.add('is-on'); });
+    }
+    function idxOf(e){ var el = e.target.closest('[data-i]'); return el && card.contains(el) ? el.getAttribute('data-i') : null; }
+    card.addEventListener('mouseover', function(e){ var i = idxOf(e); if (i != null) paint(i); });
+    card.addEventListener('mouseleave', function(){ paint(pinned); });
+    card.addEventListener('mouseout', function(e){ if (!e.relatedTarget || !e.relatedTarget.closest || !e.relatedTarget.closest('[data-i]')) paint(pinned); });
+    card.addEventListener('click', function(e){
+      var i = idxOf(e); if (i == null) return;
+      pinned = (pinned === i) ? null : i; paint(pinned != null ? pinned : i);
+    });
+
+    tabs.innerHTML = FLOORS.map(function(fl, i){
+      var camp = fl.rooms.filter(function(r){ return r.t==='camp'; })[0];
+      return '<button type="button" class="floor-tab" role="tab" data-i="'+i+'">'+fl.f+'</button>';
+    }).join('');
+    tabs.addEventListener('click', function(e){ var b = e.target.closest('.floor-tab'); if (b) show(+b.dataset.i); });
+    tabs.addEventListener('keydown', function(e){
+      var cur = +tabs.querySelector('[aria-selected="true"]').dataset.i, n = null;
+      if (e.key === 'ArrowRight') n = (cur+1) % FLOORS.length;
+      if (e.key === 'ArrowLeft') n = (cur-1+FLOORS.length) % FLOORS.length;
+      if (n !== null){ show(n); tabs.children[n].focus(); e.preventDefault(); }
+    });
+    show(FLOORS.length - 1); // 기본: 4층 본당
+  })();
+</script>
+
+<script>
   // 푸터 계좌번호 복사
   document.querySelectorAll('.copy-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
@@ -1621,6 +1892,103 @@
       if (navigator.clipboard) navigator.clipboard.writeText(btn.dataset.copy).then(done);
     });
   });
+</script>
+
+<!-- 메인 팝업 (왼쪽 아래 작은 카드 · 이미지 한 장) — 이미지·링크는 아래 POPUP 값만 바꾸면 됨. 끄려면 on: false -->
+<style>
+  .pop{position:absolute;top:calc(50svh + 20px);left:max(40px,calc(25vw - 210px));z-index:45;width:min(420px,calc(50vw - 100px));opacity:0;transform:translateY(calc(-50% + 20px));transition:opacity .35s,transform .45s cubic-bezier(.2,.8,.2,1)}
+  .pop.is-open{transform:translateY(-50%)}
+  .pop.is-open{opacity:1}
+  .pop[hidden]{display:none}
+  .pop-box{position:relative;display:flex;flex-direction:column;max-height:calc(100svh - 48px);background:var(--surface);border:1px solid rgba(157,177,238,.22);border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .pop-x{position:absolute;top:16px;right:16px;z-index:1;width:26px;height:26px;display:grid;place-items:center;border:0;border-radius:50%;background:rgba(11,15,23,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;cursor:pointer;transition:background .2s}
+  .pop-x:hover{background:rgba(11,15,23,.85)}
+  .pop-x svg{pointer-events:none}
+  .pop-media{display:block;min-height:0;flex:1;overflow:hidden;padding:10px 10px 0;border-radius:0}
+  .pop-img{display:block;width:100%;height:100%;max-height:calc(100svh - 230px);object-fit:contain;border-radius:10px;background:#0b0f19;transition:transform .4s}
+  .pop-media:hover .pop-img{transform:scale(1.015)}
+  .pop-cta{display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 10px 0;padding:11px 0;border-radius:999px;background:var(--pw-accent);color:#0b1020;font-family:'Pretendard',sans-serif;font-size:13px;font-weight:700;text-decoration:none;transition:filter .2s,transform .2s}
+  .pop-cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .pop-cta span{transition:transform .2s}
+  .pop-cta:hover span{transform:translateX(3px)}
+  .pop-cta[hidden]{display:none}
+  .pop-bar{display:flex;justify-content:space-between;padding:8px 16px 10px}
+  .pop-bar button{border:0;background:none;padding:6px 0;font-family:'Pretendard',sans-serif;font-size:12px;color:rgba(255,255,255,.5);cursor:pointer;transition:color .2s}
+  .pop-bar button:hover{color:#fff}
+  .pop-bar button[data-pop="close"]{color:rgba(255,255,255,.85);font-weight:600}
+  @media (max-width:760px){.pop{position:fixed;top:auto;left:12px;bottom:calc(80px + env(safe-area-inset-bottom));width:216px;transform:translateY(20px)}.pop.is-open{transform:none}.pop-x{top:14px;right:14px;width:24px;height:24px}.pop-media{padding:8px 8px 0}.pop-cta{margin:8px 8px 0;padding:9px 0;font-size:12px}.pop-bar{flex-direction:column;align-items:center;gap:0;padding:4px 8px 6px}.pop-bar button{font-size:11px;padding:4px 0}.pop-box{max-height:calc(100svh - 110px)}.pop-img{max-height:calc(100svh - 280px)}}
+  @media (prefers-reduced-motion:reduce){.pop,.pop-img,.pop-cta,.pop-cta span{transition:none}
+</style>
+<div class="pop" id="mainPop" role="region" aria-label="캠프 스텝 모집" hidden>
+  <div class="pop-box">
+    <button type="button" class="pop-x" data-pop="close" aria-label="닫기">
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg>
+    </button>
+    <a class="pop-media" id="mainPopLink"><img class="pop-img" id="mainPopImg" alt=""></a>
+    <a class="pop-cta" id="mainPopCta" hidden>스텝 신청하기 <span aria-hidden="true">→</span></a>
+    <div class="pop-bar">
+      <button type="button" data-pop="today">오늘 하루 보지 않기</button>
+      <button type="button" data-pop="close">닫기</button>
+    </div>
+  </div>
+</div>
+<script>
+  (function(){
+    var POPUP = {
+      on: true,
+      image: 'popup-staff.jpg',       // 팝업 이미지 (원본: 스텝 모집 웹게시용 최종.png)
+      alt: '2027 WHOLEGEN WINTER CAMP 캠프 스텝 모집 안내 — 2027년 1월 21일(목)~22일(금), 세상의 빛 동광교회(부천), 선착순 30명',
+      link: 'https://m.site.naver.com/2lGkj', // 이미지 누르면 이동 = 포스터 QR의 스텝 신청서 (없으면 '')
+      newTab: true,
+      title: '캠프 스텝 모집',          // 화면 읽기 프로그램용 이름
+      cta: '스텝 신청하기'              // 이미지 아래 버튼 글자 (없으면 '')
+    };
+    var KEY = 'wg-pop-hide-until';
+    if (!POPUP.on) return;
+    var force = /[?&]popup\b/.test(location.search); // 주소 뒤에 ?popup 붙이면 '오늘 하루 보지 않기'와 상관없이 뜸 (확인용)
+    try { if (!force && Date.now() < Number(localStorage.getItem(KEY))) return; } catch(e){}
+
+    var pop = document.getElementById('mainPop');
+    var img = document.getElementById('mainPopImg');
+    var link = document.getElementById('mainPopLink');
+    img.alt = POPUP.alt;
+    var cta = document.getElementById('mainPopCta');
+    pop.setAttribute('aria-label', POPUP.title);
+    [link, cta].forEach(function(a){
+      if (!POPUP.link) return;
+      a.href = POPUP.link;
+      if (POPUP.newTab){ a.target = '_blank'; a.rel = 'noopener'; }
+    });
+    if (POPUP.link && POPUP.cta){ cta.firstChild.nodeValue = POPUP.cta + ' '; cta.hidden = false; }
+
+    function close(){
+      pop.classList.remove('is-open');
+      document.removeEventListener('keydown', onKey);
+      setTimeout(function(){ pop.hidden = true; }, 400);
+    }
+    function onKey(e){ if (e.key === 'Escape') close(); }
+
+    pop.addEventListener('click', function(e){
+      var act = e.target.getAttribute('data-pop');
+      if (act === 'today'){
+        var end = new Date(); end.setHours(24, 0, 0, 0); // 오늘 자정까지
+        try { localStorage.setItem(KEY, String(end.getTime())); } catch(err){}
+        close();
+      } else if (act === 'close'){
+        close();
+      }
+    });
+
+    function open(){
+      if (!pop.hidden) return;
+      pop.hidden = false;
+      requestAnimationFrame(function(){ pop.classList.add('is-open'); });
+      document.addEventListener('keydown', onKey);
+    }
+    img.onload = open;
+    img.src = POPUP.image;
+    if (img.complete && img.naturalWidth) open(); // 캐시된 이미지면 바로
+  })();
 </script>
 </body>
 </html>

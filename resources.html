@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" href="favicon.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="naver-site-verification" content="6877376ed9505cfbfa389b0d683d20d5976947e8" />
+<title>자료실 · 홀젠캠프 WHOLEGEN WINTER CAMP</title>
+<!-- 카카오톡·SNS 링크 미리보기 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="홀젠캠프 WHOLEGENCAMP">
+<meta property="og:title" content="자료실 · 홀젠캠프 WHOLEGEN WINTER CAMP">
+<meta property="og:description" content="홀젠캠프(WHOLEGEN WINTER CAMP) 2027 · 2027.01.21–22 · 무박 2일 청소년 캠프 · 세상의 빛 동광교회(부천)">
+<meta property="og:url" content="https://www.wholegencamp.com/resources.html">
+<link rel="canonical" href="https://www.wholegencamp.com/resources.html">
+<meta property="og:image" content="https://www.wholegencamp.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="홀젠캠프(WHOLEGEN WINTER CAMP) 2027 · 2027.01.21–22 · 무박 2일 청소년 캠프 · 세상의 빛 동광교회(부천)">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --sage: #1A1A1A;
+    --sage-light: #E5E5E5;
+    --cream: #FFFFFF;
+    --tan: #CCCCCC;
+    --brown: #4D4D4D;
+    --ink: #000000;
+    --pw-accent: #9DB1EE;
+    --surface: #121826;
+    --surface-2: #1A2132;
+    --line: rgba(255,255,255,0.07);
+
+    /* Spacing scale */
+    --section-gap: 128px;
+    --section-gap-mobile: 80px;
+    --head-gap: 44px;          /* section heading → content */
+    --head-gap-mobile: 28px;
+    --content-px: 40px;
+    --content-px-mobile: 20px;
+
+    /* Type scale */
+    --fs-display: 48px;
+    --fs-h2: 40px;
+    --fs-h3: 24px;
+    --fs-body: 15px;
+    --fs-small: 13px;
+    --fs-xs: 11.5px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ scroll-behavior:smooth; scroll-padding-top:72px; }
+
+  html,body{
+    width:100%;
+    min-height:100vh;
+    font-family:'Pretendard', sans-serif;
+    background: #0B0F17;
+    color: #EDEFF3;
+    overflow-x:clip;
+    position:relative;
+    font-size: var(--fs-body);
+    line-height: 1.6;
+  }
+
+  .site-top{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    background: transparent;
+    border-bottom:1px solid transparent;
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .site-top.is-solid,
+  .site-top.menu-open{
+    background: rgba(11,15,23,0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.07);
+  }
+  .site-top .logo,
+  .site-top .logo b,
+  .site-top .nav-links li,
+  .site-top .inquiry-btn{ transition: color .3s ease, background .3s ease, transform .2s ease; }
+  .site-top .logo{ color:#fff; }
+  .site-top .logo b{ color: rgba(255,255,255,0.6); }
+  .site-top .inquiry-btn{ background:#fff; color:#0B0F17; }
+  .site-top .inquiry-btn:hover{ background: var(--pw-accent); }
+  .site-top .nav-toggle span{ background:#fff; }
+  @media (min-width:901px){
+    .site-top .nav-links li{ color:#fff; }
+    .site-top .nav-links li:hover{ color: rgba(255,255,255,0.65); }
+  }
+
+  /* ---------- NAV ---------- */
+  .nav-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: 24px var(--content-px) 0;
+    position:relative;
+    z-index:40;
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:48px;
+    width:100%;
+    max-width:1280px;
+    position:relative;
+  }
+  .logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    font-weight:700;
+    color: var(--ink);
+    letter-spacing:0.5px;
+  }
+  .logo b{ color: var(--brown); font-weight:700; }
+
+  .nav-links{
+    display:flex;
+    gap:40px;
+    list-style:none;
+  }
+  .nav-links li{
+    font-size: var(--fs-body);
+    font-weight:600;
+    letter-spacing:0.6px;
+    color: var(--ink);
+    cursor:pointer;
+    transition: color .2s ease;
+  }
+  .nav-links li a{ color:inherit; text-decoration:none; }
+  .nav-links li:hover{ color: var(--brown); }
+
+  .inquiry-btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-small);
+    padding:9px 20px;
+    border-radius:999px;
+    background: var(--ink);
+    color: var(--cream);
+    font-weight:600;
+    text-decoration:none;
+    white-space:nowrap;
+    transition: background .2s ease, transform .2s ease;
+    display:inline-block;
+  }
+  .inquiry-btn:hover{
+    background: var(--brown);
+    transform: translateY(-1px);
+  }
+
+  .nav-toggle{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:28px;
+    height:22px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+    flex-shrink:0;
+  }
+  .nav-toggle span{
+    display:block;
+    width:100%;
+    height:2px;
+    background: var(--ink);
+    border-radius:2px;
+    transition: transform .2s ease, opacity .2s ease;
+  }
+  .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2){ opacity:0; }
+  .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width:900px){
+    .nav-toggle{ display:flex; order:3; }
+    .nav-links{
+      display:none;
+      position:absolute;
+      top:calc(100% + 12px);
+      left:0;
+      right:0;
+      flex-direction:column;
+      gap:0;
+      background: rgba(18,24,38,0.97);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius:20px;
+      padding:8px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.07);
+      z-index:30;
+    }
+    .nav-links.open{ display:flex; }
+    .nav-links li{ padding:0; }
+    .nav-links li a{
+      display:block;
+      padding:14px 16px;
+      border-radius:12px;
+    }
+    .nav-links li{ color:#fff; }
+    .nav-links li:hover{ background: rgba(255,255,255,0.06); }
+    .inquiry-btn{ order:2; margin-left:auto; }
+    .logo{ order:1; }
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .js .reveal{
+    opacity:0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .js .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .js .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+
+  /* ---------- PAGE ---------- */
+  .page-head{
+    width:100%;
+    padding:160px var(--content-px) 0;
+    text-align:center;
+  }
+  .page-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:3px;
+    color: var(--pw-accent);
+  }
+  .page-title{
+    margin-top:12px;
+    font-size:56px;
+    font-weight:800;
+    letter-spacing:-0.03em;
+    line-height:1.1;
+  }
+  .page-section{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding: var(--section-gap) var(--content-px) 0;
+  }
+  .page-section.first{ padding-top: var(--head-gap); }
+  .page-inner{ width:100%; max-width:1280px; }
+  .section-title{
+    font-size: var(--fs-h2);
+    font-weight:800;
+    letter-spacing:-0.5px;
+    text-align:center;
+    color:#fff;
+  }
+  .page-end{ height: var(--section-gap); }
+  @media (max-width:760px){
+    .page-head{ padding:112px var(--content-px-mobile) 0; }
+    .page-title{ font-size:36px; }
+    .page-section{ padding: var(--section-gap-mobile) var(--content-px-mobile) 0; }
+    .page-section.first{ padding-top: var(--head-gap-mobile); }
+    .section-title{ font-size:28px; }
+    .page-end{ height: var(--section-gap-mobile); }
+  }
+
+  /* ---------- 자료실 ---------- */
+  /* 제목은 왼쪽 칸, 영상은 오른쪽에 나란히 */
+  .res-wrap{
+    display:grid;
+    grid-template-columns: 200px 1fr;
+    gap:48px;
+    align-items:start;
+  }
+  .res-head{
+    position:sticky;
+    top:104px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .res-title{ margin-top:0; font-size:28px; font-weight:800; letter-spacing:-0.02em; color:#fff; }
+  .res-count{ font-family:'JetBrains Mono', monospace; font-size: var(--fs-small); color: rgba(255,255,255,0.45); }
+
+  /* 영상 카드(유튜브 쇼츠 · 세로): 썸네일을 누르면 그 자리에서 재생 (처음부터 유튜브를 불러오지 않아 페이지가 가벼움) */
+  .video-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:40px 24px;
+  }
+  .video-frame{
+    position:relative;
+    aspect-ratio:9 / 16;
+    border-radius:20px;
+    overflow:hidden;
+    background: var(--surface);
+    border:1px solid var(--line);
+  }
+  .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .video-play{
+    position:absolute;
+    inset:0;
+    display:block;
+    width:100%;
+    padding:0;
+    border:0;
+    background:none;
+    cursor:pointer;
+  }
+  .video-play img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .5s ease, filter .3s ease; }
+  .video-play:hover img{ transform: scale(1.03); filter: brightness(1.05); }
+  .play-icon{
+    position:absolute;
+    right:16px; bottom:16px;
+    z-index:1;
+    width:52px; height:52px;
+    border-radius:50%;
+    background: var(--pw-accent);
+    color:#0B0F17;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 0 0 6px rgba(157,177,238,0.25);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .video-play:hover .play-icon{ transform: scale(1.08); box-shadow: 0 0 0 9px rgba(157,177,238,0.2); }
+  .play-icon svg{ margin-left:3px; width:18px; height:18px; }
+  .video-num{
+    position:absolute;
+    left:18px; bottom:16px;
+    z-index:1;
+    font-family:'JetBrains Mono', monospace;
+    font-size:40px;
+    font-weight:700;
+    line-height:1;
+    color:#fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .channel-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 18px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.2);
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    text-decoration:none;
+    white-space:nowrap;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .channel-link:hover{ background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+  .channel-link svg{ color:#ff3d3d; }
+
+  /* 영상 준비 전 자리 */
+  .video-soon{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background:
+      radial-gradient(120% 90% at 80% 0%, rgba(157,177,238,0.22), transparent 60%),
+      radial-gradient(80% 80% at 0% 100%, rgba(157,177,238,0.10), transparent 60%),
+      var(--surface);
+    color: rgba(255,255,255,0.55);
+    text-align:center;
+  }
+  .video-soon .play-icon{ position:static; right:auto; bottom:auto; margin:0; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); box-shadow:none; }
+  .video-soon strong{ font-family:'JetBrains Mono', monospace; font-size:12px; letter-spacing:3px; color: var(--pw-accent); }
+  .video-soon span{ font-size: var(--fs-small); }
+
+  .video-meta{ margin-top:16px; }
+  .video-tag{
+    display:inline-block;
+    padding:2px 8px;
+    border-radius:6px;
+    background: rgba(157,177,238,0.14);
+    color: var(--pw-accent);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+  }
+  .video-name{ margin-top:0; font-size:17px; font-weight:700; color:#fff; line-height:1.4; }
+  .video-desc{ margin-top:4px; font-family:'JetBrains Mono', monospace; font-size:12px; color: rgba(255,255,255,0.45); }
+
+  @media (max-width:760px){
+    .res-title{ font-size:22px; }
+    .res-wrap{ grid-template-columns:1fr; gap:24px; }
+    .res-head{ position:static; flex-direction:row; align-items:center; justify-content:space-between; padding-top:0; border-top:0; }
+    .video-grid{ grid-template-columns: repeat(2, 1fr); gap:28px 12px; }
+    .video-frame{ border-radius:14px; }
+    .play-icon{ right:10px; bottom:10px; width:38px; height:38px; box-shadow: 0 0 0 4px rgba(157,177,238,0.25); }
+    .play-icon svg{ width:14px; height:14px; }
+    .video-num{ left:12px; bottom:10px; font-size:28px; }
+    .video-name{ font-size:15px; }
+  }
+
+  .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  /* 큰 제목 없이 바로 시작 — 고정 메뉴 아래로 띄움 */
+  #videos{ padding-top:144px; }
+  @media (max-width:760px){ #videos{ padding-top:100px; } }
+
+  main{ min-height: calc(100vh - 160px); }
+
+  @media (max-width:760px){
+    .nav-wrap{ padding-left: var(--content-px-mobile); padding-right: var(--content-px-mobile); }
+    .site-top .nav-wrap{ padding-top:12px; padding-bottom:12px; }
+    nav{ gap:16px; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    width:100%;
+    background:#06080D;
+    border-top:1px solid var(--line);
+    padding: 52px var(--content-px) 36px;
+  }
+  .footer-inner{
+    max-width:1280px;
+    margin:0 auto;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+  }
+  .footer-logo{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    color: var(--cream);
+    letter-spacing:0.5px;
+  }
+  .footer-logo b{ color: rgba(255,255,255,0.5); font-weight:600; }
+  .footer-links{
+    display:flex;
+    gap:28px;
+    list-style:none;
+  }
+  .footer-links a{
+    color: rgba(255,255,255,0.7);
+    text-decoration:none;
+    font-size: var(--fs-body);
+    transition: color .2s ease;
+  }
+  .footer-links a:hover{ color: var(--cream); }
+  .footer-divider{
+    margin:32px 0 24px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing:0.3px;
+    color: rgba(255,255,255,0.4);
+  }
+  .footer-account b{ padding:1px 7px; border-radius:5px; background: var(--pw-accent); color:#0c1424; font-weight:700; } /* 계좌번호 하이라이트 (메인 배너 강조색과 동일) */
+  .copy-btn{
+    margin-left:6px;
+    padding:2px 9px;
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:999px;
+    background:transparent;
+    color: rgba(255,255,255,0.6);
+    font: inherit;
+    cursor:pointer;
+  }
+  .copy-btn:hover{ color:#fff; border-color: rgba(255,255,255,0.5); }
+
+  @media (max-width:600px){
+    .site-footer{ padding:36px var(--content-px-mobile) 24px; }
+    .footer-top{ flex-direction:column; align-items:flex-start; gap:16px; }
+    .footer-links{ flex-wrap:wrap; gap:16px 20px; }
+    .footer-bottom{ flex-direction:column; gap:8px; }
+  }
+  /* 모바일 하단 고정 바: 어느 페이지에서든 바로 캠프 신청 (문의는 상단 메뉴에 있음) */
+  .m-cta{ display:none; }
+  @media (max-width:760px){
+    .m-cta{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      z-index:60;
+      display:flex;
+      gap:8px;
+      padding:10px var(--content-px-mobile) calc(10px + env(safe-area-inset-bottom));
+      background: rgba(11,15,23,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+    .m-cta a{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:48px;
+      border-radius:999px;
+      font-size:15px;
+      font-weight:700;
+      text-decoration:none;
+    }
+    .m-cta .m-cta-apply{ background: var(--pw-accent); color:#0B0F17; }
+    /* 바에 가려지지 않도록 페이지 맨 아래 여백 */
+    body{ padding-bottom: calc(68px + env(safe-area-inset-bottom)); }
+  }
+</style>
+</head>
+<body>
+
+  <header class="site-top">
+    <!-- NAV -->
+    <div class="nav-wrap">
+      <nav>
+        <a class="logo" href="index.html" style="text-decoration:none">WHOLEGEN<b>CAMP</b></a>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="about.html">소개</a></li>
+          <li><a href="camp.html">캠프 등록</a></li>
+          <li><a href="status.html">등록상태</a></li>
+          <li><a href="resources.html" aria-current="page">자료실</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+        <a class="inquiry-btn" href="https://pf.kakao.com/_xaxnyFX/chat" target="_blank" rel="noopener noreferrer">문의</a>
+      </nav>
+    </div>
+  </header>
+
+<main>
+  <h1 class="sr-only">자료실</h1>
+
+  <!-- 홍보영상 — 유튜브 채널(@wholegencamp) 영상. 새 영상은 아래 스크립트의 VIDEOS 목록에 한 줄 추가 -->
+  <section class="page-section first reveal" id="videos" aria-labelledby="videosTitle">
+    <div class="page-inner res-wrap">
+      <div class="res-head">
+        <div>
+          <h2 class="res-title" id="videosTitle">홍보영상</h2>
+        </div>
+        <a class="channel-link" href="https://www.youtube.com/@wholegencamp" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg>유튜브 채널 ↗</a>
+      </div>
+      <div id="videoList"></div>
+    </div>
+  </section>
+  <div class="page-end"></div>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">WHOLEGEN<b>CAMP</b></div>
+      <ul class="footer-links">
+        <li><a href="about.html">소개</a></li>
+        <li><a href="camp.html">캠프 등록</a></li>
+        <li><a href="status.html">등록상태</a></li>
+        <li><a href="resources.html">자료실</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="https://pf.kakao.com/_xaxnyFX/chat" target="_blank" rel="noopener noreferrer">문의</a></li>
+      </ul>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <div class="footer-account">계좌 · 하나은행 <b>161-910048-18805</b> · 예금주 홀젠(WHOLEGEN) <button class="copy-btn" type="button" data-copy="161-910048-18805">복사</button></div>
+      <div class="footer-copyright">&copy; 2026 LOIND CORPORATION. All rights reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- 모바일 하단 고정 바 -->
+<nav class="m-cta" aria-label="빠른 메뉴">
+  <a class="m-cta-apply" href="camp.html#apply">캠프 신청</a>
+</nav>
+
+<script>
+  // Header: transparent over hero, solid after
+  (function(){
+    var header = document.querySelector('.site-top');
+    var banner = document.querySelector('.banner');
+    if (!header) return;
+    if (!banner){ header.classList.add('is-solid'); return; }
+    function update(){
+      header.classList.toggle('is-solid', window.scrollY > banner.offsetHeight - header.offsetHeight);
+    }
+    update();
+    window.addEventListener('scroll', update, { passive:true });
+    window.addEventListener('resize', update);
+  })();
+
+  // Scroll reveal
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)){
+      els.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (!toggle || !links) return;
+    toggle.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('open');
+      document.querySelector('.site-top').classList.toggle('menu-open', isOpen);
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('open');
+        document.querySelector('.site-top').classList.remove('menu-open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+
+  // 홍보영상
+  // youtube: 유튜브 주소 (https://youtu.be/… 또는 https://www.youtube.com/watch?v=…) — 비워 두면 '영상 준비 중'으로 보임
+  // 쇼츠(세로) 영상 기준 · 위에서부터 순서대로
+  (function(){
+    var VIDEOS = [
+      { youtube: 'https://youtube.com/shorts/H1JQSguHgpk', title: '“순전함” Teaser 1',            desc: '2026.11.03' },
+      { youtube: 'https://youtube.com/shorts/eBs6XiEq5EA', title: '“순전함” Teaser 2 · 소망의바다', desc: '2026.11.10' },
+      { youtube: 'https://youtube.com/shorts/qiD3w6dHA1Q', title: '“순전함” Teaser 3 · 우성환 목사', desc: '2026.11.17' }
+    ];
+
+    var list = document.getElementById('videoList');
+    if (!list) return;
+
+    function ytId(url){
+      var m = String(url || '').match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([\w-]{11})/);
+      return m ? m[1] : '';
+    }
+    function esc(t){ return String(t || '').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    var PLAY = '<span class="play-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></span>';
+
+    function card(v, i){
+      var id = ytId(v.youtube);
+      var frame = id
+        ? '<button type="button" class="video-play" data-id="' + id + '" aria-label="' + esc(v.title) + ' 재생">' +
+            '<img src="https://i.ytimg.com/vi/' + id + '/oar2.jpg" onerror="this.onerror=null;this.src=\'https://i.ytimg.com/vi/' + id + '/hqdefault.jpg\'" alt="" loading="lazy">' +
+            '</button>'
+        : '<div class="video-soon">' + PLAY + '<strong>COMING SOON</strong><span>영상 준비 중이에요</span></div>';
+      return '<article class="video-card"><div class="video-frame">' + frame + '</div>' +
+        '<div class="video-meta">' + (v.tag ? '<span class="video-tag">' + esc(v.tag) + '</span>' : '') +
+        '<h3 class="video-name">' + esc(v.title) + '</h3>' + (v.desc ? '<p class="video-desc">' + esc(v.desc) + '</p>' : '') + '</div></article>';
+    }
+
+    list.innerHTML = '<div class="video-grid">' + VIDEOS.map(card).join('') + '</div>';
+
+    // 썸네일 누르면 그 자리에서 유튜브 재생
+    list.addEventListener('click', function(e){
+      var btn = e.target.closest('.video-play');
+      if (!btn) return;
+      // 파일로 직접 연 경우(file://)엔 유튜브가 재생을 막으므로(오류 153) 유튜브에서 열기
+      if (location.protocol === 'file:'){ window.open('https://youtube.com/shorts/' + btn.dataset.id, '_blank', 'noopener'); return; }
+      var f = document.createElement('iframe');
+      f.referrerPolicy = 'strict-origin-when-cross-origin'; // 유튜브가 요구: 어느 사이트에서 재생하는지 알려줌
+      f.src = 'https://www.youtube.com/embed/' + btn.dataset.id + '?autoplay=1&rel=0&playsinline=1&origin=' + encodeURIComponent(location.origin);
+      f.title = btn.getAttribute('aria-label').replace(/ 재생$/, '');
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.allowFullscreen = true;
+      btn.replaceWith(f);
+    });
+  })();
+</script>
+
+<script>
+  // 푸터 계좌번호 복사
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var done = function(){ btn.textContent = '복사됨'; setTimeout(function(){ btn.textContent = '복사'; }, 1500); };
+      if (navigator.clipboard) navigator.clipboard.writeText(btn.dataset.copy).then(done);
+    });
+  });
+</script>
+</body>
+</html>
