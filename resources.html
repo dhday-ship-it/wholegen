@@ -414,6 +414,36 @@
     .video-name{ font-size:15px; }
   }
 
+  /* 포스터 카드: 영상 카드와 같은 줄 · 같은 간격 */
+  .res-note{ font-size: var(--fs-small); line-height:1.6; color: rgba(255,255,255,0.45); }
+  .poster-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:40px 24px; }
+  .poster-frame{
+    position:relative; display:block; aspect-ratio:1 / 1.414;
+    border-radius:20px; overflow:hidden; background: var(--surface); border:1px solid var(--line);
+  }
+  .poster-frame img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .5s ease, filter .3s ease; }
+  .poster-frame:hover img{ transform: scale(1.03); filter: brightness(1.05); }
+  .poster-meta{ margin-top:16px; }
+  .poster-actions{ margin-top:10px; display:flex; gap:6px; }
+  .poster-btn{
+    display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border-radius:999px;
+    border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:13px; font-weight:600; text-decoration:none;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .poster-btn:hover{ background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.4); }
+  .poster-btn svg{ width:14px; height:14px; }
+  /* 크게 보기 */
+  .poster-view{ position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center; padding:24px; background: rgba(5,7,12,0.92); cursor:zoom-out; }
+  .poster-view[hidden]{ display:none; }
+  .poster-view img{ max-width:100%; max-height:100%; border-radius:12px; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+  .poster-view button{ position:absolute; top:18px; right:18px; width:44px; height:44px; border-radius:50%; border:0; background: rgba(255,255,255,0.12); color:#fff; font-size:22px; cursor:pointer; }
+  @media (max-width:760px){
+    .poster-grid{ grid-template-columns: repeat(2, 1fr); gap:28px 12px; }
+    .poster-frame{ border-radius:14px; }
+    .res-note br{ display:none; }
+    .poster-btn{ padding:6px 11px; font-size:12px; }
+  }
+
   .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
   /* 큰 제목 없이 바로 시작 — 고정 메뉴 아래로 띄움 */
   #videos{ padding-top:144px; }
@@ -566,6 +596,19 @@
       <div id="videoList"></div>
     </div>
   </section>
+
+  <!-- 포스터 — 새 포스터는 아래 스크립트의 POSTERS 목록에 한 줄 추가 -->
+  <section class="page-section reveal" id="posters" aria-labelledby="postersTitle">
+    <div class="page-inner res-wrap">
+      <div class="res-head">
+        <div>
+          <h2 class="res-title" id="postersTitle">포스터</h2>
+        </div>
+        <p class="res-note">눌러서 크게 보고, <br>저장해서 나눠 주세요.</p>
+      </div>
+      <div id="posterList"></div>
+    </div>
+  </section>
   <div class="page-end"></div>
 </main>
 
@@ -695,6 +738,45 @@
       f.allowFullscreen = true;
       btn.replaceWith(f);
     });
+  })();
+
+  // ---------- 포스터 ----------
+  // image: 웹사이트 폴더 안 이미지 경로 · title: 이름 · desc: 날짜나 짧은 설명
+  (function(){
+    var POSTERS = [
+      { image: 'poster.jpg',       title: '2027 WHOLEGEN WINTER CAMP', desc: '메인 포스터' },
+      { image: 'popup-staff.jpg',  title: '캠프 스텝 모집 안내',         desc: '스텝 모집 · 선착순 30명' }
+    ];
+    var list = document.getElementById('posterList');
+    if (!list) return;
+    function esc(t){ return String(t || '').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    var ZOOM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg>';
+    var SAVE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>';
+    list.innerHTML = '<div class="poster-grid">' + POSTERS.map(function(p){
+      var file = p.title.replace(/\s+/g, '_') + '.' + p.image.split('.').pop();
+      return '<article class="poster-card">' +
+        '<a class="poster-frame" href="' + esc(p.image) + '" data-view aria-label="' + esc(p.title) + ' 크게 보기"><img src="' + esc(p.image) + '" alt="' + esc(p.title) + '" loading="lazy"></a>' +
+        '<div class="poster-meta"><h3 class="video-name">' + esc(p.title) + '</h3>' + (p.desc ? '<p class="video-desc">' + esc(p.desc) + '</p>' : '') +
+        '<div class="poster-actions"><a class="poster-btn" href="' + esc(p.image) + '" data-view>' + ZOOM + '크게 보기</a>' +
+        '<a class="poster-btn" href="' + esc(p.image) + '" download="' + esc(file) + '">' + SAVE + '저장</a></div></div></article>';
+    }).join('') + '</div>';
+
+    // 크게 보기: 페이지 위에 띄우고, 바깥이나 X · ESC로 닫기
+    var view = document.createElement('div');
+    view.className = 'poster-view'; view.hidden = true;
+    view.innerHTML = '<img alt=""><button type="button" aria-label="닫기">✕</button>';
+    document.body.appendChild(view);
+    function close(){ view.hidden = true; document.documentElement.style.overflow = ''; }
+    list.addEventListener('click', function(e){
+      var a = e.target.closest('[data-view]');
+      if (!a) return;
+      e.preventDefault();
+      view.querySelector('img').src = a.getAttribute('href');
+      view.querySelector('img').alt = a.getAttribute('aria-label') || '';
+      view.hidden = false; document.documentElement.style.overflow = 'hidden';
+    });
+    view.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !view.hidden) close(); });
   })();
 </script>
 
