@@ -403,6 +403,20 @@
   #viewHome .home-right .q-item{ flex-direction:column; justify-content:center; align-items:center; gap:8px; padding:14px 6px; text-align:center; }
   #viewHome .home-right .q-text b{ font-size:12px; white-space:nowrap; }
   #viewHome .q-kakao{ background:#FEE500; color:#191919; }
+  /* 기도편지 (메뉴: 전화부 아래) */
+  .lt-actions{ display:flex; flex-wrap:wrap; gap:8px; }
+  .btn-kakao{ display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border:0; border-radius:12px; background:#FEE500; color:#191919; font:inherit; font-size:14px; font-weight:700; cursor:pointer; }
+  .btn-kakao:hover{ background:#F5DC00; }
+  .btn-kakao svg{ width:18px; height:18px; }
+  .lt-wrap{ display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; margin-top:20px; }
+  .lt-phone{ flex:none; width:390px; max-width:100%; height:780px; border-radius:28px; overflow:hidden; border:8px solid #191F28; background:#0B0F17; box-shadow:0 20px 50px rgba(30,41,59,0.18); }
+  .lt-phone iframe{ width:100%; height:100%; border:0; display:block; }
+  .lt-info{ flex:1; min-width:240px; max-width:420px; }
+  .lt-card{ padding:18px; border-radius:16px; background:#fff; border:1px solid var(--line); }
+  .lt-card h3{ font-size:13px; font-weight:700; color:var(--mute); }
+  .lt-card p{ margin-top:6px; font-size:14px; line-height:1.6; color:var(--ink); word-break:break-all; }
+  .lt-card + .lt-card{ margin-top:10px; }
+  .lt-steps{ margin-top:6px; padding-left:18px; font-size:13.5px; line-height:1.8; color:var(--ink); }
   #viewHome .q-kakao svg{ width:22px; height:22px; }
   @media (max-width:760px){ #viewHome .home-right .quick{ grid-template-columns: repeat(5, 1fr); gap:6px; } #viewHome .home-right .q-item{ padding:12px 2px; } #viewHome .home-right .q-ico{ width:34px; height:34px; } #viewHome .home-right .q-text b{ font-size:11px; } }
 
@@ -568,6 +582,10 @@
         <span class="side-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
         전화부
       </a>
+      <a class="side-item" href="#letter" data-view="letter">
+        <span class="side-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span>
+        기도편지
+      </a>
     </nav>
     <div class="main">
       <section id="viewHome" hidden>
@@ -685,6 +703,34 @@
         </div>
         <p class="ac-note">비밀번호는 시트에 그대로 저장돼요. 시트와 어드민 비밀번호는 스태프에게만 공유해 주세요.</p>
       </section>
+      <section id="viewLetter" hidden>
+        <div class="head">
+          <div>
+            <h1>기도편지</h1>
+            <p>카카오톡으로 보내면 모바일 청첩장처럼 사진 · 제목 · '기도편지 보기' 버튼이 있는 카드로 가요</p>
+          </div>
+          <div class="lt-actions">
+            <button class="btn-kakao" id="sendLetter" type="button"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4C7.03 4 3 7.13 3 11c0 2.45 1.62 4.6 4.06 5.85l-.86 3.13c-.08.29.25.52.5.35l3.72-2.47c.52.06 1.04.1 1.58.1 4.97 0 9-3.13 9-7s-4.03-7-9-7z"/></svg>카카오톡으로 보내기</button>
+            <button class="btn-ghost" id="copyLetter" type="button">링크 복사</button>
+            <a class="btn-ghost" href="../letter.html" target="_blank" rel="noopener">새 창으로 보기 ↗</a>
+          </div>
+        </div>
+        <div class="lt-wrap">
+          <div class="lt-phone"><iframe id="letterFrame" title="기도편지 미리보기" loading="lazy"></iframe></div>
+          <div class="lt-info">
+            <div class="lt-card"><h3>주소</h3><p>https://www.wholegencamp.com/letter.html</p></div>
+            <div class="lt-card"><h3>보내는 방법</h3>
+              <ol class="lt-steps">
+                <li>'카카오톡으로 보내기'를 누르고</li>
+                <li>카카오 로그인 후 받을 친구 · 단톡방을 고르면</li>
+                <li>카드로 바로 전달돼요</li>
+              </ol>
+            </div>
+            <div class="lt-card"><h3>내용 수정</h3><p>letter.html 파일을 고치고 올리면 이미 보낸 카드에도 바뀐 내용이 보여요.</p></div>
+          </div>
+        </div>
+      </section>
+
       <section id="viewContacts" hidden>
         <div class="head">
           <div>
@@ -901,7 +947,9 @@
 
     // 메뉴: #home · #reg
     function show(){
-      var v = { '#reg':'reg', '#notes':'notes', '#accounts':'accounts', '#contacts':'contacts' }[location.hash] || 'home';
+      var v = { '#reg':'reg', '#notes':'notes', '#accounts':'accounts', '#contacts':'contacts', '#letter':'letter' }[location.hash] || 'home';
+      $('viewLetter').hidden = v !== 'letter';
+      if (v === 'letter' && !$('letterFrame').src) $('letterFrame').src = '../letter.html';
       $('viewContacts').hidden = v !== 'contacts';
       if (v === 'contacts' && document.body.classList.contains('is-in') && !ct.loaded) loadContacts();
       $('viewAccounts').hidden = v !== 'accounts';
@@ -1453,6 +1501,39 @@
       document.body.classList.add('is-auto');
       load().then(enter).catch(function(err){ if (err.message === 'auth') setTok(''); }).then(function(){ document.body.classList.remove('is-auto'); });
     }
+  })();
+</script>
+
+<!-- 기도편지 보내기: 카카오톡 카드 (모바일 청첩장처럼 사진 · 제목 · '기도편지 보기' 버튼) -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
+<script>
+  (function(){
+    // letter.html과 같은 카카오 JavaScript 키 · 주소
+    var KAKAO_JS_KEY = '04a0910b5359de1738c4a0ca5253e21e';
+    var LETTER_URL = 'https://www.wholegencamp.com/letter.html';
+    var IMAGE_URL  = 'https://www.wholegencamp.com/og-image.jpg';
+    var btn = document.getElementById('sendLetter');
+    if (!btn) return;
+    var cp = document.getElementById('copyLetter');
+    if (cp) cp.addEventListener('click', function(){
+      var done = function(){ cp.textContent = '복사됨'; setTimeout(function(){ cp.textContent = '링크 복사'; }, 1500); };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(LETTER_URL).then(done);
+      else { var t = document.createElement('textarea'); t.value = LETTER_URL; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch(e){} document.body.removeChild(t); }
+    });
+    btn.addEventListener('click', function(){
+      if (!window.Kakao){ window.open(LETTER_URL, '_blank'); return; }
+      if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '홀젠캠프를 위해 기도해 주세요',
+          description: '2027 WHOLEGEN WINTER CAMP 기도편지\n2027.01.21–22 · 세상의 빛 동광교회(부천)',
+          imageUrl: IMAGE_URL,
+          link: { mobileWebUrl: LETTER_URL, webUrl: LETTER_URL }
+        },
+        buttons: [{ title: '기도편지 보기', link: { mobileWebUrl: LETTER_URL, webUrl: LETTER_URL } }]
+      });
+    });
   })();
 </script>
 </body>
