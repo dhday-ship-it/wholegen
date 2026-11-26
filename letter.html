@@ -133,10 +133,44 @@
   :root{ --gap-section:112px; --gap-title:32px; --gap-block:48px; }
   .page{ position:relative; padding:var(--gap-section) var(--px) 0; }
   .banner + .page{ padding-top:48px; }   /* 표지 아래 그라데이션이 이미 여백 역할 */
+  /* 캠프팀 소개가 접혀 있으면 표지 → 주제가 바로 이어지게 (빈 공간 줄임) */
+  .fold-body[hidden] + .theme-page{ padding-top:56px; }
+  /* 캠프팀 소개를 펼치면 소개 → 주제 사이도 같은 섹션 간격 */
+  .fold-body:not([hidden]){ padding-bottom:8px; }
   .page:last-child{ padding-bottom:var(--gap-section); }
   /* 장 제목: 표지 '⌞WINTER' · 주제 '⌞순전함'과 같은 ⌞ 표시로 이어짐 */
   .page-title{ font-size:32px; font-weight:800; letter-spacing:-0.035em; line-height:1.2; text-align:center; color:#fff; }
   .page-title .banner-step{ width:.46em; height:.46em; margin-right:.12em; }
+  /* 접었다 펴기 (캠프 소개) */
+  .fold-btn{
+    display:inline-flex; align-items:center; gap:0;
+    padding:0; border:0; background:none; font:inherit; color:inherit; letter-spacing:inherit; cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .fold-arrow{
+    width:30px; height:30px; margin-left:10px; padding:6px; border-radius:50%;
+    border:1px solid rgba(255,255,255,0.22); color:rgba(255,255,255,0.8);
+    transition: transform .3s ease, background .2s ease;
+  }
+  .fold-btn:hover .fold-arrow{ background:rgba(255,255,255,0.1); }
+  .fold-btn[aria-expanded="true"] .fold-arrow{ transform:rotate(180deg); }
+  /* 표지: '캠프팀 소개 · 자세히 보기' 버튼 */
+  .banner-more{
+    margin-top:22px; display:inline-flex; align-items:center; gap:8px;
+    padding:8px 10px 8px 16px; border-radius:999px; border:1px solid rgba(255,255,255,0.45);
+    background:rgba(11,15,23,0.25); color:#fff; font:inherit; font-size:13px; font-weight:700; cursor:pointer;
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    animation-delay:.76s !important; -webkit-tap-highlight-color:transparent;
+  }
+  .banner-more span{ font-weight:500; color:rgba(255,255,255,0.65); }
+  .banner-more span::before{ content:'·'; margin-right:6px; }
+  .banner-more .fold-arrow{ width:22px; height:22px; margin:0; padding:4px; border:0; background:rgba(255,255,255,0.15); }
+  .banner-more:hover{ background:rgba(255,255,255,0.12); }
+  .banner-more[aria-expanded="true"] .fold-arrow{ transform:rotate(180deg); }
+  .fold-body{ animation: fold-in .4s ease; }
+  .fold-body .fold-btn .fold-arrow{ transform:rotate(180deg); }   /* 펼쳐진 섹션 제목 옆 화살표 = 접기(∧) */
+  .fold-body[hidden]{ display:none; }
+  @keyframes fold-in{ from{ opacity:0; transform:translateY(-6px); } to{ opacity:1; transform:none; } }
   .page-sub{ margin-top:12px; font-size:14px; text-align:center; color:rgba(255,255,255,0.5); }
   /* 소제목 (스태프 · 지도위원 · 기도 묶음 · 시간표 · 바로가기 모두 같음) */
   .sub-title{ font-size:16px; font-weight:800; letter-spacing:-0.02em; color:var(--pw-accent); }
@@ -167,16 +201,22 @@
             mask-image:linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
   }
   .theme-page > *:not(.theme-bg){ position:relative; z-index:1; }
-  .theme-head{ display:flex; flex-direction:column; font-weight:800; letter-spacing:-0.035em; line-height:1; }
-  .th-1{ font-size:20px; font-weight:700; letter-spacing:-0.02em; color:var(--pw-light); }
-  /* 위아래 간격 같게(약 16px) · '순전함' 오른쪽 끝을 '입니다.'와 맞춤 (30.6cqw ≈ 본문 폭 꽉 참) */
-  .th-2{ margin-top:16px; font-size:clamp(84px, 30.6cqw, 140px); line-height:.95; color:var(--pw-accent); letter-spacing:-0.06em; }
-  .th-2 .banner-step{ --pw:var(--pw-accent); width:.42em; height:.42em; margin-right:.04em; }
-  .th-3{ margin-top:10px; align-self:flex-end; font-size:36px; color:#F5F6F8; }
+  .theme-head{ display:flex; flex-direction:column; align-items:center; text-align:center; font-weight:800; letter-spacing:-0.035em; line-height:1; }
+  .th-1{ font-size:17px; font-weight:700; letter-spacing:-0.02em; color:var(--pw-light); }
+  /* '⌞순전함 입니다.' 한 줄 (밑선 맞춤) */
+  .th-row{ display:flex; align-items:baseline; gap:10px; margin-top:12px; }
+  .th-2{ font-size:64px; line-height:1; color:var(--pw-accent); letter-spacing:-0.05em; }
+  .th-2 .banner-step{ --pw:var(--pw-accent); width:.42em; height:.42em; margin-right:.06em; }
+  .th-3{ font-size:26px; color:#F5F6F8; }
   /* 말씀: '입니다.' 바로 아래, 오른쪽 정렬로 타이틀에 붙임 */
   /* 말씀: 타이틀처럼 왼쪽 정렬, 왼쪽 하늘색 세로선으로 인용 표시 */
-  .theme-body{ margin-top:var(--gap-block); padding:2px 0 2px 16px; border-left:2px solid var(--pw-accent); text-align:left; }
-  .theme-verse{ font-size:15.5px; line-height:1.9; color:rgba(255,255,255,0.8); }
+  /* 말씀: 가운데 정렬 · 위에 짧은 하늘색 선 */
+  .theme-body{ margin-top:36px; text-align:center; }
+  .theme-body::before{ content:''; display:block; width:28px; height:2px; margin:0 auto 24px; background:var(--pw-accent); }
+  .theme-verse{ font-size:14.5px; line-height:1.85; letter-spacing:-0.01em; color:rgba(255,255,255,0.8); }
+  /* 문장마다 줄 길이를 고르게 (끝에 한두 단어만 남지 않게) */
+  .theme-verse span{ display:block; text-wrap:balance; }
+  .theme-verse span + span{ margin-top:6px; }
   .theme-ref{ margin-top:16px; font-size:13px; font-weight:600; color:var(--pw-accent); }
   /* 마무리 문장: 가운데, 위 내용을 정리하듯 */
   .theme-close{
@@ -230,11 +270,22 @@
   .loc-addr{ font-size:14px; color:rgba(255,255,255,0.6); }
   .loc-actions{ display:flex; gap:6px; }
   /* 시간표 */
-  .tt-day{ display:flex; align-items:baseline; gap:10px; }
-  .tt-days-2{ margin-top:32px; }
-  .tt-day b{ font-size:17px; font-weight:800; color:#fff; }
-  .tt-day span{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:rgba(255,255,255,0.45); }
-  .tt-day + .rule-list{ margin-top:10px; }
+  /* 시간표: DAY 1 / DAY 2 눌러서 바꾸기 */
+  .tt-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .tt-tabs{ display:flex; gap:6px; }
+  .tt-tab{
+    display:flex; flex-direction:column; align-items:center; gap:1px;
+    padding:7px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.18);
+    background:transparent; color:rgba(255,255,255,0.6); font:inherit; cursor:pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .tt-tab b{ font-size:13px; font-weight:800; line-height:1.2; }
+  .tt-tab span{ font-family:'JetBrains Mono', monospace; font-size:10px; line-height:1.2; opacity:.75; }
+  .tt-tab[aria-selected="true"]{ background:#fff; border-color:#fff; color:#0B0F17; }
+  .tt-head + div{ margin-top:14px; }
+  .tt-panel[hidden]{ display:none; }
+  .tt-panel{ animation: tt-in .35s ease; }
+  @keyframes tt-in{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
   .tt-item{ display:grid; grid-template-columns:84px 1fr; align-items:baseline; padding:13px 10px; }
   .tt-item time{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:rgba(255,255,255,0.45); }
   .tt-item p{ font-size:15px; font-weight:700; color:#fff; }
@@ -328,12 +379,16 @@
     </h1>
     <p class="banner-letter">홀젠캠프를 위해<br>기도해 주세요.</p>
     <p class="banner-place"><mark class="banner-hl">2027.01.21—22</mark> · 세상의 빛 동광교회 (부천)</p>
+    <button type="button" class="banner-more" data-fold="aboutSec" aria-expanded="false" aria-controls="aboutSec">캠프팀 소개<span>자세히 보기</span><svg class="fold-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
   </div>
 </section>
 
-<!-- 2장 · 캠프 소개 -->
-<section class="page" aria-labelledby="t2">
-  <h2 class="page-title reveal" id="t2"><i class="banner-step"></i>캠프 소개</h2>
+<!-- 2장 · 캠프팀 소개 (표지의 '캠프팀 소개 · 자세히 보기'를 누르면 펼쳐짐, 처음엔 접힘) -->
+<section class="page fold-body" id="aboutSec" aria-labelledby="t2" hidden>
+  <h2 class="page-title" id="t2">
+    <button type="button" class="fold-btn" data-fold="aboutSec" aria-expanded="false" aria-controls="aboutSec"><i class="banner-step"></i>캠프팀 소개<svg class="fold-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+  </h2>
+  <div>
   <p class="intro-text reveal"><span style="white-space:nowrap">[홀젠캠프]는 Whole Generation - WHOLEGEN 을 의미하며,</span><br>모든 세대, 곧 온전한 세대가 하나님 앞에 나아가기를 꿈꾸는 캠프입니다.</p>
 
   <div class="block">
@@ -361,6 +416,7 @@
   </div>
 
   <p class="vision reveal">온전한 세대, 그 시작이 청소년임을 알기에<br>그들을 향한 마음을 모아<br>‘순전함’이란 주제로 청소년 캠프를 시작합니다.</p>
+  </div>
 </section>
 
 <!-- 3장 · 2027 주제 -->
@@ -368,11 +424,10 @@
   <div class="theme-bg" aria-hidden="true"></div>
   <h2 class="theme-head" id="tTheme" aria-label="2027 WINTER CAMP 주제는 순전함입니다">
     <span class="th-1 reveal">2027 WINTER CAMP 주제는</span>
-    <span class="th-2 reveal"><i class="banner-step"></i>순전함</span>
-    <span class="th-3 reveal">입니다.</span>
+    <span class="th-row reveal"><span class="th-2"><i class="banner-step"></i>순전함</span><span class="th-3">입니다.</span></span>
   </h2>
   <div class="theme-body reveal">
-    <p class="theme-verse">그리하여 여러분은, 흠이 없고 순결해져서,<br>구부러지고 뒤틀린 세대 가운데서<br>하나님의 흠없는 자녀가 되어야 합니다.<br>그리하면 여러분은<br>이 세상에서 별과 같이 빛날 것입니다.</p>
+    <p class="theme-verse"><span>그리하여 여러분은, 흠이 없고 순결해져서, 구부러지고 뒤틀린 세대 가운데서 하나님의 흠없는 자녀가 되어야 합니다.</span><span>그리하면 여러분은 이 세상에서 별과 같이 빛날 것입니다.</span></p>
     <p class="theme-ref">빌립보서 2:15 · 새번역</p>
   </div>
 </section>
@@ -412,10 +467,15 @@
   </div>
 
   <div class="block">
-    <h3 class="sub-title reveal">시간표</h3>
+    <div class="tt-head reveal">
+      <h3 class="sub-title">시간표</h3>
+      <div class="tt-tabs" role="tablist" aria-label="날짜 선택">
+        <button type="button" role="tab" class="tt-tab" aria-selected="true" aria-controls="ttDay1" id="ttTab1"><b>DAY 1</b><span>01.21 THU</span></button>
+        <button type="button" role="tab" class="tt-tab" aria-selected="false" aria-controls="ttDay2" id="ttTab2" tabindex="-1"><b>DAY 2</b><span>01.22 FRI</span></button>
+      </div>
+    </div>
     <div class="reveal">
-      <p class="tt-day"><b>DAY 1</b><span>01.21 THU</span></p>
-      <div class="rule-list">
+      <div class="rule-list tt-panel" role="tabpanel" id="ttDay1" aria-labelledby="ttTab1">
         <div class="tt-item"><time>09:00–10:00</time><p>접수</p></div>
         <div class="tt-item is-worship"><time>10:00–12:00</time><p>WHOLE WORSHIP 1<small>이경현 목사 · 찬양 노수미</small></p></div>
         <p class="tt-break">12:00 점심식사</p>
@@ -426,10 +486,7 @@
         <div class="tt-item is-worship"><time>18:30–21:30</time><p>WHOLE WORSHIP 2<small>우성환 목사 · 찬양 이경현 목사</small></p></div>
         <p class="tt-break">21:30 집으로~!</p>
       </div>
-    </div>
-    <div class="reveal tt-days-2">
-      <p class="tt-day"><b>DAY 2</b><span>01.22 FRI</span></p>
-      <div class="rule-list">
+      <div class="rule-list tt-panel" role="tabpanel" id="ttDay2" aria-labelledby="ttTab2" hidden>
         <div class="tt-item"><time>09:00–10:00</time><p>접수 &amp; WHOLE UP!</p></div>
         <div class="tt-item is-worship"><time>10:00–12:00</time><p>WHOLE WORSHIP 3<small>류재상 목사 · 찬양 노수미</small></p></div>
         <p class="tt-break">12:00 점심식사</p>
@@ -575,7 +632,7 @@
     //               (플랫폼 > Web 사이트 도메인에 https://www.wholegencamp.com 등록 필요)
     var KAKAO_JS_KEY = '04a0910b5359de1738c4a0ca5253e21e';
     var PAGE_URL  = 'https://www.wholegencamp.com/letter.html';
-    var IMAGE_URL = 'https://www.wholegencamp.com/og-image.jpg';
+    var IMAGE_URL = 'https://www.wholegencamp.com/letter-card.jpg';  // 카드 전용 정사각형 사진 (800×800)
 
     var url = location.protocol === 'file:' ? PAGE_URL : location.href.split('#')[0];
     function webShare(){
@@ -584,6 +641,14 @@
       else copy(url, '링크를 복사했어요');
     }
     document.getElementById('copyLink').addEventListener('click', function(){ copy(url, '링크를 복사했어요'); });
+    // 카드 사진: 카카오 서버에 미리 올려 둔 주소로 보내야 잘리거나 빠지지 않음 (페이지 열릴 때 한 번)
+    var cardImage = IMAGE_URL;
+    if (KAKAO_JS_KEY && window.Kakao){
+      if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
+      Kakao.Share.scrapImage({ imageUrl: IMAGE_URL }).then(function(r){
+        cardImage = r.infos.original.url.replace(/^http:/, 'https:');
+      }).catch(function(){});
+    }
     document.getElementById('share').addEventListener('click', function(){
       if (!KAKAO_JS_KEY || !window.Kakao) return webShare();      // 키가 없으면 휴대폰 기본 공유창
       if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
@@ -591,13 +656,53 @@
         objectType: 'feed',
         content: {
           title: '홀젠캠프를 위해 기도해 주세요',
-          description: '2027 WHOLEGEN WINTER CAMP 기도편지\n2027.01.21–22 · 세상의 빛 동광교회(부천)',
-          imageUrl: IMAGE_URL,
+          description: '2027 WHOLEGEN WINTER CAMP 기도편지',
+          imageUrl: cardImage,
+          imageWidth: 800, imageHeight: 800,                       // 정사각형 그대로 (안 잘림)
           link: { mobileWebUrl: url, webUrl: url }
         },
         buttons: [{ title: '기도편지 보기', link: { mobileWebUrl: url, webUrl: url } }]
       });
     });
+  })();
+
+  // 캠프팀 소개: 표지 버튼으로 펼치고, 제목 옆 화살표로 접기 (처음엔 접힌 상태)
+  (function(){
+    var btns = [].slice.call(document.querySelectorAll('[data-fold]'));
+    function set(id, open){
+      document.getElementById(id).hidden = !open;
+      btns.forEach(function(x){ if (x.dataset.fold === id) x.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+    }
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        var id = b.dataset.fold, open = document.getElementById(id).hidden;
+        set(id, open);
+        var sec = document.getElementById(id);
+        if (open && b.classList.contains('banner-more')) sec.scrollIntoView({ behavior:'smooth' });   // 표지에서 펼치면 그 자리로 내려감
+        if (!open && b.classList.contains('fold-btn')) b.closest('section').previousElementSibling.scrollIntoView({ behavior:'smooth', block:'end' });
+      });
+    });
+  })();
+
+  // 시간표 DAY 1 / DAY 2 탭
+  (function(){
+    var tabs = [].slice.call(document.querySelectorAll('.tt-tab'));
+    function pick(i){
+      tabs.forEach(function(t, k){
+        var on = k === i;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+    }
+    tabs.forEach(function(t, i){
+      t.addEventListener('click', function(){ pick(i); });
+      t.addEventListener('keydown', function(e){
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){ var n = (i + 1) % tabs.length; pick(n); tabs[n].focus(); }
+      });
+    });
+    // 캠프 둘째 날(1/22)이면 DAY 2를 먼저 보여줌
+    var t = new Date(); if (t.getFullYear() === 2027 && t.getMonth() === 0 && t.getDate() === 22) pick(1);
   })();
 
   // D-DAY (camp.html과 같음)

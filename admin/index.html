@@ -1511,7 +1511,7 @@
     // letter.html과 같은 카카오 JavaScript 키 · 주소
     var KAKAO_JS_KEY = '04a0910b5359de1738c4a0ca5253e21e';
     var LETTER_URL = 'https://www.wholegencamp.com/letter.html';
-    var IMAGE_URL  = 'https://www.wholegencamp.com/og-image.jpg';
+    var IMAGE_URL  = 'https://www.wholegencamp.com/letter-card.jpg';  // 카드 전용 정사각형 사진 (800×800)
     var btn = document.getElementById('sendLetter');
     if (!btn) return;
     var cp = document.getElementById('copyLetter');
@@ -1520,6 +1520,14 @@
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(LETTER_URL).then(done);
       else { var t = document.createElement('textarea'); t.value = LETTER_URL; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch(e){} document.body.removeChild(t); }
     });
+    // 카드 사진: 카카오 서버에 미리 올려 둔 주소로 보내야 잘리거나 빠지지 않음 (페이지 열릴 때 한 번)
+    var cardImage = IMAGE_URL;
+    if (window.Kakao){
+      if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
+      Kakao.Share.scrapImage({ imageUrl: IMAGE_URL }).then(function(r){
+        cardImage = r.infos.original.url.replace(/^http:/, 'https:');
+      }).catch(function(){});
+    }
     btn.addEventListener('click', function(){
       if (!window.Kakao){ window.open(LETTER_URL, '_blank'); return; }
       if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
@@ -1527,8 +1535,9 @@
         objectType: 'feed',
         content: {
           title: '홀젠캠프를 위해 기도해 주세요',
-          description: '2027 WHOLEGEN WINTER CAMP 기도편지\n2027.01.21–22 · 세상의 빛 동광교회(부천)',
-          imageUrl: IMAGE_URL,
+          description: '2027 WHOLEGEN WINTER CAMP 기도편지',
+          imageUrl: cardImage,
+          imageWidth: 800, imageHeight: 800,                       // 정사각형 그대로 (안 잘림)
           link: { mobileWebUrl: LETTER_URL, webUrl: LETTER_URL }
         },
         buttons: [{ title: '기도편지 보기', link: { mobileWebUrl: LETTER_URL, webUrl: LETTER_URL } }]
