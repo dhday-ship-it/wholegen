@@ -1125,8 +1125,14 @@
   .fp-label{ transition: fill .2s ease; }
   .fp-label.is-on, .fp-label.is-small.is-on{ fill:#0B0F17; stroke:none; }
   .fp-sub{ fill: var(--pw-accent); font-weight:600; }
-  .fp-restricted rect{ fill: rgba(255,120,110,0.14); stroke:#FF8A7E; stroke-width:3; }
-  .fp-restricted text{ fill:#FF8A7E; font-family:'Pretendard',sans-serif; font-weight:800; text-anchor:middle; dominant-baseline:middle; }
+  #fpHatch line{ stroke: rgba(255,255,255,0.05); stroke-width:2; }
+  .fp-restricted{ pointer-events:none; }
+  .fp-restricted circle{ fill:#0E1320; stroke: rgba(255,255,255,0.18); stroke-width:2; }
+  .fp-lock path{ fill:none; stroke: rgba(255,255,255,0.7); stroke-width:2.2; stroke-linecap:round; }
+  .fp-lock rect{ fill: rgba(255,255,255,0.7); }
+  .fp-restricted text{ text-anchor:middle; dominant-baseline:middle; paint-order:stroke; stroke:#0E1320; stroke-width:10px; stroke-linejoin:round; }
+  .fp-r-en{ fill: rgba(255,255,255,0.75); font-family:'JetBrains Mono', monospace; font-weight:700; letter-spacing:.18em; }
+  .fp-r-ko{ fill: rgba(255,255,255,0.45); font-family:'Pretendard',sans-serif; font-weight:600; }
   .fp-sub.is-on{ fill:#0B0F17; }
   .fp-group{ pointer-events:none; }
   .fp-label.is-small{ fill: rgba(255,255,255,0.5); font-weight:600; }
@@ -1879,8 +1885,16 @@
         }
       });
       if (fl.restricted){
-        out += '<g class="fp-restricted"><rect x="'+(fl.w/2-fs*3.2)+'" y="'+(fl.h/2-fs*1.1)+'" width="'+(fs*6.4)+'" height="'+(fs*2.2)+'" rx="'+(fs*0.5)+'"/>'
-             + '<text x="'+(fl.w/2)+'" y="'+(fl.h/2)+'" font-size="'+Math.round(fs*1.2)+'">통제구역</text></g>';
+        // 빗금으로 살짝 덮고, 가운데에 자물쇠 + 작은 안내 (도면 위에 박스 X)
+        var cx = fl.w/2, cy = fl.h/2, u = fs/10;
+        out = out.replace('<image href="'+fl.img, '<defs><pattern id="fpHatch" width="'+(u*6)+'" height="'+(u*6)+'" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="'+(u*6)+'"/></pattern></defs><image href="'+fl.img);
+        out += '<g class="fp-restricted">'
+             + '<rect class="fp-hatch" x="0" y="0" width="'+fl.w+'" height="'+fl.h+'" fill="url(#fpHatch)"/>'
+             + '<circle cx="'+cx+'" cy="'+(cy-u*14)+'" r="'+(u*13)+'"/>'
+             + '<g class="fp-lock" transform="translate('+cx+' '+(cy-u*14)+') scale('+(u*0.55)+')">'
+             +   '<path d="M-6 -2 V-6 a6 6 0 0 1 12 0 V-2"/><rect x="-9" y="-2" width="18" height="13" rx="3"/></g>'
+             + '<text class="fp-r-en" x="'+cx+'" y="'+(cy+u*9)+'" font-size="'+Math.round(u*5.2)+'">STAFF ONLY</text>'
+             + '<text class="fp-r-ko" x="'+cx+'" y="'+(cy+u*17)+'" font-size="'+Math.round(u*5.6)+'">캠프 기간 출입 제한</text></g>';
       }
       fl.doors.forEach(function(d){
         out += '<g class="fp-door"><circle cx="'+d.x+'" cy="'+d.y+'" r="'+Math.round(fsS*0.45)+'"/><text x="'+d.x+'" y="'+d.ly+'" font-size="'+fsS+'">'+d.n+'</text></g>';
