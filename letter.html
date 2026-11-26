@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>기도편지 · 홀젠캠프</title>
+<meta name="description" content="2027 WHOLEGEN WINTER CAMP · 홀젠캠프를 위해 기도해 주세요.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="홀젠캠프 WHOLEGENCAMP">
+<meta property="og:title" content="홀젠캠프를 위해 기도해 주세요">
+<meta property="og:description" content="2027 WHOLEGEN WINTER CAMP 기도편지 · 2027.01.21–22 · 세상의 빛 동광교회(부천)">
+<meta property="og:url" content="https://www.wholegencamp.com/letter.html">
+<meta property="og:image" content="https://www.wholegencamp.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0F17">
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  /* 홈페이지(index.html)와 같은 값 */
+  :root{
+    --pw:#9DB1EE;
+    --pw-accent:#9DB1EE;
+    --surface:#121826;
+    --pw-light:#DDE4EE;
+    --surface-2:#1A2132;
+    --line:rgba(255,255,255,0.07);
+    --line-strong:rgba(255,255,255,0.14);
+    --px:20px;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{
+    width:100%; min-height:100vh;
+    font-family:'Pretendard', sans-serif;
+    background:#05070C; color:#EDEFF3;
+    overflow-x:clip;
+    font-size:15px; line-height:1.6;
+    word-break:keep-all;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; }
+
+  /* 폰 폭 한 장 (PC에서는 가운데) */
+  .letter{
+    position:relative; max-width:480px; margin:0 auto; min-height:100vh;
+    background:#0B0F17; container-type:inline-size; overflow-x:clip;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.05), 0 0 80px rgba(0,0,0,0.6);
+  }
+
+  /* ---------- 상단 ---------- */
+  .site-top{
+    position:fixed; top:0; left:50%; transform:translateX(-50%);
+    width:100%; max-width:480px; z-index:50;
+    border-bottom:1px solid transparent;
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .site-top.is-solid{
+    background:rgba(11,15,23,0.78);
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
+    border-bottom-color:var(--line);
+  }
+  .site-top nav{ padding:16px var(--px); display:flex; align-items:center; justify-content:space-between; }
+  .logo{ font-family:'JetBrains Mono', monospace; font-size:15px; font-weight:700; letter-spacing:.5px; color:#fff; text-decoration:none; }
+  .logo b{ color:rgba(255,255,255,0.6); }
+  .top-btn{ padding:7px 14px; border-radius:999px; background:#fff; color:#0B0F17; font-size:12px; font-weight:700; text-decoration:none; }
+
+  /* ---------- 1장: 표지 (홈페이지 배너) ---------- */
+  .banner{
+    --pw:#9DB1EE;
+    position:relative; width:100%;
+    height:100vh; height:100svh; min-height:600px; max-height:900px;
+    overflow:hidden; background:#0c1424; color:#fff;
+  }
+  .banner-bg{
+    position:absolute; inset:-10%;
+    background:url('art.png') center 55% / cover no-repeat;
+    filter:blur(40px) saturate(1.1) brightness(.5) hue-rotate(-8deg);
+  }
+  .banner-figure{
+    position:absolute; top:0; left:50%; height:100%;
+    aspect-ratio:326 / 464; transform:translateX(-62%);
+    background:url('art.png') center / cover no-repeat;
+    filter:saturate(1.15);
+    -webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+            mask-image:radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
+    opacity:0; animation:fade-in 1.6s ease .1s forwards;
+  }
+  @keyframes fade-in{ to{ opacity:.9; } }
+  .banner::before{
+    content:''; position:absolute; inset:0; z-index:1;
+    /* 아래로 갈수록 2장 배경색(#0B0F17)으로 자연스럽게 이어짐 */
+    background:linear-gradient(180deg, rgba(11,15,23,0.35) 0%, rgba(11,15,23,0.1) 45%, rgba(11,15,23,0.6) 75%, #0B0F17 100%);
+  }
+  .banner::after{
+    content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode:overlay; opacity:.4;
+  }
+  .banner-inner{
+    position:relative; z-index:2; height:100%;
+    padding:72px var(--px) 96px;
+    display:flex; flex-direction:column; justify-content:center; align-items:flex-end; text-align:right;
+  }
+  .banner-wordmark{
+    font-weight:700; font-size:clamp(48px, 16cqw, 76px);
+    line-height:.9; letter-spacing:-0.035em;
+    text-shadow:0 4px 40px rgba(8,13,25,0.35);
+  }
+  .banner-wordmark span{ display:block; opacity:0; animation:banner-up 1s cubic-bezier(.2,.7,.2,1) forwards; }
+  .banner-wordmark .w-2{ color:var(--pw); animation-delay:.25s; }
+  .banner-wordmark .w-3{ color:var(--pw-light); animation-delay:.35s; }
+  .banner-wordmark .w-4{ color:#F5F6F8; animation-delay:.45s; }
+  .banner-step{
+    display:inline-block; width:.5em; height:.5em; margin-right:-.01em; vertical-align:baseline;
+    background:var(--pw);
+    clip-path:polygon(0 0, 34% 0, 34% 52%, 100% 52%, 100% 100%, 0 100%);
+  }
+  .banner-inner > :not(.banner-wordmark){ opacity:0; animation:banner-up .9s ease forwards; }
+  .banner-letter{ margin-top:28px; font-size:28px; font-weight:800; line-height:1.25; letter-spacing:-0.03em; animation-delay:.6s !important; }
+  .banner-place{ margin-top:14px; font-size:15px; font-weight:700; color:rgba(255,255,255,0.88); animation-delay:.68s !important; }
+  .banner-hl{
+    padding:2px 8px; border-radius:6px; background:var(--pw); color:#0c1424;
+    -webkit-box-decoration-break:clone; box-decoration-break:clone;
+  }
+  @keyframes banner-up{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:none; } }
+
+  /* ---------- 장 공통 ---------- */
+  /* 장 구분 없이 한 흐름: 화면 높이 · 구분선 없이 같은 간격으로 이어짐 */
+  :root{ --gap-section:112px; --gap-title:32px; --gap-block:48px; }
+  .page{ position:relative; padding:var(--gap-section) var(--px) 0; }
+  .banner + .page{ padding-top:48px; }   /* 표지 아래 그라데이션이 이미 여백 역할 */
+  .page:last-child{ padding-bottom:var(--gap-section); }
+  /* 장 제목: 표지 '⌞WINTER' · 주제 '⌞순전함'과 같은 ⌞ 표시로 이어짐 */
+  .page-title{ font-size:32px; font-weight:800; letter-spacing:-0.035em; line-height:1.2; text-align:center; color:#fff; }
+  .page-title .banner-step{ width:.46em; height:.46em; margin-right:.12em; }
+  .page-sub{ margin-top:12px; font-size:14px; text-align:center; color:rgba(255,255,255,0.5); }
+  /* 소제목 (스태프 · 지도위원 · 기도 묶음 · 시간표 · 바로가기 모두 같음) */
+  .sub-title{ font-size:16px; font-weight:800; letter-spacing:-0.02em; color:var(--pw-accent); }
+  .block{ margin-top:var(--gap-block); }
+  .block > .sub-title + *{ margin-top:14px; }
+  /* 줄 목록 (정보 · 기도제목 · 시간표 · 계좌 모두 같음) */
+  .rule-list{ list-style:none; border-top:1px solid var(--line-strong); }
+  .rule-list > *{ border-bottom:1px solid var(--line); }
+
+  /* ---------- 2장: 캠프 소개 ---------- */
+  .intro-text{ margin-top:var(--gap-title); font-size:clamp(13px, 3.75cqw, 16px); letter-spacing:-0.01em; line-height:1.9; text-align:center; color:rgba(255,255,255,0.75); }
+
+  /* ---------- 3장: 2027 주제 (표지와 같은 그림 · 글씨) ---------- */
+  .theme-page{ display:flex; flex-direction:column; padding-top:calc(var(--gap-section) + 16px); padding-bottom:0; z-index:0; }
+  /* 말씀 바로 다음 장: 배경 그림이 '캠프 안내' 아래까지 번지며 이어짐 */
+  .page.joined{ padding-top:72px; z-index:1; }   /* 말씀 → '순전함,' 간격 */
+  /* 주제 배경 그림: 아래로 캠프 안내까지 길게 내려가며 서서히 사라짐 */
+  .theme-page .theme-bg{
+    inset:0 0 -420px 0;
+    -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 22%, #000 50%, transparent 100%);
+            mask-image:linear-gradient(180deg, transparent 0%, #000 22%, #000 50%, transparent 100%);
+  }
+  .theme-bg{
+    position:absolute; inset:-10%; z-index:0; pointer-events:none;
+    background:url('art.png') center 40% / cover no-repeat;
+    filter:blur(48px) saturate(1.1) brightness(.4) hue-rotate(-8deg);
+    -webkit-mask-image:linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+            mask-image:linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+  }
+  .theme-page > *:not(.theme-bg){ position:relative; z-index:1; }
+  .theme-head{ display:flex; flex-direction:column; font-weight:800; letter-spacing:-0.035em; line-height:1; }
+  .th-1{ font-size:20px; font-weight:700; letter-spacing:-0.02em; color:var(--pw-light); }
+  /* 위아래 간격 같게(약 16px) · '순전함' 오른쪽 끝을 '입니다.'와 맞춤 (30.6cqw ≈ 본문 폭 꽉 참) */
+  .th-2{ margin-top:16px; font-size:clamp(84px, 30.6cqw, 140px); line-height:.95; color:var(--pw-accent); letter-spacing:-0.06em; }
+  .th-2 .banner-step{ --pw:var(--pw-accent); width:.42em; height:.42em; margin-right:.04em; }
+  .th-3{ margin-top:10px; align-self:flex-end; font-size:36px; color:#F5F6F8; }
+  /* 말씀: '입니다.' 바로 아래, 오른쪽 정렬로 타이틀에 붙임 */
+  /* 말씀: 타이틀처럼 왼쪽 정렬, 왼쪽 하늘색 세로선으로 인용 표시 */
+  .theme-body{ margin-top:var(--gap-block); padding:2px 0 2px 16px; border-left:2px solid var(--pw-accent); text-align:left; }
+  .theme-verse{ font-size:15.5px; line-height:1.9; color:rgba(255,255,255,0.8); }
+  .theme-ref{ margin-top:16px; font-size:13px; font-weight:600; color:var(--pw-accent); }
+  /* 마무리 문장: 가운데, 위 내용을 정리하듯 */
+  .theme-close{
+    text-align:center; letter-spacing:-0.03em;
+  }
+  /* '순전함,' 한 줄 + 설명 한 줄 (설명은 폭에 맞춰 크기 조절, 중간에 끊기지 않음) */
+  .theme-close b{ display:block; font-size:24px; font-weight:800; line-height:1.3; color:var(--pw-accent); }
+  .theme-close span{ display:block; margin-top:6px; white-space:nowrap; font-size:clamp(14px, 4.4cqw, 18px); font-weight:700; line-height:1.4; color:#fff; }
+
+  /* ---------- 2장: 스태프 · 지도위원 (한 줄에 6명) ---------- */
+  .block:has(> .people) > .sub-title{ text-align:center; }
+  .people{ list-style:none; display:grid; grid-template-columns:repeat(6, 1fr); gap:4px; text-align:center; }
+  .people li{ min-width:0; }
+  .people img{ display:block; width:100%; max-width:60px; aspect-ratio:1; margin:0 auto; border-radius:50%; object-fit:cover; object-position:center 20%; background:var(--surface-2); }
+  .people b{ display:block; margin-top:8px; font-size:12px; font-weight:700; line-height:1.3; color:#fff; }
+  .people span{ display:block; margin-top:2px; font-size:10.5px; line-height:1.3; color:rgba(255,255,255,0.5); }
+  .vision{ margin-top:var(--gap-block); text-align:center; font-size:15px; line-height:1.9; color:rgba(255,255,255,0.75); }
+
+  /* ---------- 5장: 기도제목 ---------- */
+  .prayers li{ padding:16px 2px; font-size:15.5px; line-height:1.75; color:rgba(255,255,255,0.88); }
+
+  /* ---------- 4장: 캠프 안내 (캠프 등록 페이지 내용, 어두운 색으로) ---------- */
+  .camp-poster{ display:block; width:100%; max-width:280px; margin:36px auto 0; border-radius:14px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.5); }
+  .camp-poster img{ width:100%; display:block; }
+  .camp-badges{ margin-top:var(--gap-block); display:flex; gap:6px; }
+  .camp-dday{ padding:4px 11px; border-radius:999px; background:#fff; color:#0B0F17; font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:700; letter-spacing:.5px; }
+  .camp-recruit{ padding:4px 11px; border-radius:999px; background:rgba(157,177,238,0.16); color:var(--pw-accent); font-size:12px; font-weight:700; }
+  .camp-info-title{ margin-top:14px; font-size:24px; font-weight:800; letter-spacing:-0.02em; line-height:1.2; color:#fff; }
+  .camp-info-list{ margin-top:18px; }
+  .camp-info-list > div{ display:grid; grid-template-columns:48px 1fr; gap:14px; padding:14px 2px; }
+  .camp-info-list dt{ margin:0; padding-top:2px; font-size:13px; font-weight:700; color:rgba(255,255,255,0.45); }
+  .camp-info-list dd{ margin:0; font-size:15px; font-weight:600; color:#fff; }
+  .camp-info-list dd small{ display:block; margin-top:2px; font-size:13px; font-weight:400; color:rgba(255,255,255,0.5); }
+  /* 오시는 길 */
+  .loc-map{ position:relative; height:220px; border-radius:14px; overflow:hidden; background:var(--surface-2); }
+  .loc-map .root_daum_roughmap{ position:absolute; inset:0; width:100% !important; height:100% !important; border:0; background:transparent; }
+  .loc-map .root_daum_roughmap .wrap_map{ height:100% !important; }
+  .loc-map .root_daum_roughmap .cont{ display:none; }
+  .loc-pin{
+    position:absolute; left:50%; top:50%; z-index:2;
+    transform:translate(-50%, calc(-100% - 58px));
+    padding:9px 14px; border-radius:12px; background:#0B0F17;
+    box-shadow:0 10px 24px rgba(0,0,0,0.35); pointer-events:none; transition:opacity .25s ease;
+  }
+  .loc-pin::after{ content:""; position:absolute; left:50%; bottom:-7px; transform:translateX(-50%); border:7px solid transparent; border-bottom:0; border-top-color:#0B0F17; }
+  .loc-pin img{ display:block; height:24px; width:auto; }
+  .loc-pin.is-hidden{ opacity:0; }
+  .loc-map:not(.pin-off) .roughmap_lebel_text,
+  .loc-map:not(.pin-off) div:has(> .roughmap_lebel_text){ visibility:hidden; }
+  .loc-row{ margin-top:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .loc-addr{ font-size:14px; color:rgba(255,255,255,0.6); }
+  .loc-actions{ display:flex; gap:6px; }
+  /* 시간표 */
+  .tt-day{ display:flex; align-items:baseline; gap:10px; }
+  .tt-days-2{ margin-top:32px; }
+  .tt-day b{ font-size:17px; font-weight:800; color:#fff; }
+  .tt-day span{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:rgba(255,255,255,0.45); }
+  .tt-day + .rule-list{ margin-top:10px; }
+  .tt-item{ display:grid; grid-template-columns:84px 1fr; align-items:baseline; padding:13px 10px; }
+  .tt-item time{ font-family:'JetBrains Mono', monospace; font-size:11.5px; color:rgba(255,255,255,0.45); }
+  .tt-item p{ font-size:15px; font-weight:700; color:#fff; }
+  .tt-item p small{ display:block; margin-top:2px; font-size:13px; font-weight:500; color:rgba(255,255,255,0.55); }
+  .tt-item.is-worship{ margin:4px 0; padding:13px 10px; border-radius:10px; background:rgba(157,177,238,0.09); border-bottom-color:transparent; }
+  .tt-item.is-worship time{ color:var(--pw-accent); font-weight:700; }
+  .tt-break{ padding:9px 10px 9px 94px; font-size:12px; color:rgba(255,255,255,0.4); }
+
+  /* 바로가기 */
+  .links{ display:grid; grid-template-columns:repeat(3, 1fr); gap:24px 8px; padding:24px 0; }
+  .link{
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    background:none; border:0; padding:0; font:inherit; color:inherit; text-decoration:none; cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .link-ico{
+    width:56px; height:56px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid rgba(255,255,255,0.22); color:#fff;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .link-ico svg{ width:23px; height:23px; }
+  .link:hover .link-ico, .link:focus-visible .link-ico{ background:#fff; border-color:#fff; color:#0B0F17; }
+  .link-name{ font-size:12.5px; font-weight:600; color:rgba(255,255,255,0.75); text-align:center; line-height:1.3; }
+  .account{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 2px; }
+  .account strong{ display:block; font-size:16px; font-weight:700; color:#fff; }
+  .account span{ display:block; margin-top:2px; font-size:13px; color:rgba(255,255,255,0.5); }
+
+  .pill{
+    flex:none; display:inline-flex; align-items:center; justify-content:center;
+    padding:9px 16px; border-radius:999px; border:1px solid rgba(255,255,255,0.45);
+    background:transparent; color:#fff; font:inherit; font-size:13px; font-weight:700; cursor:pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+  .pill:hover{ background:rgba(255,255,255,0.12); }
+  .pill.sm{ padding:7px 13px; font-size:12.5px; }
+  .pill.solid{ background:#fff; color:#0B0F17; border-color:#fff; }
+  .pill.solid:hover{ background:var(--pw-accent); border-color:var(--pw-accent); }
+
+  /* ---------- 6장: 공유 ---------- */
+  .share-page{ display:flex; flex-direction:column; text-align:center; overflow:hidden; padding-top:calc(var(--gap-section) + 16px); }
+  .share-page > *:not(.theme-bg){ position:relative; z-index:1; }
+  .share-sub{ margin-top:14px; font-size:15px; line-height:1.75; color:rgba(255,255,255,0.6); }
+  .share-btns{ margin-top:var(--gap-title); display:flex; flex-direction:column; gap:8px; }
+  .share-btns .pill{ width:100%; height:52px; font-size:15px; gap:8px; }
+  .share-btns .pill svg{ width:20px; height:20px; }
+  /* 카카오톡 공유 버튼: 카카오 노란색 */
+  .pill.kakao{ background:#FEE500; border-color:#FEE500; color:#191919; }
+  .pill.kakao:hover{ background:#F5DC00; }
+  .share-from{ margin-top:var(--gap-block); font-size:13px; color:rgba(255,255,255,0.4); }
+  .share-from .logo{ display:block; margin-top:8px; font-size:13px; }
+
+  .toast{
+    position:fixed; left:50%; bottom:28px; z-index:60; transform:translate(-50%, 20px);
+    padding:12px 20px; border-radius:999px; background:#fff; color:#0B0F17;
+    font-size:14px; font-weight:700; opacity:0; pointer-events:none; white-space:nowrap;
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  .toast.show{ opacity:1; transform:translate(-50%, 0); }
+
+  /* 스크롤하면 나타남 (홈페이지 .reveal과 같음) */
+  .js .reveal{ opacity:0; transform:translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .js .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){
+    .banner-figure{ animation:none; opacity:.9; }
+    .banner-wordmark span, .banner-inner > *{ animation:none; opacity:1; }
+    .js .reveal{ opacity:1; transform:none; transition:none; }
+  }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<div class="letter">
+
+<header class="site-top" id="top">
+  <nav>
+    <a class="logo" href="./">WHOLEGEN<b>CAMP</b></a>
+    <a class="top-btn" href="./">홈페이지</a>
+  </nav>
+</header>
+
+<!-- 1장 · 표지 -->
+<section class="banner" aria-label="홀젠캠프 기도편지">
+  <div class="banner-bg" aria-hidden="true"></div>
+  <div class="banner-figure" aria-hidden="true"></div>
+  <div class="banner-inner">
+    <h1 class="banner-wordmark" aria-label="2027 WHOLEGEN WINTER CAMP">
+      <span class="w-2" aria-hidden="true">WHOLEGEN</span>
+      <span class="w-3" aria-hidden="true"><i class="banner-step"></i>WINTER</span>
+      <span class="w-4" aria-hidden="true">CAMP</span>
+    </h1>
+    <p class="banner-letter">홀젠캠프를 위해<br>기도해 주세요.</p>
+    <p class="banner-place"><mark class="banner-hl">2027.01.21—22</mark> · 세상의 빛 동광교회 (부천)</p>
+  </div>
+</section>
+
+<!-- 2장 · 캠프 소개 -->
+<section class="page" aria-labelledby="t2">
+  <h2 class="page-title reveal" id="t2"><i class="banner-step"></i>캠프 소개</h2>
+  <p class="intro-text reveal"><span style="white-space:nowrap">[홀젠캠프]는 Whole Generation - WHOLEGEN 을 의미하며,</span><br>모든 세대, 곧 온전한 세대가 하나님 앞에 나아가기를 꿈꾸는 캠프입니다.</p>
+
+  <div class="block">
+    <h3 class="sub-title reveal">스태프</h3>
+    <ul class="people reveal">
+      <li><img src="speakers/staff1.jpg" alt="" loading="lazy"><b>이경현 목사</b><span>대표</span></li>
+      <li><img src="speakers/staff2.jpg" alt="" loading="lazy"><b>김일보 간사</b><span>총괄디렉터</span></li>
+      <li><img src="speakers/crew3.jpg" alt="" loading="lazy"><b>이혜원</b></li>
+      <li><img src="speakers/crew4.jpg" alt="" loading="lazy"><b>주찬미</b></li>
+      <li><img src="speakers/crew5.jpg" alt="" loading="lazy"><b>정대희</b></li>
+      <li><img src="speakers/wor3.jpg" alt="" loading="lazy"><b>노수미</b></li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3 class="sub-title reveal">지도위원</h3>
+    <ul class="people reveal">
+      <li><img src="speakers/adv1.jpg" alt="" loading="lazy"><b>전영훈 목사</b><span>새숨교회</span></li>
+      <li><img src="speakers/adv2.jpg" alt="" loading="lazy"><b>이재환 목사</b><span>구로동교회</span></li>
+      <li><img src="speakers/adv6.jpg" alt="" loading="lazy"><b>윤형진 목사</b><span>주예수교회</span></li>
+      <li><img src="speakers/adv3.jpg" alt="" loading="lazy"><b>김단일 목사</b><span>컴앤씨교회</span></li>
+      <li><img src="speakers/adv4.jpg" alt="" loading="lazy"><b>오현철 교수</b><span>성결대학교</span></li>
+      <li><img src="speakers/adv5.jpg" alt="" loading="lazy"><b>김건주 목사</b><span>복음과 도시</span></li>
+    </ul>
+  </div>
+
+  <p class="vision reveal">온전한 세대, 그 시작이 청소년임을 알기에<br>그들을 향한 마음을 모아<br>‘순전함’이란 주제로 청소년 캠프를 시작합니다.</p>
+</section>
+
+<!-- 3장 · 2027 주제 -->
+<section class="page theme-page" aria-labelledby="tTheme">
+  <div class="theme-bg" aria-hidden="true"></div>
+  <h2 class="theme-head" id="tTheme" aria-label="2027 WINTER CAMP 주제는 순전함입니다">
+    <span class="th-1 reveal">2027 WINTER CAMP 주제는</span>
+    <span class="th-2 reveal"><i class="banner-step"></i>순전함</span>
+    <span class="th-3 reveal">입니다.</span>
+  </h2>
+  <div class="theme-body reveal">
+    <p class="theme-verse">그리하여 여러분은, 흠이 없고 순결해져서,<br>구부러지고 뒤틀린 세대 가운데서<br>하나님의 흠없는 자녀가 되어야 합니다.<br>그리하면 여러분은<br>이 세상에서 별과 같이 빛날 것입니다.</p>
+    <p class="theme-ref">빌립보서 2:15 · 새번역</p>
+  </div>
+</section>
+
+<!-- 4장 · 캠프 안내 (캠프 등록 페이지 내용: D-DAY ~ 시간표) + 바로가기 -->
+<section class="page joined" aria-label="캠프 안내">
+  <p class="theme-close reveal"><b>순전함,</b><span>예수 그리스도 안에서 온전히 세워지는 세대</span></p>
+  <a class="camp-poster reveal" href="poster.jpg" target="_blank" rel="noopener" aria-label="포스터 크게 보기"><img src="poster.jpg" alt="2027 WHOLEGEN WINTER CAMP 포스터" loading="lazy"></a>
+
+  <div class="reveal">
+    <div class="camp-badges"><span class="camp-dday" id="campDday">D-DAY</span><span class="camp-recruit">모집중</span></div>
+    <p class="camp-info-title">2027 WHOLEGEN<br>WINTER CAMP</p>
+    <dl class="rule-list camp-info-list">
+      <div><dt>주제</dt><dd>순전함<small>예수 그리스도 안에서 온전히 세워지는 세대 · 빌 2:15</small></dd></div>
+      <div><dt>일정</dt><dd>2027.01.21 (목) – 01.22 (금)<small>무박 2일 · 숙박 없음</small></dd></div>
+      <div><dt>장소</dt><dd>세상의 빛 동광교회<small>경기도 부천시 소사구 경인옛로 130</small></dd></div>
+      <div><dt>대상</dt><dd>청소년, 교사, 교역자</dd></div>
+      <div><dt>정원</dt><dd>500명 한정<small>홀젠 연합캠프 1차</small></dd></div>
+    </dl>
+  </div>
+
+  <div class="block reveal">
+    <h3 class="sub-title">오시는 길</h3>
+    <div>
+      <div class="loc-map" id="mapBox">
+        <div id="daumRoughmapContainer1791734562245" class="root_daum_roughmap root_daum_roughmap_landing"></div>
+        <div class="loc-pin" aria-hidden="true"><img src="partners/donggwang.png" alt=""></div>
+      </div>
+      <div class="loc-row">
+        <p class="loc-addr">세상의 빛 동광교회 (부천)</p>
+        <div class="loc-actions">
+          <a class="pill sm solid" href="https://map.kakao.com/link/map/%EC%84%B8%EC%83%81%EC%9D%98%EB%B9%9B%EB%8F%99%EA%B4%91%EA%B5%90%ED%9A%8C,37.4813546,126.8055173" target="_blank" rel="noopener noreferrer">카카오맵 ↗</a>
+          <a class="pill sm" href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%20%EB%B6%80%EC%B2%9C%EC%8B%9C%20%EC%86%8C%EC%82%AC%EA%B5%AC%20%EA%B2%BD%EC%9D%B8%EC%98%9B%EB%A1%9C%20130" target="_blank" rel="noopener noreferrer">네이버 지도 ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3 class="sub-title reveal">시간표</h3>
+    <div class="reveal">
+      <p class="tt-day"><b>DAY 1</b><span>01.21 THU</span></p>
+      <div class="rule-list">
+        <div class="tt-item"><time>09:00–10:00</time><p>접수</p></div>
+        <div class="tt-item is-worship"><time>10:00–12:00</time><p>WHOLE WORSHIP 1<small>이경현 목사 · 찬양 노수미</small></p></div>
+        <p class="tt-break">12:00 점심식사</p>
+        <div class="tt-item"><time>13:30–14:30</time><p>WHOLE UP!<small>김형기</small></p></div>
+        <div class="tt-item"><time>14:30–15:00</time><p>마임 콘서트<small>조인정 아티스트</small></p></div>
+        <div class="tt-item"><time>15:00–17:00</time><p>WHOLE RE:VIEW<small>다시, 세상을 보다 · 유경상 교수</small></p></div>
+        <p class="tt-break">17:00 저녁식사</p>
+        <div class="tt-item is-worship"><time>18:30–21:30</time><p>WHOLE WORSHIP 2<small>우성환 목사 · 찬양 이경현 목사</small></p></div>
+        <p class="tt-break">21:30 집으로~!</p>
+      </div>
+    </div>
+    <div class="reveal tt-days-2">
+      <p class="tt-day"><b>DAY 2</b><span>01.22 FRI</span></p>
+      <div class="rule-list">
+        <div class="tt-item"><time>09:00–10:00</time><p>접수 &amp; WHOLE UP!</p></div>
+        <div class="tt-item is-worship"><time>10:00–12:00</time><p>WHOLE WORSHIP 3<small>류재상 목사 · 찬양 노수미</small></p></div>
+        <p class="tt-break">12:00 점심식사</p>
+        <div class="tt-item"><time>13:30–14:30</time><p>찬양콘서트<small>웨이홈</small></p></div>
+        <div class="tt-item"><time>14:30–17:00</time><p>WHOLE VISION<small>비전토크콘서트</small></p></div>
+        <p class="tt-break">17:00 저녁식사</p>
+        <div class="tt-item is-worship"><time>18:30–22:00</time><p>WHOLE WORSHIP 4<small>이경현 목사 · 찬양 조세아</small></p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3 class="sub-title reveal">바로가기</h3>
+    <nav class="rule-list links reveal" aria-label="바로가기">
+      <a class="link" href="./" target="_blank" rel="noopener">
+        <span class="link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-6h4v6"/></svg></span>
+        <span class="link-name">홈페이지</span>
+      </a>
+      <a class="link" href="camp.html" target="_blank" rel="noopener">
+        <span class="link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 11h6M9 15h4"/></svg></span>
+        <span class="link-name">캠프 신청</span>
+      </a>
+      <a class="link" href="https://m.site.naver.com/2lGkj" target="_blank" rel="noopener noreferrer">
+        <span class="link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M18 8v6M15 11h6"/></svg></span>
+        <span class="link-name">스텝 신청</span>
+      </a>
+      <a class="link" href="https://www.instagram.com/wholegen.camp/" target="_blank" rel="noopener noreferrer">
+        <span class="link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg></span>
+        <span class="link-name">인스타그램</span>
+      </a>
+      <a class="link" href="https://www.youtube.com/@wholegencamp" target="_blank" rel="noopener noreferrer">
+        <span class="link-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg></span>
+        <span class="link-name">유튜브</span>
+      </a>
+      <a class="link" href="https://pf.kakao.com/_xaxnyFX/chat" target="_blank" rel="noopener noreferrer">
+        <span class="link-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3.5c-5.2 0-9.5 3.3-9.5 7.4 0 2.6 1.7 4.9 4.3 6.2l-.9 3.4c-.1.3.3.6.6.4l4-2.7c.5.1 1 .1 1.5.1 5.2 0 9.5-3.3 9.5-7.4S17.2 3.5 12 3.5z"/></svg></span>
+        <span class="link-name">카톡 문의</span>
+      </a>
+    </nav>
+  </div>
+</section>
+
+<!-- 5장 · 기도제목 + 후원 계좌 -->
+<section class="page" aria-labelledby="t3">
+  <h2 class="page-title reveal" id="t3"><i class="banner-step"></i>기도제목</h2>
+
+  <div class="block">
+    <h3 class="sub-title reveal">캠프팀을 위한 기도</h3>
+    <ul class="rule-list prayers">
+      <li class="reveal">메인 스텝들(이경현 목사, 김일보 디렉터, 노수미, 이혜원, 정대희, 주찬미)이 성령 안에서 탁월한 영성과 풍성한 은혜로 준비되게 하소서</li>
+      <li class="reveal">협력하는 모든 기관과 단체, 예배팀과 출연진이 하나되게 하시며, 예수의 생명을 전하게 하소서</li>
+      <li class="reveal">캠프를 섬길 40명의 스텝들을 보내 주시고, 예수의 생명을 담는 공동체로 세워주소서</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3 class="sub-title reveal">청소년들을 위한 기도</h3>
+    <ul class="rule-list prayers">
+      <li class="reveal">존귀한 청소년들이 모여, 모든 시간이 축제로 드려지게 하소서</li>
+      <li class="reveal">'순전한 예수'를 만나 길과 진리, 생명을 알게 하소서</li>
+      <li class="reveal">복음 안에서, 참된 자유와 기쁨을 누리게 하소서</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <h3 class="sub-title reveal">캠프를 위한 기도</h3>
+    <ul class="rule-list prayers">
+      <li class="reveal">첫 캠프의 모든 과정이 하나님 보시기에 합당하도록 인도하소서</li>
+      <li class="reveal">'순전함'이란 주제에 연결되는 시간들로 준비되게 하소서</li>
+      <li class="reveal">예수님을 만날 순전한 이들을 보내주시고, 필요한 재정을 채워주소서</li>
+    </ul>
+  </div>
+  <div class="block">
+    <h3 class="sub-title reveal">후원 계좌</h3>
+    <div class="rule-list reveal">
+      <div class="account">
+        <div>
+          <strong>하나은행 161-910048-18805</strong>
+          <span>예금주 홀젠(WHOLEGEN)</span>
+        </div>
+        <button class="pill sm" type="button" data-copy="하나은행 161-910048-18805" data-msg="후원 계좌번호를 복사했어요">복사</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6장 · 공유하기 -->
+<section class="page share-page" aria-labelledby="t5">
+  <div class="theme-bg" aria-hidden="true"></div>
+  <h2 class="page-title reveal" id="t5"><i class="banner-step"></i>기도편지 공유하기</h2>
+  <p class="share-sub reveal">함께 기도해 주실 분들께<br>이 편지를 전해 주세요.</p>
+  <div class="share-btns reveal">
+    <button class="pill kakao" type="button" id="share">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.5c-5.2 0-9.5 3.3-9.5 7.4 0 2.6 1.7 4.9 4.3 6.2l-.9 3.4c-.1.3.3.6.6.4l4-2.7c.5.1 1 .1 1.5.1 5.2 0 9.5-3.3 9.5-7.4S17.2 3.5 12 3.5z"/></svg>
+      카카오톡으로 보내기
+    </button>
+    <button class="pill" type="button" id="copyLink">링크 복사</button>
+  </div>
+  <p class="share-from reveal">기도로 함께해 주셔서 감사합니다.<a class="logo" href="./">WHOLEGEN<b>CAMP</b></a></p>
+</section>
+
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- 카카오 JavaScript SDK (카카오톡 공유) -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
+
+<script>
+  (function(){
+    // 상단 바: 스크롤하면 배경
+    var top = document.getElementById('top');
+    function onScroll(){ top.classList.toggle('is-solid', window.scrollY > 40); }
+    onScroll(); window.addEventListener('scroll', onScroll, { passive:true });
+
+    // 스크롤하면 나타남
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function(el){ el.classList.add('in'); }); }
+    else {
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { rootMargin:'0px 0px -8% 0px' });
+      els.forEach(function(el){ io.observe(el); });
+    }
+
+    // 복사 · 공유
+    var toast = document.getElementById('toast'), tt;
+    function say(msg){ toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove('show'); }, 1800); }
+    function copy(text, msg){
+      function fallback(){
+        var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); say(msg); } catch(e) { say(text); }
+        document.body.removeChild(ta);
+      }
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(function(){ say(msg); }, fallback);
+      else fallback();
+    }
+    document.querySelectorAll('[data-copy]').forEach(function(b){
+      b.addEventListener('click', function(){ copy(b.dataset.copy, b.dataset.msg); });
+    });
+    // ---------- 카카오톡 공유 (모바일 청첩장처럼 사진 · 제목 · 버튼 카드로 보내짐) ----------
+    // KAKAO_JS_KEY: developers.kakao.com → 내 애플리케이션 → 앱 키 → 'JavaScript 키'
+    //               (플랫폼 > Web 사이트 도메인에 https://www.wholegencamp.com 등록 필요)
+    var KAKAO_JS_KEY = '04a0910b5359de1738c4a0ca5253e21e';
+    var PAGE_URL  = 'https://www.wholegencamp.com/letter.html';
+    var IMAGE_URL = 'https://www.wholegencamp.com/og-image.jpg';
+
+    var url = location.protocol === 'file:' ? PAGE_URL : location.href.split('#')[0];
+    function webShare(){
+      var data = { title:'홀젠캠프를 위해 기도해 주세요', text:'2027 WHOLEGEN WINTER CAMP 기도편지', url:url };
+      if (navigator.share) navigator.share(data).catch(function(){});
+      else copy(url, '링크를 복사했어요');
+    }
+    document.getElementById('copyLink').addEventListener('click', function(){ copy(url, '링크를 복사했어요'); });
+    document.getElementById('share').addEventListener('click', function(){
+      if (!KAKAO_JS_KEY || !window.Kakao) return webShare();      // 키가 없으면 휴대폰 기본 공유창
+      if (!Kakao.isInitialized()) Kakao.init(KAKAO_JS_KEY);
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '홀젠캠프를 위해 기도해 주세요',
+          description: '2027 WHOLEGEN WINTER CAMP 기도편지\n2027.01.21–22 · 세상의 빛 동광교회(부천)',
+          imageUrl: IMAGE_URL,
+          link: { mobileWebUrl: url, webUrl: url }
+        },
+        buttons: [{ title: '기도편지 보기', link: { mobileWebUrl: url, webUrl: url } }]
+      });
+    });
+  })();
+
+  // D-DAY (camp.html과 같음)
+  (function(){
+    var el = document.getElementById('campDday');
+    if (!el) return;
+    var today = new Date(); today.setHours(0,0,0,0);
+    var start = new Date(2027, 0, 21), end = new Date(2027, 0, 22);
+    var d = Math.round((start - today) / 86400000);
+    el.textContent = d > 0 ? 'D-' + d : (today <= end ? 'D-DAY' : 'THANK YOU');
+  })();
+</script>
+
+<!-- 카카오맵 지도퍼가기 (camp.html과 같은 지도) -->
+<script charset="UTF-8" class="daum_roughmap_loader_script" src="https://t1.kakaocdn.net/kakaomapweb/roughmap/loader/prod/roughmapLoader.js"></script>
+<script charset="UTF-8">
+  (function(){
+    var box = document.getElementById('mapBox');
+    if (!box || !window.daum || !daum.roughmap) return;
+    new daum.roughmap.Lander({
+      "timestamp" : "1791734562245",
+      "key" : "34oadzfhhps",
+      "mapWidth" : String(Math.round(box.clientWidth) || 360),
+      "mapHeight" : String(Math.round(box.clientHeight) || 240)
+    }).render();
+    var pin = box.querySelector('.loc-pin');
+    if (pin) ['pointerdown', 'wheel', 'touchstart'].forEach(function(ev){
+      box.addEventListener(ev, function(){ pin.classList.add('is-hidden'); box.classList.add('pin-off'); }, { once:true, passive:true });
+    });
+  })();
+</script>
+</body>
+</html>
